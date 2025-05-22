@@ -9,11 +9,17 @@ import { Icons } from "next/dist/lib/metadata/types/metadata-types";
  */
 export function generateIconMetadata(favicon: StrapiImage | null): Icons | undefined {
   if (!favicon) {
+    console.log('No favicon data received from Strapi');
     return undefined;
   }
   
   const iconUrl = getStrapiMedia(favicon);
-  if (!iconUrl) return undefined;
+  if (!iconUrl) {
+    console.log('Could not generate icon URL from favicon data');
+    return undefined;
+  }
+  
+  console.log('Generated favicon URL:', iconUrl);
   
   const formats = favicon.formats || {};
   
@@ -23,7 +29,12 @@ export function generateIconMetadata(favicon: StrapiImage | null): Icons | undef
   const largeIcon = formats.large ? getStrapiMedia({ ...favicon, url: formats.large.url }) : iconUrl;
   
   // Ensure we don't have null URLs
-  if (!smallIcon || !mediumIcon || !largeIcon) return undefined;
+  if (!smallIcon || !mediumIcon || !largeIcon) {
+    console.log('One or more icon sizes could not be generated');
+    return undefined;
+  }
+  
+  console.log('Icon URLs generated:', { smallIcon, mediumIcon, largeIcon });
   
   return {
     icon: [

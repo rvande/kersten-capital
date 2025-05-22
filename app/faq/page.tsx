@@ -10,7 +10,7 @@ export default async function FAQPage() {
   const faqData = await getFAQs();
   
   return (
-    <div className="flex flex-col flex-1 bg-gradient-to-b from-[#323230] via-[#262624] to-[#1a1a18]">
+    <div className="flex flex-col flex-1 bg-gradient-to-b from-[#3A3A40] via-[#2A2A30] to-[#1E1E24]">
       <FAQHeader />
       <FAQPageContent faqs={faqData.data || []} />
     </div>

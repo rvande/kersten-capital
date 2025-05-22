@@ -106,64 +106,77 @@ export default function Navbar({ navbar }: NavbarProps) {
           </Link>
           
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-12" aria-label="Main Navigation">
-            {navbar.menu?.map((menuItem) => (
-              <div key={menuItem.id} className="relative group">
-                <button
-                  className="font-header text-[#3D3939] hover:text-[#CA3B2A] text-2xl font-bold transition-all duration-200 flex items-center py-2 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-[#CA3B2A] after:transition-all after:duration-300 hover:after:w-full"
-                  onMouseEnter={() => setActiveMenu(menuItem.id)}
-                  onMouseLeave={() => setActiveMenu(null)}
-                  onClick={() => setActiveMenu(activeMenu === menuItem.id ? null : menuItem.id)}
-                  onKeyDown={(e) => handleKeyDown(e, menuItem.id)}
-                  aria-expanded={activeMenu === menuItem.id}
-                  aria-haspopup="true"
-                  aria-controls={`dropdown-menu-${menuItem.id}`}
-                >
-                  {menuItem.title}
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    className={`h-5 w-5 ml-1 transition-transform duration-200 ${activeMenu === menuItem.id ? 'transform rotate-180' : ''}`}
-                    viewBox="0 0 20 20" 
-                    fill="currentColor"
-                    aria-hidden="true"
+          <div className="hidden md:flex items-center">
+            <nav className="flex items-center space-x-12 mr-8" aria-label="Main Navigation">
+              {navbar.menu?.map((menuItem) => (
+                <div key={menuItem.id} className="relative group">
+                  <button
+                    className="font-header text-gray-800 hover:text-[#CA3B2A] text-2xl font-bold transition-all duration-200 flex items-center py-2 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-[#CA3B2A] after:transition-all after:duration-300 hover:after:w-full"
+                    onMouseEnter={() => setActiveMenu(menuItem.id)}
+                    onMouseLeave={() => setActiveMenu(null)}
+                    onClick={() => setActiveMenu(activeMenu === menuItem.id ? null : menuItem.id)}
+                    onKeyDown={(e) => handleKeyDown(e, menuItem.id)}
+                    aria-expanded={activeMenu === menuItem.id}
+                    aria-haspopup="true"
+                    aria-controls={`dropdown-menu-${menuItem.id}`}
                   >
-                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </button>
-                
-                {/* Dropdown for desktop */}
-                <div 
-                  id={`dropdown-menu-${menuItem.id}`}
-                  ref={(el) => setDropdownRef(el, menuItem.id)}
-                  className={`absolute left-0 mt-4 w-84 rounded-md shadow-xl bg-[#F8F6F3] ring-1 ring-black ring-opacity-5 transition-all duration-200 ${
-                    activeMenu === menuItem.id ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
-                  }`}
-                  onMouseEnter={() => setActiveMenu(menuItem.id)}
-                  onMouseLeave={() => setActiveMenu(null)}
-                >
-                  <div className="py-3 divide-y divide-[#E8E3DD]">
-                    {menuItem.links?.map((link, index) => (
-                      <Link
-                        key={link.id}
-                        href={link.url || '#'}
-                        target={link.newTab ? '_blank' : '_self'}
-                        className="font-body block px-7 py-4 text-xl text-[#3D3939] hover:bg-[#F0EDE8] hover:text-[#CA3B2A] transition-all duration-200 hover:pl-9"
-                        onClick={() => setActiveMenu(null)}
-                        tabIndex={activeMenu === menuItem.id ? 0 : -1}
-                        rel={link.newTab ? "noopener noreferrer" : undefined}
-                      >
-                        {link.text}
-                      </Link>
-                    ))}
+                    {menuItem.title}
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      className={`h-5 w-5 ml-1 transition-transform duration-200 ${activeMenu === menuItem.id ? 'transform rotate-180' : ''}`}
+                      viewBox="0 0 20 20" 
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                  
+                  {/* Dropdown for desktop */}
+                  <div 
+                    id={`dropdown-menu-${menuItem.id}`}
+                    ref={(el) => setDropdownRef(el, menuItem.id)}
+                    className={`absolute left-0 mt-4 w-84 rounded-md shadow-xl bg-gray-100 ring-1 ring-black ring-opacity-5 transition-all duration-200 ${
+                      activeMenu === menuItem.id ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
+                    }`}
+                    onMouseEnter={() => setActiveMenu(menuItem.id)}
+                    onMouseLeave={() => setActiveMenu(null)}
+                  >
+                    <div className="py-3 divide-y divide-gray-300">
+                      {menuItem.links?.map((link, index) => (
+                        <Link
+                          key={link.id}
+                          href={link.url || '#'}
+                          target={link.newTab ? '_blank' : '_self'}
+                          className="font-body block px-7 py-4 text-xl text-gray-600 hover:bg-gray-200 hover:text-[#CA3B2A] transition-all duration-200 hover:pl-9"
+                          onClick={() => setActiveMenu(null)}
+                          tabIndex={activeMenu === menuItem.id ? 0 : -1}
+                          rel={link.newTab ? "noopener noreferrer" : undefined}
+                        >
+                          {link.text}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </nav>
+              ))}
+            </nav>
+            
+            {/* Desktop Contact CTA */}
+            <Link 
+              href="/contact" 
+              className="bg-[#CA3B2A] text-white text-xl font-header py-2 px-5 rounded-sm shadow-sm transition-all duration-200 hover:bg-[#B22C1D] flex items-center"
+            >
+              <span>Contact Us</span>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </Link>
+          </div>
           
           {/* Mobile menu button */}
           <button 
-            className="md:hidden text-[#3D3939] p-2 focus:outline-none focus:ring-2 focus:ring-[#CA3B2A] rounded-md mobile-menu-toggle hover:bg-[#F0EDE8] transition-colors"
+            className="md:hidden text-gray-700 p-2 focus:outline-none focus:ring-2 focus:ring-[#CA3B2A] rounded-md mobile-menu-toggle hover:bg-gray-200 transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-menu"
@@ -188,11 +201,11 @@ export default function Navbar({ navbar }: NavbarProps) {
             mobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
           }`}
         >
-          <nav className="flex flex-col space-y-2 py-4 border-t border-[#E8E3DD]">
+          <nav className="flex flex-col space-y-2 py-4 border-t border-gray-300">
             {navbar.menu?.map((menuItem) => (
               <div key={menuItem.id} className="py-3 px-3">
                 <button 
-                  className="font-header w-full font-medium text-xl text-[#3D3939] px-3 py-3 mb-2 flex justify-between items-center hover:text-[#CA3B2A] focus:outline-none focus:ring-2 focus:ring-[#CA3B2A] rounded-md transition-colors hover:bg-[#F0EDE8]"
+                  className="font-header w-full font-medium text-2xl text-gray-800 px-3 py-3 mb-2 flex justify-between items-center hover:text-[#CA3B2A] focus:outline-none focus:ring-2 focus:ring-[#CA3B2A] rounded-md transition-colors hover:bg-gray-200"
                   onClick={() => setActiveMenu(activeMenu === menuItem.id ? null : menuItem.id)}
                   aria-expanded={activeMenu === menuItem.id}
                   aria-controls={`mobile-dropdown-${menuItem.id}`}
@@ -235,6 +248,20 @@ export default function Navbar({ navbar }: NavbarProps) {
                 </div>
               </div>
             ))}
+            
+            {/* Mobile Contact CTA */}
+            <div className="mt-6 px-6 pb-4">
+              <Link 
+                href="/contact" 
+                className="bg-[#CA3B2A] text-white text-xl font-header py-2 px-5 rounded-sm shadow-sm transition-all duration-200 hover:bg-[#B22C1D] flex items-center justify-center w-full"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <span>Contact Us</span>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </Link>
+            </div>
           </nav>
         </div>
       </div>

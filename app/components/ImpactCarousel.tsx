@@ -117,7 +117,7 @@ export default function ImpactCarousel() {
   };
 
   return (
-    <section className="relative w-full bg-gradient-to-b from-[#F8F6F3] to-[#EFEAE3] py-16 md:py-24">
+    <section className="relative w-full bg-[#F8F6F3] py-16 md:py-24 overflow-hidden">
       {/* Background Accent */}
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#8A2C24] via-[#B9453A] to-[#CA3B2A]"></div>
       
@@ -160,7 +160,7 @@ export default function ImpactCarousel() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.5 }}
-              className="bg-gradient-to-b from-[#3A3532] to-[#2A2927] rounded-lg p-6 md:p-8 shadow-md border-t-4 border-[#B9453A] max-w-4xl mx-auto"
+              className="bg-gradient-to-br from-[#3A3A40] to-[#1E1E24] rounded-lg p-6 md:p-8 shadow-md border-t-4 border-[#CA3B2A] max-w-4xl mx-auto"
             >
               <div className="md:flex items-start">
                 <div className="mb-6 md:mb-0 md:mr-8 flex-shrink-0 flex justify-center">
@@ -173,13 +173,13 @@ export default function ImpactCarousel() {
                 </div>
                 <div>
                   <div className="relative mb-4">
-                    <p className="text-[#F8F6F3] text-lg md:text-xl leading-relaxed">
+                    <p className="text-gray-200 text-lg md:text-xl leading-relaxed">
                       "{testimonials[currentIndex].quote}"
                     </p>
                   </div>
                   <div>
                     <p className="font-semibold text-lg text-[#CA3B2A]">{testimonials[currentIndex].name}</p>
-                    <p className="text-[#D1C9BF]">{testimonials[currentIndex].title}, {testimonials[currentIndex].company}</p>
+                    <p className="text-gray-400">{testimonials[currentIndex].title}, {testimonials[currentIndex].company}</p>
                   </div>
                 </div>
               </div>
@@ -190,7 +190,7 @@ export default function ImpactCarousel() {
           <div className="flex justify-between items-center mt-8">
             <button 
               onClick={handlePrev}
-              className="p-2 rounded-full bg-[#F8F6F3] shadow-md hover:shadow-lg border border-[#E8E3DD] transition-all duration-300 text-[#8A2C24] hover:text-[#CA3B2A] focus:outline-none focus:ring-2 focus:ring-[#CA3B2A]"
+              className="p-2 mb-1 rounded-full bg-[#F8F6F3] shadow-md hover:shadow-lg border border-[#E8E3DD] transition-all duration-300 text-[#8A2C24] hover:text-[#CA3B2A] focus:outline-none focus:ring-2 focus:ring-[#CA3B2A]"
               aria-label="Previous testimonial"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -215,7 +215,7 @@ export default function ImpactCarousel() {
             
             <button 
               onClick={handleNext}
-              className="p-2 rounded-full bg-[#F8F6F3] shadow-md hover:shadow-lg border border-[#E8E3DD] transition-all duration-300 text-[#8A2C24] hover:text-[#CA3B2A] focus:outline-none focus:ring-2 focus:ring-[#CA3B2A]"
+              className="p-2 mb-1 rounded-full bg-[#F8F6F3] shadow-md hover:shadow-lg border border-[#E8E3DD] transition-all duration-300 text-[#8A2C24] hover:text-[#CA3B2A] focus:outline-none focus:ring-2 focus:ring-[#CA3B2A]"
               aria-label="Next testimonial"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

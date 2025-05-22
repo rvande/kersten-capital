@@ -48,12 +48,10 @@ const expertiseCards = [
     title: "Industry Expertise",
     description: "Deep understanding of specific market segments and their unique talent requirements.",
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
-        <line x1="12" y1="6" x2="12" y2="6"></line>
-        <line x1="12" y1="10" x2="12" y2="10"></line>
-        <line x1="12" y1="14" x2="12" y2="14"></line>
-        <line x1="12" y1="18" x2="12" y2="18"></line>
+      <svg className="w-10 h-10" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12.6,3h6.8c0.7,0,1.2,0.8,0.9,1.4L18,9h-4l-2.3-4.6C11.4,3.8,11.9,3,12.6,3z"/>
+        <path d="M14,9h4l2.8,14c0.1,0.7-0.1,1.3-0.5,1.8l-3.5,3.5c-0.4,0.4-1,0.4-1.4,0l-3.5-3.5c-0.5-0.5-0.7-1.2-0.5-1.8L14,9z"/>
+        <line x1="16" y1="17" x2="19.6" y2="17"/>
       </svg>
     )
   },
@@ -213,7 +211,7 @@ export default function ValueProposition() {
   };
 
   return (
-    <section className="relative w-full bg-white py-16 md:py-24 overflow-hidden">
+    <section className="relative w-full bg-[#F8F6F3] py-16 md:py-24 overflow-hidden">
       {/* Background Accent */}
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#8A2C24] to-[#CA3B2A]"></div>
       
@@ -254,7 +252,7 @@ export default function ValueProposition() {
           <div className="space-y-24 mb-16">
             {/* Left Image - Right Text */}
             <motion.div 
-              className="flex flex-col md:flex-row items-stretch gap-0 bg-gradient-to-br from-[#373634] to-[#2D2D2D] rounded-xl overflow-hidden shadow-xl"
+              className="flex flex-col md:flex-row items-stretch gap-0 bg-gradient-to-br from-[#3A3A40] to-[#1E1E24] rounded-xl overflow-hidden shadow-xl"
               variants={itemVariants}
               whileInView={{ y: 0, opacity: 1 }}
               initial={{ y: 50, opacity: 0 }}
@@ -297,7 +295,7 @@ export default function ValueProposition() {
             
             {/* Right Image - Left Text */}
             <motion.div 
-              className="flex flex-col-reverse md:flex-row items-stretch gap-0 bg-gradient-to-br from-[#373634] to-[#2D2D2D] rounded-xl overflow-hidden shadow-xl"
+              className="flex flex-col-reverse md:flex-row items-stretch gap-0 bg-gradient-to-br from-[#3A3A40] to-[#1E1E24] rounded-xl overflow-hidden shadow-xl"
               variants={itemVariants}
               whileInView={{ y: 0, opacity: 1 }}
               initial={{ y: 50, opacity: 0 }}
@@ -339,15 +337,23 @@ export default function ValueProposition() {
             </motion.div>
           </div>
           
-          {/* Divider */}
-          <div className="flex items-center justify-center my-16">
-            <div className="h-px bg-gray-200 w-full max-w-xs"></div>
-            <div className="mx-4">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-[#CA3B2A]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
+          {/* Creative Divider */}
+          <div className="relative py-16">
+            <div className="absolute left-0 right-0 h-12 flex items-center justify-center">
+              <div className="h-0.5 bg-gradient-to-r from-transparent via-[#CA3B2A] to-transparent w-full max-w-4xl mx-auto"></div>
             </div>
-            <div className="h-px bg-gray-200 w-full max-w-xs"></div>
+                         <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-10">
+               <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#8A2C24] to-[#CA3B2A] shadow-lg flex items-center justify-center p-4">
+                 <Image 
+                   src="/logo-white.png" 
+                   alt="Kersten Capital Logo" 
+                   width={60} 
+                   height={60}
+                   className="object-contain"
+                 />
+               </div>
+               <div className="mt-1 w-0.5 h-8 bg-gradient-to-b from-[#CA3B2A] to-transparent"></div>
+              </div>
           </div>
           
           {/* Expertise Cards with Accordion */}
@@ -364,7 +370,7 @@ export default function ValueProposition() {
                 key={index}
                 custom={index}
                 variants={cardVariants}
-                className={`bg-gradient-to-br from-[#373634] to-[#2D2D2D] rounded-md shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer`}
+                className={`bg-gradient-to-br from-[#3A3A40] to-[#1E1E24] rounded-md shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer`}
                 onClick={() => toggleCard(index)}
                 whileHover={{ 
                   y: -5,
@@ -395,9 +401,9 @@ export default function ValueProposition() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <div className="p-5 border-t border-gray-100/10">
+                      <div className="p-5 border-t border-gray-400/10">
                         <p className="text-base text-gray-200">{card.description}</p>
-                        <div className="mt-4 pt-4 border-t border-gray-100/10">
+                        <div className="mt-4 pt-4 border-t border-gray-400/10">
                           <h4 className="text-sm font-semibold text-[#CA3B2A] mb-2">How We Deliver:</h4>
                           <ul className="text-sm text-gray-300 space-y-2">
                             <li className="flex items-start">
@@ -425,7 +431,7 @@ export default function ValueProposition() {
                   )}
                 </AnimatePresence>
                 {expandedCard !== index && (
-                  <div className="p-4 border-t border-gray-100/10">
+                  <div className="p-4 border-t border-gray-400/10">
                     <p className="text-sm md:text-base text-gray-200">{card.description}</p>
                   </div>
                 )}

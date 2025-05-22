@@ -47,7 +47,7 @@ export function FAQGroup({ categoryName, faqs }: FAQGroupProps) {
   return (
     <div className="mb-12">
       <h2 className="text-4xl font-bold mb-6 text-white border-l-4 border-red-600 pl-3">{categoryName}</h2>
-      <div className="bg-gradient-to-br from-[#3A3936]/80 to-[#2A2926]/80 backdrop-blur-sm rounded-lg shadow-md overflow-hidden divide-y divide-gray-700 border border-white/10">
+      <div className="bg-gradient-to-br from-[#3A3A40]/80 to-[#1E1E24]/80 backdrop-blur-sm rounded-lg shadow-md overflow-hidden divide-y divide-gray-700 border border-white/10">
         {faqs.map((faq) => (
           <FAQAccordionItem 
             key={faq.id} 

@@ -118,7 +118,7 @@ export default function MissionSection() {
   );
   
   return (
-    <section className="relative w-full bg-gradient-to-b from-[#323230] via-[#262624] to-[#1a1a18] py-20 md:py-32 overflow-hidden">
+    <section className="relative w-full bg-gradient-to-b from-[#3A3A40] via-[#2A2A30] to-[#1E1E24] py-20 md:py-32 overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
@@ -131,7 +131,7 @@ export default function MissionSection() {
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#8A2C24] via-[#B9453A] to-[#CA3B2A]"></div>
       
       <motion.div 
-        className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-[#323230]/20 via-[#262624]/15 to-[#1a1a18]/25"
+        className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-[#3A3A40]/20 via-[#2A2A30]/15 to-[#1E1E24]/25"
         style={{ scale: backgroundScale }}
       />
       
@@ -143,24 +143,43 @@ export default function MissionSection() {
           viewport={{ once: true, margin: "-100px" }}
           variants={containerVariants}
         >
-          <div className="text-center mb-12">
-            <motion.h2 
-              className="font-cormorant text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 md:mb-4"
-              variants={itemVariants}
-              style={{ opacity }}
-            >
-              Our Mission
-            </motion.h2>
+          {/* Mission Section with Text and Image Side-by-Side on Desktop */}
+          <div className="flex flex-col md:flex-row md:items-center md:gap-12 mb-16">
+            <div className="text-center md:text-left md:w-1/2 mb-10 md:mb-0">
+              <motion.h2 
+                className="font-cormorant text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 md:mb-4"
+                variants={itemVariants}
+                style={{ opacity }}
+              >
+                Our Mission
+              </motion.h2>
+              <motion.div 
+                className="h-0.5 w-24 md:w-32 bg-gradient-to-r from-[#8A2C24] via-[#B9453A] to-[#CA3B2A] mx-auto md:mx-0 mb-10"
+                variants={itemVariants}
+              />
+              <motion.p
+                className="font-body text-xl md:text-2xl text-white/90 leading-relaxed mx-auto md:mx-0"
+                variants={itemVariants}
+              >
+                {mission.mainText}
+              </motion.p>
+            </div>
+            
+            {/* Chess Image - Strategic Thinking Visualization */}
             <motion.div 
-              className="h-0.5 w-24 md:w-32 bg-gradient-to-r from-[#8A2C24] via-[#B9453A] to-[#CA3B2A] mx-auto mb-10"
-              variants={itemVariants}
-            />
-            <motion.p
-              className="font-body text-xl md:text-2xl text-white/90 leading-relaxed max-w-3xl mx-auto mb-12"
+              className="md:w-1/2"
               variants={itemVariants}
             >
-              {mission.mainText}
-            </motion.p>
+              <div className="rounded-lg overflow-hidden shadow-2xl">
+                <Image 
+                  src="/chess.jpg" 
+                  alt="Strategic talent acquisition represented by chess pieces" 
+                  width={800} 
+                  height={500}
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+            </motion.div>
           </div>
 
           {/* The Kersten Difference */}
@@ -180,7 +199,7 @@ export default function MissionSection() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-100px" }}
-                className={`bg-gradient-to-br from-[#F8F6F3] to-[#EFEAE3] rounded-lg p-5 transform transition-all duration-300 shadow-md hover:shadow-xl ${activePoint === i ? 'scale-105' : ''}`}
+                className={`bg-gradient-to-br from-[#F8F6F3] to-[#EDE8E0] rounded-lg p-5 transform transition-all duration-300 shadow-md hover:shadow-xl ${activePoint === i ? 'scale-105' : ''}`}
                 onMouseEnter={() => setActivePoint(i)}
                 onMouseLeave={() => setActivePoint(null)}
               >

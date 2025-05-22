@@ -65,6 +65,10 @@ export async function generateMetadata(): Promise<Metadata> {
     return {
       title: 'Kersten Talent Capital',
       description: 'Strategic talent investment firm',
+      icons: {
+        icon: '/favicon.ico',
+        apple: '/apple-touch-icon.png',
+      },
     };
   }
 }
@@ -93,7 +97,7 @@ export default async function RootLayout({
     return (
       <html lang="en" className={`${inter.variable} ${cormorant.variable} h-full`}>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
-          <header className="bg-white shadow-sm">
+          <header className="bg-gradient-to-b from-gray-100 to-gray-200 shadow-sm">
             <div className="container mx-auto px-4 py-4">
               <h1 className="text-xl font-bold">Kersten Talent Capital</h1>
             </div>
