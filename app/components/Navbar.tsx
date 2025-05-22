@@ -225,7 +225,7 @@ export default function Navbar({ navbar }: NavbarProps) {
                 <div 
                   id={`mobile-dropdown-${menuItem.id}`}
                   className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                    activeMenu === menuItem.id ? 'max-h-screen opacity-100 bg-gradient-to-b from-[#373634] to-[#2D2D2D]' : 'max-h-0 opacity-0'
+                    activeMenu === menuItem.id ? 'max-h-screen opacity-100 bg-gradient-to-b from-[#1E1E24] via-[#2A2A30] to-[#3A3A40]' : 'max-h-0 opacity-0'
                   }`}
                 >
                   <div className="mt-2 pl-4 border-l-2 border-[#CA3B2A] ml-3">
