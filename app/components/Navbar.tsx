@@ -136,13 +136,13 @@ export default function Navbar({ navbar }: NavbarProps) {
                   <div 
                     id={`dropdown-menu-${menuItem.id}`}
                     ref={(el) => setDropdownRef(el, menuItem.id)}
-                    className={`absolute left-0 mt-4 w-84 rounded-md shadow-xl bg-gray-100 ring-1 ring-black ring-opacity-5 transition-all duration-200 ${
+                    className={`absolute left-0 mt-4 w-70 bg-gray-100 transition-all duration-200 ${
                       activeMenu === menuItem.id ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
                     }`}
                     onMouseEnter={() => setActiveMenu(menuItem.id)}
                     onMouseLeave={() => setActiveMenu(null)}
                   >
-                    <div className="py-3 divide-y divide-gray-300">
+                    <div className="py-3">
                       {menuItem.links?.map((link, index) => (
                         <Link
                           key={link.id}
@@ -165,7 +165,7 @@ export default function Navbar({ navbar }: NavbarProps) {
             {/* Desktop Contact CTA */}
             <Link 
               href="/contact" 
-              className="bg-[#CA3B2A] text-white text-xl font-header py-2 px-5 rounded-sm shadow-sm transition-all duration-200 hover:bg-[#B22C1D] flex items-center"
+              className="bg-[#CA3B2A] text-white text-xl font-bold font-header py-2 px-5 rounded-sm shadow-sm transition-all duration-200 hover:bg-[#B22C1D] flex items-center"
             >
               <span>Contact Us</span>
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -224,7 +224,7 @@ export default function Navbar({ navbar }: NavbarProps) {
                 
                 <div 
                   id={`mobile-dropdown-${menuItem.id}`}
-                  className={`overflow-hidden transition-all duration-300 ease-in-out rounded-b-lg ${
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
                     activeMenu === menuItem.id ? 'max-h-screen opacity-100 bg-gradient-to-b from-[#373634] to-[#2D2D2D]' : 'max-h-0 opacity-0'
                   }`}
                 >

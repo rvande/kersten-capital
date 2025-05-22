@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const valuePoints = [
   {
@@ -438,6 +439,21 @@ export default function ValueProposition() {
               </motion.div>
             ))}
           </div>
+          
+          {/* Additional CTA */}
+          <motion.div
+            className="flex justify-center mb-12"
+            variants={itemVariants}
+          >
+            <Link href="/contact">
+              <div className="bg-[#E04032] text-white px-8 py-4 rounded-md shadow-lg hover:bg-[#B02F22] transition-colors border border-white/10 flex items-center space-x-2 transform hover:scale-105 transition-transform duration-300">
+                <span className="font-bold">Schedule a Consultation</span>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </div>
+            </Link>
+          </motion.div>
           
           {/* Statistics Badge */}
           <motion.div 

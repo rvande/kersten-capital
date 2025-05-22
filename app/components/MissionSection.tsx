@@ -118,7 +118,7 @@ export default function MissionSection() {
   );
   
   return (
-    <section className="relative w-full bg-gradient-to-b from-[#3A3A40] via-[#2A2A30] to-[#1E1E24] py-20 md:py-32 overflow-hidden">
+    <section className="relative w-full bg-gradient-to-b from-[#1E1E24] via-[#2A2A30] to-[#3A3A40] py-20 md:py-32 overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{

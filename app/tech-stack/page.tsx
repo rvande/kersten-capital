@@ -139,6 +139,7 @@ export default function TechStackPage() {
                     />
                   </div>
                 </div>
+                <span className="text-sm font-medium text-center text-gray-700 block mb-4">Vercel Platform</span>
                 <div className="grid grid-cols-3 gap-4">
                   {[
                     { name: "Next.js", logo: "https://cdn.worldvectorlogo.com/logos/nextjs-2.svg", alt: "Next.js logo" },
@@ -174,6 +175,7 @@ export default function TechStackPage() {
                     />
                   </div>
                 </div>
+                <span className="text-sm font-medium text-center text-gray-700 block mb-4">Railway Platform</span>
                 <div className="grid grid-cols-3 gap-4">
                   {[
                     { name: "Strapi CMS", logo: "https://cdn.worldvectorlogo.com/logos/strapi-2.svg", alt: "Strapi logo" },

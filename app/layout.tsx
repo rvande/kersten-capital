@@ -5,6 +5,8 @@ import { getGlobalData } from "./api/api";
 import { getStrapiMedia } from "./utils/media";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import FaqFooterWrapper from "./components/FaqFooterWrapper";
+import ScrollToTop from "./components/ScrollToTop";
 import { generateIconMetadata, generateOgImages } from "./utils/favicon";
 
 const inter = Inter({
@@ -37,7 +39,11 @@ export async function generateMetadata(): Promise<Metadata> {
       ? generateOgImages(shareImage, metaTitle)
       : generateOgImages(global.favicon, metaTitle);
     
+    // Get site URL from environment variable or default
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kersten-capital.com';
+    
     return {
+      metadataBase: new URL(siteUrl),
       title: {
         default: metadataTitle,
         template: `%s | ${global.metaTitleSuffix}`,
@@ -63,6 +69,7 @@ export async function generateMetadata(): Promise<Metadata> {
     console.error('Error generating metadata:', error);
     // Fallback metadata
     return {
+      metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://kersten-capital.com'),
       title: 'Kersten Talent Capital',
       description: 'Strategic talent investment firm',
       icons: {
@@ -87,7 +94,9 @@ export default async function RootLayout({
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
           <Header global={globalData.data} />
           <main className="flex-1 flex flex-col">{children}</main>
+          <FaqFooterWrapper />
           <Footer footer={globalData.data.footer} />
+          <ScrollToTop />
         </body>
       </html>
     );
@@ -103,7 +112,9 @@ export default async function RootLayout({
             </div>
           </header>
           <main className="flex-1 flex flex-col">{children}</main>
+          <FaqFooterWrapper />
           <Footer footer={null} />
+          <ScrollToTop />
         </body>
       </html>
     );
