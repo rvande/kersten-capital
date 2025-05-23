@@ -95,23 +95,26 @@ export default function Hero2() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80"></div>
 
-        {/* Single h1 element for both mobile and desktop */}
-        <div className="absolute inset-0">
+        {/* Single h1 for SEO, styled responsively */}
+        <div className="absolute top-0 left-0 w-full flex flex-col items-center z-10 pointer-events-none">
+          <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-white mt-20 md:mt-32 mb-8 md:mb-28 font-cormorant opacity-0 leading-tight text-center mx-auto md:max-w-none max-w-[300px] pointer-events-auto"
+            style={{ 
+              animation: isLoaded ? 'fadeIn 1s ease-out forwards' : 'none',
+            }}>
+            <span className="md:inline hidden">Elevate Your </span>
+            <span className="md:hidden inline">Elevate Your<br /></span>
+            <span className="bg-gradient-to-r from-[#8A2C24] to-[#CA3B2A] bg-clip-text text-transparent relative shine-text">
+              Leadership
+            </span>
+            <span> Team</span>
+          </h1>
+        </div>
+
+        {/* Desktop Overlay Content (no h1) */}
+        <div className="hidden md:block absolute inset-0">
           <div className="container mx-auto h-full px-6 py-20">
             <div className="h-full flex flex-col">
-              <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-white mt-12 mb-8 md:mb-28 font-cormorant opacity-0 leading-tight text-center mx-auto md:max-w-none max-w-[300px]"
-                style={{ 
-                  animation: isLoaded ? 'fadeIn 1s ease-out forwards' : 'none',
-                }}>
-                <span className="md:inline hidden">Elevate Your </span>
-                <span className="md:hidden inline">Elevate Your<br /></span>
-                <span className="bg-gradient-to-r from-[#8A2C24] to-[#CA3B2A] bg-clip-text text-transparent relative shine-text">
-                  Leadership
-                </span>
-                <span> Team</span>
-              </h1>
-              
-              <div className="flex flex-col md:flex-row gap-4 mb-4 mt-28 justify-center items-stretch max-w-5xl mx-auto">
+              <div className="flex flex-col md:flex-row gap-4 mb-4 mt-110 justify-center items-stretch max-w-5xl mx-auto">
                 {services.map((service, index) => (
                   <div
                     key={index}
@@ -136,7 +139,6 @@ export default function Hero2() {
                 ))}
               </div>
             </div>
-
             {/* CTA Button */}
             <div className="absolute bottom-24 left-0 right-0 flex justify-center">
               <Link href="/contact">
@@ -152,29 +154,9 @@ export default function Hero2() {
           </div>
         </div>
 
-        {/* Desktop Overlay Content - Remove h1 from here */}
-        <div className="hidden md:block absolute inset-0 pointer-events-none">
-          <div className="container mx-auto h-full px-6 py-20 pointer-events-auto">
-            <div className="h-full flex flex-col">
-              {/* CTA Button */}
-              <div className="absolute bottom-24 left-0 right-0 flex justify-center">
-                <Link href="/contact">
-                  <div 
-                    className="relative overflow-hidden bg-transparent text-white border border-white/50 hover:border-white px-10 py-5 rounded-md opacity-0 group hover:shadow-[0_0_15px_rgba(202,59,42,0.5)]"
-                    style={{ animation: isLoaded ? 'fadeInUp 0.8s ease-out 1.8s forwards' : 'none' }}
-                  >
-                    <span className="relative z-10 font-bold text-xl">Your Next Great Hire Starts Here</span>
-                    <div className="absolute inset-0 w-[200%] h-full transform -translate-x-full bg-gradient-to-r from-[#8A2C24]/0 via-[#CA3B2A]/50 to-[#8A2C24]/0 animate-sheen group-hover:via-[#CA3B2A]/60"></div>
-                  </div>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Overlay Content - Remove h1 from here */}
-        <div className="md:hidden absolute inset-0 pointer-events-none">
-          <div className="h-full flex flex-col px-4 pointer-events-auto">
+        {/* Mobile Overlay Content (no h1) */}
+        <div className="md:hidden absolute inset-0">
+          <div className="h-full flex flex-col px-4">
             <div className="mt-auto">
               <div className="grid grid-cols-1 gap-2">
                 {services.map((service, index) => (
@@ -202,7 +184,6 @@ export default function Hero2() {
                   </div>
                 ))}
               </div>
-
               {/* Mobile CTA Button */}
               <div className="mt-8 mb-8">
                 <Link href="/contact">
