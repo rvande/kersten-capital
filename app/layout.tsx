@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import { Inter, Cormorant_Garamond } from "next/font/google";
+import { Inter, Cormorant_Garamond, Montserrat } from "next/font/google";
 import "../app/globals.css";
 import { getGlobalData } from "./api/api";
 import { getStrapiMedia } from "./utils/media";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import FaqFooterWrapper from "./components/FaqFooterWrapper";
+import ScrollToTop from "./components/ScrollToTop";
 import { generateIconMetadata, generateOgImages } from "./utils/favicon";
 
 const inter = Inter({
@@ -17,6 +19,13 @@ const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-cormorant",
+  display: "swap",
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-montserrat",
   display: "swap",
 });
 
@@ -37,7 +46,11 @@ export async function generateMetadata(): Promise<Metadata> {
       ? generateOgImages(shareImage, metaTitle)
       : generateOgImages(global.favicon, metaTitle);
     
+    // Get site URL from environment variable or default
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kersten-capital.com';
+    
     return {
+      metadataBase: new URL(siteUrl),
       title: {
         default: metadataTitle,
         template: `%s | ${global.metaTitleSuffix}`,
@@ -63,6 +76,7 @@ export async function generateMetadata(): Promise<Metadata> {
     console.error('Error generating metadata:', error);
     // Fallback metadata
     return {
+      metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://kersten-capital.com'),
       title: 'Kersten Talent Capital',
       description: 'Strategic talent investment firm',
     };
@@ -79,11 +93,13 @@ export default async function RootLayout({
     const globalData = await getGlobalData();
     
     return (
-      <html lang="en" className={`${inter.variable} ${cormorant.variable} h-full`}>
+      <html lang="en" className={`${inter.variable} ${cormorant.variable} ${montserrat.variable} h-full`}>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
           <Header global={globalData.data} />
           <main className="flex-1 flex flex-col">{children}</main>
+          <FaqFooterWrapper />
           <Footer footer={globalData.data.footer} />
+          <ScrollToTop />
         </body>
       </html>
     );
@@ -91,15 +107,14 @@ export default async function RootLayout({
     console.error('Error in RootLayout:', error);
     // Fallback rendering without header that requires global data
     return (
-      <html lang="en" className={`${inter.variable} ${cormorant.variable} h-full`}>
+      <html lang="en" className={`${inter.variable} ${cormorant.variable} ${montserrat.variable} h-full`}>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
-          <header className="bg-white shadow-sm">
-            <div className="container mx-auto px-4 py-4">
-              <h1 className="text-xl font-bold">Kersten Talent Capital</h1>
-            </div>
+          <header className="bg-gradient-to-b from-gray-100 to-gray-200 shadow-sm">
           </header>
           <main className="flex-1 flex flex-col">{children}</main>
+          <FaqFooterWrapper />
           <Footer footer={null} />
+          <ScrollToTop />
         </body>
       </html>
     );

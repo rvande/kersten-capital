@@ -10,9 +10,117 @@ export default function TechStackPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-300 pt-24 pb-16 px-4">
       <div className="container mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-12 font-header text-gray-800">
+        <h1 className="text-4xl font-bold text-center mb-8 font-header text-gray-800">
           Our Technology Stack
         </h1>
+        
+        {/* New Benefits Section */}
+        <div className="bg-white rounded-lg shadow-xl p-8 max-w-5xl mx-auto mb-16">
+          <h2 className="text-3xl font-semibold mb-6 font-header border-b pb-2 text-gray-800">Business & SEO Benefits</h2>
+          <p className="text-gray-700 mb-6 text-lg">
+            Our modern technology stack is specifically designed to maximize your online presence while providing enterprise-grade reliability and performance. Here's how our architectural choices directly benefit your business:
+          </p>
+          
+          <div className="grid md:grid-cols-2 gap-8 mb-6">
+            <div>
+              <h3 className="text-2xl font-semibold mb-4 font-header text-gray-800 border-l-4 border-[#CA3B2A] pl-3">Performance & Scalability</h3>
+              <ul className="space-y-3 pl-4">
+                <li className="flex items-start">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#CA3B2A] mt-1 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-gray-700"><strong>Lightning-fast page loads</strong> with Next.js server-side rendering and efficient asset delivery</span>
+                </li>
+                <li className="flex items-start">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#CA3B2A] mt-1 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-gray-700"><strong>Global CDN deployment</strong> ensures your content is delivered instantly worldwide</span>
+                </li>
+                <li className="flex items-start">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#CA3B2A] mt-1 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-gray-700"><strong>Scales automatically</strong> with your business growth without additional infrastructure costs</span>
+                </li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="text-2xl font-semibold mb-4 font-header text-gray-800 border-l-4 border-[#CA3B2A] pl-3">SEO Advantages</h3>
+              <ul className="space-y-3 pl-4">
+                <li className="flex items-start">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#CA3B2A] mt-1 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-gray-700"><strong>Server-side rendering</strong> creates search-engine friendly HTML that ranks higher in search results</span>
+                </li>
+                <li className="flex items-start">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#CA3B2A] mt-1 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-gray-700"><strong>Rich Results Schema</strong> markup increases visibility in Google search with enhanced listings</span>
+                </li>
+                <li className="flex items-start">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#CA3B2A] mt-1 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-gray-700"><strong>Mobile-first approach</strong> improves rankings as Google prioritizes mobile-friendly sites</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <h3 className="text-2xl font-semibold mb-4 font-header text-gray-800 border-l-4 border-[#CA3B2A] pl-3">Content Control</h3>
+              <ul className="space-y-3 pl-4">
+                <li className="flex items-start">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#CA3B2A] mt-1 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-gray-700"><strong>User-friendly CMS</strong> allows non-technical staff to update content without developer help</span>
+                </li>
+                <li className="flex items-start">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#CA3B2A] mt-1 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-gray-700"><strong>Flexible content structure</strong> adapts to your business needs without technical limitations</span>
+                </li>
+                <li className="flex items-start">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#CA3B2A] mt-1 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-gray-700"><strong>Media optimization</strong> automatically resizes and formats images for maximum performance</span>
+                </li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="text-2xl font-semibold mb-4 font-header text-gray-800 border-l-4 border-[#CA3B2A] pl-3">ROI & Cost Efficiency</h3>
+              <ul className="space-y-3 pl-4">
+                <li className="flex items-start">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#CA3B2A] mt-1 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-gray-700"><strong>Reduced infrastructure costs</strong> with serverless architecture that scales with demand</span>
+                </li>
+                <li className="flex items-start">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#CA3B2A] mt-1 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-gray-700"><strong>Faster time-to-market</strong> for new features through automated deployment pipeline</span>
+                </li>
+                <li className="flex items-start">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#CA3B2A] mt-1 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-gray-700"><strong>Analytics integration</strong> provides actionable insights to optimize marketing spend</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
         
         <div className="mb-16">
           <h2 className="text-3xl font-semibold mb-8 text-center font-header text-gray-800">Architecture Overview</h2>
@@ -31,6 +139,7 @@ export default function TechStackPage() {
                     />
                   </div>
                 </div>
+                <span className="text-sm font-medium text-center text-gray-700 block mb-4">Vercel Platform</span>
                 <div className="grid grid-cols-3 gap-4">
                   {[
                     { name: "Next.js", logo: "https://cdn.worldvectorlogo.com/logos/nextjs-2.svg", alt: "Next.js logo" },
@@ -66,6 +175,7 @@ export default function TechStackPage() {
                     />
                   </div>
                 </div>
+                <span className="text-sm font-medium text-center text-gray-700 block mb-4">Railway Platform</span>
                 <div className="grid grid-cols-3 gap-4">
                   {[
                     { name: "Strapi CMS", logo: "https://cdn.worldvectorlogo.com/logos/strapi-2.svg", alt: "Strapi logo" },

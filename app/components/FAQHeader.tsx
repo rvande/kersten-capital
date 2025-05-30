@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function FAQHeader() {
   return (
-    <div className="bg-gradient-to-b from-red-900 to-red-800 py-16 mb-12">
+    <div className="bg-gradient-to-b from-[#8A2C24] to-[#CA3B2A] py-16 mb-12">
       <div className="container mx-auto px-4 text-center">
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
           Frequently Asked Questions

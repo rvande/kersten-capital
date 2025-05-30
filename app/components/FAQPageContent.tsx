@@ -77,7 +77,7 @@ export default function FAQPageContent({ faqs }: FAQPageContentProps) {
         )}
         
         {/* CTA Section */}
-        <div className="bg-gradient-to-br from-[#F8F6F3]/10 to-[#EFEAE3]/10 backdrop-blur-sm rounded-lg shadow-md overflow-hidden border border-white/10 mb-10">
+        <div className="bg-gradient-to-br from-[#3A3A40]/90 to-[#1E1E24]/90 backdrop-blur-sm rounded-lg shadow-md overflow-hidden border border-white/10 mb-10">
           <div className="px-6 py-12 md:p-12 flex flex-col md:flex-row items-center justify-between">
             <div className="mb-6 md:mb-0 md:mr-8">
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">

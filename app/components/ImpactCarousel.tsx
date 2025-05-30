@@ -1,82 +1,83 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
+import { useRef } from 'react';
 
 interface Testimonial {
   id: number;
-  name: string;
-  title: string;
-  company: string;
   quote: string;
-  color: string; // Instead of avatar path, use a color for the placeholder
 }
 
-// Placeholder testimonials - replace with actual testimonials when available
+// Updated testimonials - only keeping quotes
 const testimonials: Testimonial[] = [
   {
     id: 1,
-    name: "Sarah Johnson",
-    title: "Chief Operating Officer",
-    company: "FutureTech Solutions",
-    quote: "Kersten Talent Capital transformed our executive search process. Within weeks, they identified and secured a CFO candidate who exceeded our expectations and has been instrumental in our company's growth trajectory.",
-    color: "#8A2C24"
+    quote: "Kersten Talent Capital transformed our executive search process. Within weeks, they identified and secured a CFO candidate who exceeded our expectations and has been instrumental in our company's growth trajectory."
   },
   {
     id: 2,
-    name: "Michael Chen",
-    title: "CEO",
-    company: "Innovate Partners",
-    quote: "The fractional CTO that Kersten helped us find was exactly what our startup needed. Their expertise in our industry and ability to work within our budget constraints made all the difference during our critical scaling phase.",
-    color: "#B9453A"
+    quote: "The fractional CTO that Kersten helped us find was exactly what our startup needed. Their expertise in our industry and ability to work within our budget constraints made all the difference during our critical scaling phase."
   },
   {
     id: 3,
-    name: "Rebecca Martinez",
-    title: "VP of HR",
-    company: "Global Logistics Inc.",
-    quote: "We had struggled for months to fill specialized technical roles until we partnered with Kersten. Their contingency search model delivered outstanding candidates and saved us countless hours of vetting time.",
-    color: "#8A2C24"
+    quote: "We had struggled for months to fill specialized technical roles until we partnered with Kersten. Their contingency search model delivered outstanding candidates and saved us countless hours of vetting time."
   },
   {
     id: 4,
-    name: "David Wilson",
-    title: "Founder",
-    company: "NextGen Health",
-    quote: "The strategic talent acquisition partnership with Kersten has been transformative for our organization. They truly understand our company culture and consistently deliver candidates who align with our vision and values.",
-    color: "#B9453A"
+    quote: "The strategic talent acquisition partnership with Kersten has been transformative for our organization. They truly understand our company culture and consistently deliver candidates who align with our vision and values."
   }
 ];
 
-// Placeholder avatar component
-const AvatarPlaceholder = ({ name, color }: { name: string, color: string }) => {
-  // Get the initials from the name
-  const initials = name
-    .split(' ')
-    .map(part => part[0])
-    .join('')
-    .toUpperCase();
-    
-  return (
-    <div 
-      className="w-full h-full flex items-center justify-center" 
-      style={{ backgroundColor: color }}
-    >
-      <span className="text-white text-2xl font-semibold">{initials}</span>
-    </div>
-  );
-};
+// Component for individual testimonial card with hover effects
+function TestimonialCard({ testimonial, delay }: { testimonial: Testimonial; delay: number }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-export default function ImpactCarousel() {
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 60 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+      transition={{ duration: 0.6, delay, ease: "easeOut" }}
+      className="relative group cursor-default"
+    >
+      {/* Blue background - positioned behind card */}
+      <div className="absolute inset-0 bg-[#0C6BAF] rounded-xl transform translate-x-2 translate-y-2 transition-transform duration-300 group-hover:translate-x-3 group-hover:translate-y-3" />
+      
+      {/* Main card */}
+      <motion.div 
+        className="relative bg-white rounded-xl p-8 md:p-10 shadow-lg border border-gray-100 transition-transform duration-300 group-hover:-translate-x-1 group-hover:-translate-y-1"
+        whileHover={{ scale: 1.02 }}
+        transition={{ duration: 0.2 }}
+      >
+        <div className="text-center">
+          {/* Quote Icon */}
+          <motion.div 
+            className="mb-6"
+            initial={{ scale: 0 }}
+            animate={isInView ? { scale: 1 } : { scale: 0 }}
+            transition={{ duration: 0.5, delay: delay + 0.2 }}
+          >
+            <svg className="w-12 h-12 text-[#0C6BAF] mx-auto" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
+            </svg>
+          </motion.div>
+          
+          <blockquote className="font-open-sans text-lg md:text-xl text-black leading-relaxed">
+            "{testimonial.quote}"
+          </blockquote>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+// Mobile carousel component
+function MobileCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
-
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) => 
@@ -117,112 +118,145 @@ export default function ImpactCarousel() {
   };
 
   return (
-    <section className="relative w-full bg-gradient-to-b from-[#F8F6F3] to-[#EFEAE3] py-16 md:py-24">
-      {/* Background Accent */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#8A2C24] via-[#B9453A] to-[#CA3B2A]"></div>
-      
-      <div className="max-w-7xl mx-auto px-5 md:px-8 relative">
-        <div className="text-center mb-12">
+    <div 
+      className="relative overflow-hidden lg:hidden"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      <AnimatePresence mode="wait">
+        <motion.div 
+          key={currentIndex}
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -50 }}
+          transition={{ duration: 0.5 }}
+          className="relative group cursor-default"
+        >
+          {/* Blue background - positioned behind card */}
+          <div className="absolute inset-0 bg-[#0C6BAF] rounded-xl transform translate-x-2 translate-y-2" />
+          
+          {/* Main card */}
+          <div className="relative bg-white rounded-xl p-8 md:p-10 shadow-lg border border-gray-100">
+            <div className="text-center">
+              {/* Quote Icon */}
+              <div className="mb-6">
+                <svg className="w-12 h-12 text-[#0C6BAF] mx-auto" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
+                </svg>
+              </div>
+              
+              <blockquote className="font-open-sans text-lg md:text-xl text-black leading-relaxed">
+                "{testimonials[currentIndex].quote}"
+              </blockquote>
+            </div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Navigation Controls */}
+      <div className="flex justify-between items-center mt-12">
+        <button 
+          onClick={handlePrev}
+          className="p-3 rounded-full bg-white shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 text-[#0C6BAF] hover:text-[#002C5F] focus:outline-none focus:ring-2 focus:ring-[#0C6BAF]"
+          aria-label="Previous testimonial"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        
+        <div className="flex space-x-3">
+          {testimonials.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`h-3 rounded-full transition-all duration-300 ${
+                index === currentIndex 
+                  ? 'bg-[#0C6BAF] w-8' 
+                  : 'bg-gray-300 w-3 hover:bg-[#0C6BAF]/50'
+              }`}
+              aria-label={`Go to testimonial ${index + 1}`}
+            />
+          ))}
+        </div>
+        
+        <button 
+          onClick={handleNext}
+          className="p-3 rounded-full bg-white shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 text-[#0C6BAF] hover:text-[#002C5F] focus:outline-none focus:ring-2 focus:ring-[#0C6BAF]"
+          aria-label="Next testimonial"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default function ImpactCarousel() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
+  return (
+    <section className="relative w-full bg-white py-10 md:py-10 lg:py-10">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+        <div className="text-center mb-16 md:mb-24">
           <motion.h2 
-            className="font-cormorant text-5xl md:text-5xl lg:text-6xl font-bold text-[#8A2C24] mb-3 md:mb-4"
+            className="font-montserrat text-4xl md:text-5xl lg:text-6xl font-black text-[#002C5F] mb-8 leading-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
           >
             Our Impact
           </motion.h2>
+          
+          {/* Accent shape underline */}
           <motion.div 
-            className="h-0.5 w-24 md:w-32 bg-gradient-to-r from-[#8A2C24] via-[#B9453A] to-[#8A2C24] mx-auto mb-4"
+            className="flex justify-center mb-8"
             initial={{ opacity: 0, scaleX: 0 }}
             animate={isLoaded ? { opacity: 1, scaleX: 1 } : {}}
             transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98], delay: 0.3 }}
-          />
+          >
+            <svg 
+              width="300" 
+              height="12" 
+              viewBox="0 0 627 16" 
+              fill="none" 
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-64 h-6 md:w-72 md:h-6 lg:w-80 lg:h-7"
+            >
+              <path d="M5.1661 0H626.166L5.1661 16C-1.18851 9.74819 -2.23569 6.25249 5.1661 0Z" fill="#0C6BAF"/>
+            </svg>
+          </motion.div>
+          
           <motion.p 
-            className="text-lg text-[#3D3939] max-w-2xl mx-auto"
+            className="font-open-sans text-lg md:text-xl lg:text-2xl text-black leading-relaxed max-w-5xl mx-auto"
             initial={{ opacity: 0 }}
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.8, delay: 0.4 }}
+            style={{ lineHeight: '1.7' }}
           >
             What our clients say about their experience working with Kersten Talent Capital
           </motion.p>
         </div>
 
-        <div 
-          className="relative overflow-hidden"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
-          <AnimatePresence mode="wait">
-            <motion.div 
-              key={currentIndex}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.5 }}
-              className="bg-gradient-to-b from-[#3A3532] to-[#2A2927] rounded-lg p-6 md:p-8 shadow-md border-t-4 border-[#B9453A] max-w-4xl mx-auto"
-            >
-              <div className="md:flex items-start">
-                <div className="mb-6 md:mb-0 md:mr-8 flex-shrink-0 flex justify-center">
-                  <div className="relative w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden border-4 border-[#B9453A]/20">
-                    <AvatarPlaceholder 
-                      name={testimonials[currentIndex].name} 
-                      color={testimonials[currentIndex].color}
-                    />
-                  </div>
-                </div>
-                <div>
-                  <div className="relative mb-4">
-                    <p className="text-[#F8F6F3] text-lg md:text-xl leading-relaxed">
-                      "{testimonials[currentIndex].quote}"
-                    </p>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-lg text-[#CA3B2A]">{testimonials[currentIndex].name}</p>
-                    <p className="text-[#D1C9BF]">{testimonials[currentIndex].title}, {testimonials[currentIndex].company}</p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+        {/* Mobile Carousel */}
+        <MobileCarousel />
 
-          {/* Navigation Controls */}
-          <div className="flex justify-between items-center mt-8">
-            <button 
-              onClick={handlePrev}
-              className="p-2 rounded-full bg-[#F8F6F3] shadow-md hover:shadow-lg border border-[#E8E3DD] transition-all duration-300 text-[#8A2C24] hover:text-[#CA3B2A] focus:outline-none focus:ring-2 focus:ring-[#CA3B2A]"
-              aria-label="Previous testimonial"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            
-            <div className="flex space-x-2">
-              {testimonials.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentIndex(index)}
-                  className={`w-3 h-3 rounded-full transition-all ${
-                    index === currentIndex 
-                      ? 'bg-[#B9453A] w-6' 
-                      : 'bg-[#B9453A]/20 hover:bg-[#B9453A]/50'
-                  }`}
-                  aria-label={`Go to testimonial ${index + 1}`}
-                />
-              ))}
-            </div>
-            
-            <button 
-              onClick={handleNext}
-              className="p-2 rounded-full bg-[#F8F6F3] shadow-md hover:shadow-lg border border-[#E8E3DD] transition-all duration-300 text-[#8A2C24] hover:text-[#CA3B2A] focus:outline-none focus:ring-2 focus:ring-[#CA3B2A]"
-              aria-label="Next testimonial"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
+        {/* Desktop Grid - 3 Cards */}
+        <div className="hidden lg:grid lg:grid-cols-3 gap-8 xl:gap-12">
+          {testimonials.slice(0, 3).map((testimonial, index) => (
+            <TestimonialCard
+              key={testimonial.id}
+              testimonial={testimonial}
+              delay={index * 0.2}
+            />
+          ))}
         </div>
       </div>
     </section>

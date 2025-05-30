@@ -32,7 +32,6 @@ export async function fetchAPI(path: string, urlParamsObject = {}, options = {})
     const requestUrl = `${getStrapiURL(apiPath)}${queryString ? `?${queryString}` : ''}`;
     
     console.log('Fetching from URL:', requestUrl);
-    console.log('With params:', JSON.stringify(urlParamsObject));
     
     // Make the request to Strapi with authentication token
     const response = await fetch(requestUrl, {
@@ -48,23 +47,133 @@ export async function fetchAPI(path: string, urlParamsObject = {}, options = {})
       const errorText = await response.text();
       console.error('API response error:', response.status, response.statusText);
       console.error('Error details:', errorText);
+      
+      // Check for specific validation errors
+      let errorJson = null;
       try {
-        // Try to parse the error as JSON for better error reporting
-        const errorJson = JSON.parse(errorText);
-        console.error('Parsed error:', JSON.stringify(errorJson, null, 2));
-      } catch (parseError) {
-        // If it's not JSON, just log the raw text
-        console.error('Raw error text:', errorText);
+        errorJson = JSON.parse(errorText);
+      } catch (e) {
+        // Not JSON, continue with other approaches
       }
+      
+      // Handle content field error specifically - this is a common issue with Strapi v5
+      if (errorJson?.error?.details?.key === 'content' || errorText.includes('Invalid key content')) {
+        console.log('Content field error detected - trying with wildcard populate');
+        
+        // Replace the params with a wildcard populate
+        const simplifiedParams: Record<string, any> = { 
+          ...urlParamsObject,
+          populate: '*' 
+        };
+        
+        const simpleQueryString = qs.stringify(simplifiedParams, {
+          encodeValuesOnly: true,
+        });
+        
+        const simpleUrl = `${getStrapiURL(apiPath)}${simpleQueryString ? `?${simpleQueryString}` : ''}`;
+        console.log('Retrying with wildcard populate URL:', simpleUrl);
+        
+        const simpleResponse = await fetch(simpleUrl, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.STRAPI_API_TOKEN || ''}`,
+          },
+          ...options,
+        });
+        
+        if (simpleResponse.ok) {
+          console.log('Wildcard populate request succeeded');
+          const simpleData = await simpleResponse.json();
+          return normalizeResponse(simpleData);
+        }
+        
+        console.error('Wildcard populate request also failed');
+      }
+      // Handle invalid populate errors by trying simpler approach
+      else if (response.status === 400 && errorText.includes('Invalid key')) {
+        console.log('Trying with simplified populate parameter...');
+        
+        // Simplify the populate parameter if it's complex
+        const simplifiedParams: Record<string, any> = { ...urlParamsObject };
+        if (simplifiedParams.populate) {
+          // Replace complex populate with simple wildcard
+          simplifiedParams.populate = '*';
+          
+          const simpleQueryString = qs.stringify(simplifiedParams, {
+            encodeValuesOnly: true,
+          });
+          
+          const simpleUrl = `${getStrapiURL(apiPath)}${simpleQueryString ? `?${simpleQueryString}` : ''}`;
+          console.log('Retrying with simplified URL:', simpleUrl);
+          
+          const simpleResponse = await fetch(simpleUrl, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${process.env.STRAPI_API_TOKEN || ''}`,
+            },
+            ...options,
+          });
+          
+          if (simpleResponse.ok) {
+            console.log('Simplified request succeeded');
+            const simpleData = await simpleResponse.json();
+            return normalizeResponse(simpleData);
+          }
+          
+          console.error('Simplified request also failed');
+        }
+      }
+      
       throw new Error(`API error ${response.status}: ${response.statusText}`);
     }
     
     const data = await response.json();
-    return data;
+    
+    // Log a brief summary of the response data for debugging
+    console.log(`API response summary for ${path}:`, {
+      dataType: Array.isArray(data.data) ? 'array' : typeof data.data === 'object' ? 'object' : 'other',
+      itemCount: Array.isArray(data.data) ? data.data.length : data.data ? 1 : 0,
+      metaInfo: data.meta ? 'present' : 'absent'
+    });
+    
+    return normalizeResponse(data);
   } catch (error) {
     console.error('API fetch error:', error);
     throw error;
   }
+}
+
+/**
+ * Normalize Strapi response to handle different formats
+ * @param {any} data The data from Strapi
+ * @returns {Object} Normalized response
+ */
+function normalizeResponse(data: any) {
+  // Handle edge cases where Strapi returns unexpected data structure
+  if (!data.data && !data.meta) {
+    console.warn('Unexpected API response format - normalizing:', typeof data);
+    
+    // Try to convert to expected format
+    if (Array.isArray(data)) {
+      return {
+        data: data,
+        meta: { pagination: { page: 1, pageSize: data.length, total: data.length } }
+      };
+    } else if (typeof data === 'object' && data !== null) {
+      return {
+        data: [data],
+        meta: { pagination: { page: 1, pageSize: 1, total: 1 } }
+      };
+    }
+    
+    // Fallback for truly unexpected formats
+    return {
+      data: data,
+      meta: {}
+    };
+  }
+  
+  return data;
 }
 
 /**
