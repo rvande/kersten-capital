@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -15,10 +15,22 @@ interface ServiceItem {
 
 export default function Hero2() {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [expandedService, setExpandedService] = useState<number | null>(null);
+  const [headlineIndex, setHeadlineIndex] = useState(0);
+  const phrases = [
+    'Your Leadership Team',
+    'Your Leadership Strategy',
+    'Your Executive Hiring',
+  ];
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     setIsLoaded(true);
+    intervalRef.current = setInterval(() => {
+      setHeadlineIndex((prev) => (prev + 1) % phrases.length);
+    }, 3200);
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, []);
 
   const services: ServiceItem[] = [
@@ -82,266 +94,108 @@ export default function Hero2() {
   ];
 
   return (
-    <div className="relative w-full">
-      {/* Hero Image - Full Screen */}
-      <div className="relative h-[90vh] sm:h-[80vh] md:h-screen w-full">
-        <Image
-          src="/hero.jpg"
-          alt="Professional Leadership"
-          fill
-          style={{ objectFit: 'cover' }}
-          priority
-          className="brightness-[0.85]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80"></div>
+    <div className="relative w-full overflow-hidden">
+      {/* Video Background */}
+      <video
+        className="absolute inset-0 w-full h-full object-cover z-0"
+        src="/hero.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+        poster="/leadership.jpg"
+        style={{ minHeight: '100%', minWidth: '100%' }}
+      />
+      {/* Overlay for darkening video */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/80 z-10" />
 
-        {/* Single h1 for SEO, styled responsively */}
-        <div className="absolute top-0 left-0 w-full flex flex-col items-center z-10 pointer-events-none">
-          <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-white mt-20 md:mt-32 mb-8 md:mb-28 font-cormorant opacity-0 leading-tight text-center mx-auto md:max-w-none max-w-[300px] pointer-events-auto"
-            style={{ 
-              animation: isLoaded ? 'fadeIn 1s ease-out forwards' : 'none',
-            }}>
-            <span className="md:inline hidden">Elevate Your </span>
-            <span className="md:hidden inline">Elevate Your<br /></span>
-            <span className="bg-gradient-to-r from-[#8A2C24] to-[#CA3B2A] bg-clip-text text-transparent relative shine-text">
-              Leadership
+      {/* Main Content */}
+      <div className="relative z-20 flex flex-col h-[100vh] sm:h-[80vh] md:h-screen w-full px-4 md:px-8 lg:px-16">
+        <div className="flex flex-col justify-center h-full md:items-start items-center md:text-left text-center max-w-4xl">
+          {/* TRANSFORM headline */}
+          <div className="w-full md:flex md:justify-start flex justify-center mb-2 md:mb-4">
+            <span
+              className="text-[3.5rem] md:text-[5rem] lg:text-[7rem] font-black font-montserrat text-white drop-shadow-lg tracking-tight"
+              style={{
+                letterSpacing: '-0.04em',
+                textShadow: '0 2px 8px rgba(0,0,0,0.3)',
+              }}
+            >
+              TRANSFORM
             </span>
-            <span> Team</span>
-          </h1>
-        </div>
-
-        {/* Desktop Overlay Content (no h1) */}
-        <div className="hidden md:block absolute inset-0">
-          <div className="container mx-auto h-full px-6 py-20">
-            <div className="h-full flex flex-col">
-              <div className="flex flex-col md:flex-row gap-4 mb-4 mt-110 justify-center items-stretch max-w-5xl mx-auto">
-                {services.map((service, index) => (
-                  <div
-                    key={index}
-                    className="bg-black/40 backdrop-blur-sm rounded-lg p-6 transform opacity-0 border-l-4 border-[#CA3B2A] hover:bg-black/50 transition-all duration-500 cursor-pointer group flex-1"
-                    style={{
-                      animation: isLoaded ? `slideInFromBottom 0.8s ease-out ${service.delay}s forwards` : 'none',
-                    }}
-                    onClick={() => setExpandedService(expandedService === index ? null : index)}
-                  >
-                    <div className="flex flex-col h-full">
-                      <h3 className="font-cormorant text-2xl font-bold mb-2 text-white">
-                        {service.title}
-                      </h3>
-                      <p className="font-inter text-white/80 text-base flex-grow">
-                        {service.shortDescription}
-                      </p>
-                      <div className="text-[#CA3B2A] group-hover:text-white transition-colors duration-300 mt-2 text-right">
-                        <span className="text-lg">Learn more ›</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+          </div>
+          {/* Animated Headline */}
+          <div className="w-full md:flex md:justify-start flex justify-center mb-6 md:mb-8">
+            <h1
+              className="relative font-montserrat text-[1.6rem] md:text-[4rem] lg:text-[5.5rem] leading-tight font-black"
+              
+            >
+              <span
+                className="inline-block whitespace-nowrap transition-transform duration-1500 ease-in-out gradient-text"
+                style={{
+                  transform: `translateX(${isLoaded ? '0' : '-40px'})`,
+                  animation: isLoaded ? 'slideRight 2.2s cubic-bezier(0.4,0,0.2,1)' : 'none',
+                  willChange: 'transform',
+                }}
+                key={headlineIndex}
+              >
+                {phrases[headlineIndex]}
+              </span>
+            </h1>
+          </div>
+          {/* Subheadline/Description */}
+          <div className="w-full md:flex md:justify-start flex justify-center mb-8 md:mb-10">
+            <p className="max-w-3xl md:text-left text-center text-white font-open-sans font-normal text-base md:text-lg lg:text-xl" style={{lineHeight: '1.7'}}>
+              Kersten Talent Capital strives to revolutionize organizational performance through strategic talent intelligence and executive placement solutions that catalyze growth, innovation, and sustainable competitive advantages for forward-thinking enterprises across global markets.
+            </p>
+          </div>
+          {/* CTA Button */}
+          <div className="md:flex md:justify-start flex justify-center">
+            <Link href="/contact">
+              <div
+                className="relative bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] hover:from-[#187CC1] hover:to-[#71C8F3] text-white font-semibold font-open-sans px-8 py-4 rounded-md text-md md:text-xl sm:text-lg shadow-lg transition-all duration-300 border-0 focus:outline-none focus:ring-2 focus:ring-[#71C8F3]"
+                style={{
+                  boxShadow: '0 4px 24px 0 rgba(12,107,175,0.20)',
+                  fontWeight: 600,
+                  letterSpacing: '0.01em',
+                }}
+              >
+                Your Next Great Hire Starts Here
               </div>
-            </div>
-            {/* CTA Button */}
-            <div className="absolute bottom-24 left-0 right-0 flex justify-center">
-              <Link href="/contact">
-                <div 
-                  className="relative overflow-hidden bg-transparent text-white border border-white/50 hover:border-white px-10 py-5 rounded-md opacity-0 group hover:shadow-[0_0_15px_rgba(202,59,42,0.5)]"
-                  style={{ animation: isLoaded ? 'fadeInUp 0.8s ease-out 1.8s forwards' : 'none' }}
-                >
-                  <span className="relative z-10 font-bold text-xl">Your Next Great Hire Starts Here</span>
-                  <div className="absolute inset-0 w-[200%] h-full transform -translate-x-full bg-gradient-to-r from-[#8A2C24]/0 via-[#CA3B2A]/50 to-[#8A2C24]/0 animate-sheen group-hover:via-[#CA3B2A]/60"></div>
-                </div>
-              </Link>
-            </div>
+            </Link>
           </div>
         </div>
-
-        {/* Mobile Overlay Content (no h1) */}
-        <div className="md:hidden absolute inset-0">
-          <div className="h-full flex flex-col px-4">
-            <div className="mt-auto">
-              <div className="grid grid-cols-1 gap-2">
-                {services.map((service, index) => (
-                  <div
-                    key={index}
-                    className="bg-black/40 backdrop-blur-sm rounded-lg p-3 transform opacity-0 border-l-4 border-[#CA3B2A] active:bg-black/50 transition-all duration-300"
-                    style={{
-                      animation: isLoaded ? `slideInFromBottom 0.8s ease-out ${service.delay}s forwards` : 'none',
-                    }}
-                    onClick={() => setExpandedService(expandedService === index ? null : index)}
-                  >
-                    <div className="flex justify-between items-center">
-                      <div className="flex-1">
-                        <h3 className="font-cormorant text-xl font-bold text-white">
-                          {service.title}
-                        </h3>
-                        <p className="font-inter text-white/80 text-sm line-clamp-1">
-                          {service.shortDescription}
-                        </p>
-                      </div>
-                      <div className="text-[#CA3B2A] ml-2">
-                        <span className="text-lg">›</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              {/* Mobile CTA Button */}
-              <div className="mt-8 mb-8">
-                <Link href="/contact">
-                  <div 
-                    className="relative overflow-hidden bg-gradient-to-r from-[#8A2C24] to-[#CA3B2A] text-white px-6 py-4 rounded-md opacity-0 w-full text-center hover:shadow-[0_0_15px_rgba(202,59,42,0.5)]"
-                    style={{ animation: isLoaded ? 'fadeInUp 0.8s ease-out 1.8s forwards' : 'none' }}
-                  >
-                    <span className="relative z-10 font-bold text-lg">Your Next Great Hire Starts Here</span>
-                    <div className="absolute inset-0 w-[200%] h-full transform -translate-x-full bg-gradient-to-r from-white/0 via-white/30 to-white/0 animate-sheen"></div>
-                  </div>
-                </Link>
-              </div>
-            </div>
-          </div>
+        {/* Bottom blue/white shape */}
+        <div className="absolute left-0 right-0 bottom-0 w-full pointer-events-none select-none" style={{ zIndex: 30 }}>
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            width="100%" 
+            height="130px" 
+            viewBox="0 0 1280 140" 
+            preserveAspectRatio="none"
+            className="w-full h-[50px] md:h-[130px]"
+          >
+            <g fill="#0C6BAF">
+              {/* First layer with transparency */}
+              <path 
+                d="M1280 0l-266 91.52a72.59 72.59 0 0 1-30.76 3.71L0 0v140h1280z" 
+                fillOpacity="0.6"
+              />
+              {/* Second layer solid */}
+              <path 
+                d="M1280 0l-262.1 116.26a73.29 73.29 0 0 1-39.09 6L0 0v140h1280z" 
+                fill="#ffffff"
+              />
+            </g>
+          </svg>
         </div>
       </div>
-
-      {/* Modal */}
-      {expandedService !== null && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/90" onClick={() => setExpandedService(null)}>
-          <div className="bg-[#1A1A1A] rounded-xl p-6 md:p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto text-white" onClick={(e) => e.stopPropagation()}>
-            <div className="flex justify-between items-start mb-6">
-              <h3 className="font-cormorant text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#8A2C24] to-[#CA3B2A] bg-clip-text text-transparent">
-                {services[expandedService].title}
-              </h3>
-              <button 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setExpandedService(null);
-                }}
-                className="text-white/60 hover:text-white transition-colors duration-300"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            
-            <p className="font-inter text-white/90 mb-6 text-sm md:text-base">
-              {services[expandedService].fullDescription}
-            </p>
-            
-            <div className="mb-6">
-              <h4 className="font-cormorant text-lg md:text-xl font-bold text-[#CA3B2A] mb-3">
-                Key Features:
-              </h4>
-              <ul className="list-disc list-inside space-y-2">
-                {services[expandedService].keyFeatures.map((feature, i) => (
-                  <li key={i} className="font-inter text-white/80 text-sm md:text-base">{feature}</li>
-                ))}
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-cormorant text-lg md:text-xl font-bold text-[#CA3B2A] mb-3">
-                Ideal For:
-              </h4>
-              <ul className="list-disc list-inside space-y-2">
-                {services[expandedService].idealFor.map((item, i) => (
-                  <li key={i} className="font-inter text-white/80 text-sm md:text-base">{item}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* CSS Animations */}
+      {/* Animations */}
       <style jsx>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes slideInFromBottom {
-          from { 
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to { 
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes glare {
-          0% {
-            transform: translateX(-100%) skewX(45deg);
-          }
-          100% {
-            transform: translateX(200%) skewX(45deg);
-          }
-        }
-
-        @keyframes sheen {
-          0% {
-            transform: translateX(-100%) skewX(30deg);
-            opacity: 0;
-          }
-          10% {
-            opacity: 0.7;
-          }
-          90% {
-            opacity: 0.7;
-          }
-          100% {
-            transform: translateX(200%) skewX(30deg);
-            opacity: 0;
-          }
-        }
-        
-        @keyframes textShimmer {
-          0% {
-            background-position: 200% center;
-          }
-          100% {
-            background-position: -200% center;
-          }
-        }
-
-        :global(.animate-glare) {
-          animation: glare 1.5s infinite ease-in-out;
-        }
-
-        :global(.animate-sheen) {
-          animation: sheen 3.5s ease-in-out infinite;
-          animation-delay: 0.5s;
-        }
-        
-        :global(.shine-text) {
-          position: relative;
-        }
-        
-        :global(.shine-text)::after {
-          content: 'Leadership';
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, 
-            transparent 0%,
-            transparent 20%,
-            rgba(255, 255, 255, 0.8) 45%,
-            rgba(255, 255, 255, 0.8) 55%,
-            transparent 80%,
-            transparent 100%
-          );
-          background-size: 200% 100%;
-          background-clip: text;
-          -webkit-background-clip: text;
-          color: transparent;
-          animation: textShimmer 8s ease-in-out infinite;
+        @keyframes slideRight {
+          0% { opacity: 0; transform: translateX(-60px); }
+          40% { opacity: 1; transform: translateX(0); }
+          100% { opacity: 1; transform: translateX(0); }
         }
       `}</style>
     </div>

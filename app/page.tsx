@@ -4,6 +4,7 @@ import Link from "next/link";
 import ValueProposition from "./components/ValueProposition";
 import Hero2 from "./components/Hero2";
 import MissionSection from "./components/MissionSection";
+import AnimatedBackground from "./components/AnimatedBackground";
 import ImpactCarousel from "./components/ImpactCarousel";
 import RecentContentSection from "./components/RecentContentSection";
 import { fetchWhitepapers } from "./utils/blog-helpers";
@@ -39,6 +40,7 @@ export default async function Home() {
         <Hero2 />
         <MissionSection />
         <ValueProposition />
+        <AnimatedBackground />
         <ImpactCarousel />
         <RecentContentSection 
           blogPosts={recentPosts.data} 
@@ -165,6 +167,7 @@ export default async function Home() {
         <Hero2 />
         <MissionSection />
         <ValueProposition />
+        <AnimatedBackground />
         <ImpactCarousel />
         <RecentContentSection 
           blogPosts={mockBlogPosts} 

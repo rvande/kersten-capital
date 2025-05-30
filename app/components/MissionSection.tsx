@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const mission = {
   mainText: "Kersten Talent Capital strives to revolutionize organizational performance through strategic talent intelligence and executive placement solutions that catalyze growth, innovation, and sustainable competitive advantages for forward-thinking enterprises across global markets.",
@@ -62,14 +63,14 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.3,
+      staggerChildren: 0.2,
       delayChildren: 0.1
     }
   }
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 30 },
   visible: { 
     opacity: 1, 
     y: 0,
@@ -118,99 +119,96 @@ export default function MissionSection() {
   );
   
   return (
-    <section className="relative w-full bg-gradient-to-b from-[#1E1E24] via-[#2A2A30] to-[#3A3A40] py-20 md:py-32 overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0" style={{
-          backgroundImage: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="1"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
-          backgroundSize: '24px 24px'
-        }}></div>
-      </div>
-      
-      {/* Colored Accent Line */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#8A2C24] via-[#B9453A] to-[#CA3B2A]"></div>
-      
-      <motion.div 
-        className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-[#3A3A40]/20 via-[#2A2A30]/15 to-[#1E1E24]/25"
-        style={{ scale: backgroundScale }}
-      />
-      
-      <div className="max-w-7xl mx-auto px-5 md:px-8 relative z-10" ref={ref}>
+    <section className="relative w-full bg-white py-6 md:py-6 lg:py-6">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8" ref={ref}>
         <motion.div 
-          className="md:max-w-4xl lg:max-w-5xl mx-auto"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={containerVariants}
         >
-          {/* Mission Section with Text and Image Side-by-Side on Desktop */}
-          <div className="flex flex-col md:flex-row md:items-center md:gap-12 mb-16">
-            <div className="text-center md:text-left md:w-1/2 mb-10 md:mb-0">
-              <motion.h2 
-                className="font-cormorant text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 md:mb-4"
-                variants={itemVariants}
-                style={{ opacity }}
-              >
-                Our Mission
-              </motion.h2>
-              <motion.div 
-                className="h-0.5 w-24 md:w-32 bg-gradient-to-r from-[#8A2C24] via-[#B9453A] to-[#CA3B2A] mx-auto md:mx-0 mb-10"
-                variants={itemVariants}
-              />
-              <motion.p
-                className="font-body text-xl md:text-2xl text-white/90 leading-relaxed mx-auto md:mx-0"
-                variants={itemVariants}
-              >
-                {mission.mainText}
-              </motion.p>
-            </div>
-            
-            {/* Chess Image - Strategic Thinking Visualization */}
+          {/* Mission Section with Image and Content */}
+          <div className="flex flex-col lg:flex-row lg:items-center lg:gap-16 mb-20 md:mb-32">
+            {/* Chess Image - Left Side */}
             <motion.div 
-              className="md:w-1/2"
+              className="lg:w-1/2 mb-10 lg:mb-0"
               variants={itemVariants}
             >
-              <div className="rounded-lg overflow-hidden shadow-2xl">
+              <div className="rounded-2xl overflow-hidden shadow-xl">
                 <Image 
                   src="/chess.jpg" 
                   alt="Strategic talent acquisition represented by chess pieces" 
-                  width={800} 
-                  height={500}
+                  width={600} 
+                  height={400}
                   className="w-full h-auto object-cover"
+                  priority
                 />
               </div>
             </motion.div>
-          </div>
 
-          {/* The Kersten Difference */}
-          <motion.div className="text-center mb-14" variants={itemVariants}>
-            <h3 className="font-cormorant text-4xl md:text-4xl font-bold text-white mb-4">
-              The Kersten <span className="text-[#CA3B2A]">Difference</span>
-            </h3>
-            <div className="h-0.5 w-20 bg-gradient-to-r from-[#8A2C24] via-[#B9453A] to-[#CA3B2A] mx-auto mb-2"></div>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-3">
-            {differenceFeatures.map((feature, i) => (
-              <motion.div
-                key={i}
-                custom={i}
-                variants={cardVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                className={`bg-gradient-to-br from-[#F8F6F3] to-[#EDE8E0] rounded-lg p-5 transform transition-all duration-300 shadow-md hover:shadow-xl ${activePoint === i ? 'scale-105' : ''}`}
-                onMouseEnter={() => setActivePoint(i)}
-                onMouseLeave={() => setActivePoint(null)}
+            {/* Content - Right Side */}
+            <div className="lg:w-1/2 text-center lg:text-left">
+              <motion.div 
+                className="mb-6"
+                variants={itemVariants}
               >
-                <div className="flex justify-center mb-4">
-                  {feature.icon}
-                </div>
-                <h3 className="font-cormorant text-2xl font-bold text-[#3A3532] mb-3 text-center">{feature.title}</h3>
-                <p className="font-body text-[#3D3939] leading-relaxed text-center">{feature.description}</p>
+                <span className="text-[#0C6BAF] font-montserrat font-semibold text-lg md:text-xl tracking-wide">
+                  Kersten Talent Capital
+                </span>
               </motion.div>
-            ))}
+
+              <motion.h2 
+                className="font-montserrat text-4xl md:text-5xl lg:text-6xl font-black text-[#002C5F] mb-6 leading-tight"
+                variants={itemVariants}
+              >
+                Our Mission
+              </motion.h2>
+
+              {/* Accent shape underline */}
+              <motion.div 
+                className="flex justify-center lg:justify-start mb-6"
+                variants={itemVariants}
+              >
+                <svg 
+                  width="300" 
+                  height="12" 
+                  viewBox="0 0 627 16" 
+                  fill="none" 
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-64 h-6 md:w-72 md:h-6 lg:w-80 lg:h-7"
+                >
+                  <path d="M5.1661 0H626.166L5.1661 16C-1.18851 9.74819 -2.23569 6.25249 5.1661 0Z" fill="#0C6BAF"/>
+                </svg>
+              </motion.div>
+
+              <motion.p
+                className="font-open-sans text-base md:text-lg lg:text-xl text-black leading-relaxed mb-8 md:mb-10"
+                variants={itemVariants}
+                style={{ lineHeight: '1.7' }}
+              >
+                {mission.mainText}
+              </motion.p>
+
+              {/* CTA Buttons */}
+              <motion.div 
+                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+                variants={itemVariants}
+              >
+                <Link href="/about">
+                  <div className="bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] hover:from-[#187CC1] hover:to-[#71C8F3] text-white font-semibold font-montserrat px-8 py-4 rounded-md text-lg shadow-md transition-all duration-300 text-center">
+                    About Us
+                  </div>
+                </Link>
+                <Link href="/contact">
+                  <div className="bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] hover:from-[#187CC1] hover:to-[#71C8F3] text-white font-semibold font-montserrat px-8 py-4 rounded-md text-lg shadow-md transition-all duration-300 text-center">
+                    Contact Us
+                  </div>
+                </Link>
+              </motion.div>
+            </div>
           </div>
+
+       
         </motion.div>
       </div>
     </section>

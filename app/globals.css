@@ -19,8 +19,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #1E1E24;
-    --foreground: #ededed;
+    --background: #ffffff;
+    --foreground: #ffffff;
   }
 }
 
@@ -42,13 +42,40 @@ main {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-cormorant);
+  font-family: var(--font-montserrat);
 }
 
 .font-header {
   font-family: var(--font-cormorant);
 }
 
+/* Gradient text support - Enhanced for Next.js 15 and modern browsers */
+.gradient-text {
+  display: inline-block;
+  background: linear-gradient(180deg, #0C6BAF 0%, #71C8F3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: #0C6BAF; /* Fallback color */
+}
+
+/* Ensure gradient text works across browsers with Tailwind */
+.bg-gradient-to-b.bg-clip-text.text-transparent {
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  color: #0C6BAF !important; /* Fallback */
+}
+
+/* Additional support for webkit gradient text */
+@supports (-webkit-background-clip: text) {
+  .gradient-text,
+  .bg-gradient-to-b.bg-clip-text.text-transparent {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
 
 /* Improved readability for content in dark sections */
 .bg-gradient-to-b[class*="from-[#3A3A40]"] p {
@@ -57,11 +84,22 @@ h1, h2, h3, h4, h5, h6 {
   padding-bottom: 0.125rem;
 }
 
-
-
 /* Darker backgrounds - brighter button */
-
 .bg-gradient-to-b[class*="from-[#3A3A40]"] button[class*="bg-[#CA3B2A]"] {
   background-color: #E04032;
+}
+
+/* Animated gradient background */
+@keyframes gradient-x {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 15s ease infinite;
 }
 
