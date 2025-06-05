@@ -9,13 +9,18 @@
   --color-gray-200: #e9e9e9;
   --color-gray-300: #d8d8d8;
   --color-gray-500: #9e9e9e;
-  --color-gray-600: #757575;
-  --color-gray-700: #616161;
+  --color-gray-600: #4A4A4A;
+  --color-gray-700: #2D2D2D;
   --cta-red: #CA3B2A;
   --cta-red-hover: #B02F22;
   --cta-red-dark: #8A2C24;
+  
+  /* Enhanced text colors for better contrast */
+  --text-primary: #1A1A1A;
+  --text-secondary: #2D2D2D;
+  --text-tertiary: #4A4A4A;
+  --text-muted: #6B7280;
 }
-
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -43,11 +48,56 @@ main {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-montserrat);
+  line-height: 1.2;
 }
 
 .font-header {
   font-family: var(--font-cormorant);
 }
+
+/* Standardized section spacing */
+.section-padding-sm { @apply py-12 md:py-16; }
+.section-padding-md { @apply py-16 md:py-24; }
+.section-padding-lg { @apply py-20 md:py-32; }
+
+/* Consistent container widths */
+.container-content { @apply max-w-7xl mx-auto px-4 md:px-6 lg:px-8; }
+.container-text { @apply max-w-4xl mx-auto; }
+
+/* Enhanced card shadows for better depth perception */
+.card-shadow-sm { @apply shadow-lg hover:shadow-xl transition-shadow duration-300; }
+.card-shadow-md { @apply shadow-xl hover:shadow-2xl transition-shadow duration-300; }
+.card-shadow-lg { @apply shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] transition-shadow duration-300; }
+
+/* Better text contrast classes */
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-tertiary { color: var(--text-tertiary); }
+.text-muted { color: var(--text-muted); }
+
+/* Improved touch targets for mobile */
+.touch-target {
+  @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+}
+
+/* Interactive elements with better hover states */
+.interactive-card {
+  @apply transition-all duration-300 ease-out;
+  @apply hover:scale-[1.02] hover:shadow-xl;
+  @apply focus:outline-none focus:ring-2 focus:ring-[#71C8F3] focus:ring-offset-2;
+}
+
+.interactive-button {
+  @apply transition-all duration-200 ease-out;
+  @apply hover:transform hover:scale-105 hover:shadow-lg;
+  @apply focus:outline-none focus:ring-2 focus:ring-[#71C8F3] focus:ring-offset-2;
+  @apply active:scale-95;
+}
+
+/* Consistent line heights */
+.text-body { @apply leading-relaxed; }
+.text-body-loose { @apply leading-loose; }
+.text-heading { @apply leading-tight; }
 
 /* Gradient text support - Enhanced for Next.js 15 and modern browsers */
 .gradient-text {
@@ -89,6 +139,22 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #E04032;
 }
 
+/* Loading skeleton animation */
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
 /* Animated gradient background */
 @keyframes gradient-x {
   0%, 100% {
@@ -101,5 +167,27 @@ h1, h2, h3, h4, h5, h6 {
 
 .animate-gradient-x {
   animation: gradient-x 15s ease infinite;
+}
+
+/* Mobile-optimized animations */
+@media (prefers-reduced-motion: reduce) {
+  .interactive-card,
+  .interactive-button,
+  .animate-gradient-x {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Better mobile spacing */
+@media (max-width: 768px) {
+  .mobile-spacing-tight { @apply px-4 py-8; }
+  .mobile-spacing-normal { @apply px-6 py-12; }
+  .mobile-spacing-loose { @apply px-8 py-16; }
+  
+  /* Simplified animations on mobile */
+  .interactive-card {
+    @apply hover:scale-100 hover:shadow-lg;
+  }
 }
 

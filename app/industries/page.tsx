@@ -113,13 +113,24 @@ export default function IndustriesPage() {
     <main className="flex flex-col w-full">
       {/* Hero Section */}
       <div className="relative w-full overflow-hidden">
-        {/* Animated Gradient Background */}
-        <div className="absolute inset-0">
+        {/* Image Background */}
+        <div className="absolute inset-0 w-full h-full z-0">
+          <Image
+            src="/industries.jpg"
+            alt="Industries"
+            fill
+            className="object-cover"
+            priority
+          />
+          {/* Dark overlay for better text readability */}
+          <div className="absolute inset-0 bg-black/30"></div>
+        </div>
+        {/* Gradient Background */}
+        <div className="absolute inset-0 z-10">
           <div 
-            className="absolute inset-0 animate-gradient-x"
+            className="absolute inset-0"
             style={{
-              background: 'linear-gradient(-45deg, #002C5F, #0C6BAF, #005A9C, #187CC1, #71C8F3, #0C6BAF, #002C5F)',
-              backgroundSize: '400% 400%',
+              background: 'linear-gradient(135deg, #002C5F/90 0%, #0C6BAF/85 50%, #187CC1/90 100%)',
             }}
           />
         </div>
@@ -138,7 +149,7 @@ export default function IndustriesPage() {
                 }}
               >
                 Our
-                <span className="text-[#002c5f] block">Industries</span>
+                <span className="text-white block">Industries</span>
               </h1>
             </div>
             {/* Subheadline */}

@@ -105,24 +105,35 @@ export default function ServicesPage() {
     <main className="flex flex-col w-full">
       {/* Hero Section */}
       <div className="relative w-full overflow-hidden">
-        {/* Animated Gradient Background */}
-        <div className="absolute inset-0">
+        {/* Image Background */}
+        <div className="absolute inset-0 w-full h-full z-0">
+          <Image
+            src="/ireland.jpg"
+            alt="Services"
+            fill
+            className="object-cover"
+            priority
+          />
+          {/* Dark overlay for better text readability */}
+          <div className="absolute inset-0 bg-black/30"></div>
+        </div>
+        {/* Gradient Background */}
+        <div className="absolute inset-0 z-10">
           <div 
-            className="absolute inset-0 animate-gradient-x"
+            className="absolute inset-0"
             style={{
-              background: 'linear-gradient(-45deg, #002C5F, #0C6BAF, #005A9C, #187CC1, #71C8F3, #0C6BAF, #002C5F)',
-              backgroundSize: '400% 400%',
+              background: 'linear-gradient(135deg, #002C5F/90 0%, #0C6BAF/85 50%, #187CC1/90 100%)',
             }}
           />
         </div>
 
         {/* Main Content */}
         <div className="relative z-20 flex flex-col h-[80vh] sm:h-[70vh] md:h-[80vh] w-full px-4 md:px-8 lg:px-16">
-          <div className="flex flex-col justify-center h-full md:items-start items-center md:text-left text-center max-w-5xl">
+          <div className="flex flex-col justify-start md:justify-center h-full md:items-start items-center md:text-left text-center max-w-5xl pt-16 md:pt-0 md:-mt-5">
             {/* Main headline */}
             <div className="w-full md:flex md:justify-start flex justify-center mb-6 md:mb-8">
               <h1
-                className="relative font-montserrat text-[2.5rem] md:text-[4.5rem] lg:text-[6rem] leading-tight font-black text-white drop-shadow-lg"
+                className="relative font-montserrat text-3xl sm:text-4xl md:text-[4.5rem] lg:text-[6rem] leading-tight font-black text-white drop-shadow-lg"
                 style={{
                   letterSpacing: '-0.04em',
                   textShadow: '0 2px 8px rgba(0,0,0,0.3)',
@@ -130,11 +141,11 @@ export default function ServicesPage() {
                 }}
               >
                 Our
-                <span className="text-[#002c5f] block">Services</span>
+                <span className="text-white block">Services</span>
               </h1>
             </div>
             {/* Subheadline */}
-            <div className="w-full md:flex md:justify-start flex justify-center mb-8 md:mb-10">
+            <div className="w-full md:flex md:justify-start flex sm:mb-8 ">
               <p className="max-w-4xl md:text-left text-center text-white font-open-sans font-normal text-lg md:text-xl lg:text-2xl" style={{lineHeight: '1.7'}}>
                 Comprehensive talent acquisition solutions tailored to your organization's unique needs and strategic objectives.
               </p>
@@ -165,8 +176,8 @@ export default function ServicesPage() {
       </div>
 
       {/* Services Section */}
-      <section className="relative bg-white py-16 md:py-24 lg:py-32">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8">
+      <section className="relative bg-white section-padding-lg">
+        <div className="container-content">
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -176,10 +187,10 @@ export default function ServicesPage() {
           >
             {/* Section Header */}
             <motion.div variants={itemVariants} className="text-center mb-16 md:mb-20">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-[#002C5F] mb-6 font-montserrat">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-[#002C5F] mb-6 font-montserrat text-heading">
                 Choose Your Solution
               </h2>
-              <p className="text-lg sm:text-xl md:text-2xl text-black/70 max-w-4xl mx-auto font-open-sans leading-relaxed">
+              <p className="text-lg sm:text-xl md:text-2xl text-secondary container-text mx-auto font-open-sans text-body">
                 From executive search to fractional hiring, we offer flexible talent acquisition solutions designed to meet your specific requirements.
               </p>
             </motion.div>
@@ -191,14 +202,10 @@ export default function ServicesPage() {
                   key={service.title}
                   custom={index}
                   variants={cardVariants}
-                  whileHover={{ 
-                    y: -10,
-                    transition: { duration: 0.3, ease: "easeOut" }
-                  }}
                   className="group"
                 >
-                  <Link href={service.href} className="block h-full">
-                    <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden h-full border border-gray-100 hover:border-[#0C6BAF]/20">
+                  <Link href={service.href} className="block h-full touch-target">
+                    <div className="bg-white rounded-2xl card-shadow-lg interactive-card overflow-hidden h-full border border-gray-100 hover:border-[#0C6BAF]/20">
                       {/* Service Icon & Header */}
                       <div className={`bg-gradient-to-br ${service.gradient} p-8 relative overflow-hidden`}>
                         <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16" />
@@ -206,31 +213,31 @@ export default function ServicesPage() {
                           <div className="mb-6">
                             {service.icon}
                           </div>
-                          <h3 className="text-2xl md:text-3xl font-black text-white mb-2 font-montserrat">
+                          <h3 className="text-2xl md:text-3xl font-black text-white mb-2 font-montserrat text-heading">
                             {service.title}
                           </h3>
-                          <p className="text-white/90 text-lg font-semibold font-open-sans">
+                          <p className="text-white/95 text-lg font-semibold font-open-sans">
                             {service.subtitle}
                           </p>
                         </div>
                       </div>
 
                       {/* Service Content */}
-                      <div className="p-8">
-                        <p className="text-black/80 mb-6 font-open-sans text-base leading-relaxed">
+                      <div className="p-8 mobile-spacing-normal lg:p-8">
+                        <p className="text-secondary mb-6 font-open-sans text-base text-body">
                           {service.description}
                         </p>
 
                         {/* Key Features */}
                         <div className="mb-6">
-                          <h4 className="text-lg font-black text-[#002C5F] mb-3 font-montserrat">
+                          <h4 className="text-lg font-black text-[#002C5F] mb-3 font-montserrat text-heading">
                             Key Features:
                           </h4>
-                          <ul className="space-y-2">
+                          <ul className="space-y-3">
                             {service.features.map((feature, featureIndex) => (
-                              <li key={featureIndex} className="flex items-start">
-                                <div className="w-2 h-2 bg-[#0C6BAF] rounded-full mt-2 mr-3 flex-shrink-0" />
-                                <span className="text-black/70 font-open-sans text-sm">
+                              <li key={featureIndex} className="flex items-start group/item">
+                                <div className="w-2 h-2 bg-[#0C6BAF] rounded-full mt-2 mr-3 flex-shrink-0 group-hover/item:scale-125 transition-transform duration-200" />
+                                <span className="text-tertiary font-open-sans text-sm touch-target">
                                   {feature}
                                 </span>
                               </li>
@@ -240,17 +247,17 @@ export default function ServicesPage() {
 
                         {/* Ideal For */}
                         <div className="mb-6">
-                          <h4 className="text-lg font-black text-[#002C5F] mb-3 font-montserrat">
+                          <h4 className="text-lg font-black text-[#002C5F] mb-3 font-montserrat text-heading">
                             Ideal For:
                           </h4>
-                          <p className="text-black/70 font-open-sans text-sm leading-relaxed">
+                          <p className="text-tertiary font-open-sans text-sm text-body">
                             {service.idealFor}
                           </p>
                         </div>
 
                         {/* CTA */}
                         <div className="pt-4 border-t border-gray-100">
-                          <div className="flex items-center text-[#0C6BAF] font-semibold font-montserrat group-hover:text-[#187CC1] transition-colors">
+                          <div className="flex items-center text-[#0C6BAF] font-semibold font-montserrat group-hover:text-[#187CC1] transition-colors interactive-button">
                             <span>Learn More</span>
                             <FaArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                           </div>
@@ -266,31 +273,31 @@ export default function ServicesPage() {
       </section>
 
       {/* Call to Action Section */}
-      <section className="relative bg-gradient-to-br from-[#002C5F] to-[#0C6BAF] py-16 md:py-24">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8">
+      <section className="relative bg-gradient-to-br from-[#002C5F] to-[#0C6BAF] section-padding-md">
+        <div className="container-content">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto text-center"
+            className="container-text mx-auto text-center"
           >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-6 font-montserrat">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-6 font-montserrat text-heading">
               Ready to Find Your Perfect Match?
             </h2>
-            <p className="text-lg sm:text-xl text-white/90 mb-10 font-open-sans leading-relaxed">
+            <p className="text-lg sm:text-xl text-white/95 mb-10 font-open-sans text-body">
               Let's discuss which service best fits your talent acquisition needs and organizational goals.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link 
                 href="/contact"
-                className="inline-block px-8 py-4 bg-white text-[#002C5F] rounded-full hover:bg-gray-100 transition-all duration-300 font-montserrat font-semibold shadow-lg hover:shadow-xl"
+                className="interactive-button touch-target inline-block px-8 py-4 bg-white text-[#002C5F] rounded-full hover:bg-gray-100 transition-all duration-300 font-montserrat font-semibold shadow-lg hover:shadow-xl"
               >
                 Get Started Today
               </Link>
               <Link 
                 href="/our-approach"
-                className="inline-block px-8 py-4 bg-transparent border-2 border-white text-white rounded-full hover:bg-white hover:text-[#002C5F] transition-all duration-300 font-montserrat font-semibold"
+                className="interactive-button touch-target inline-block px-8 py-4 bg-transparent border-2 border-white text-white rounded-full hover:bg-white hover:text-[#002C5F] transition-all duration-300 font-montserrat font-semibold"
               >
                 Our Approach
               </Link>

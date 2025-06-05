@@ -103,11 +103,11 @@ export default function OurApproachPage() {
           </video>
         </div>
         {/* Blue Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#002C5F]/80 via-[#0C6BAF]/60 to-[#187CC1]/80 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#002C5F]/50 via-[#0C6BAF]/40 to-[#187CC1]/50 z-10" />
 
         {/* Main Content */}
         <div className="relative z-20 flex flex-col h-[80vh] sm:h-[70vh] md:h-[80vh] w-full px-4 md:px-8 lg:px-16">
-          <div className="flex flex-col justify-center h-full md:items-start items-center md:text-left text-center max-w-5xl">
+          <div className="flex flex-col justify-start md:justify-center h-full md:items-start items-center md:text-left text-center max-w-5xl pt-16 md:pt-0 md:-mt-5">
             {/* Main headline */}
             <div className="w-full md:flex md:justify-start flex justify-center mb-6 md:mb-8">
               <h1

@@ -127,7 +127,7 @@ export default function ExecutiveSearchPage() {
             {/* Main headline */}
             <div className="w-full md:flex md:justify-start flex justify-center mb-6 md:mb-8">
               <h1
-                className="relative font-montserrat text-[4rem] md:text-[4.5rem] lg:text-[6rem] leading-tight font-black text-white drop-shadow-lg"
+                className="relative font-montserrat text-3xl sm:text-4xl md:text-[4.5rem] lg:text-[6rem] leading-tight font-black text-white drop-shadow-lg"
                 style={{
                   letterSpacing: '-0.04em',
                   textShadow: '0 2px 8px rgba(0,0,0,0.3)',
@@ -140,7 +140,7 @@ export default function ExecutiveSearchPage() {
             </div>
             {/* Subheadline */}
             <div className="w-full md:flex md:justify-start flex justify-center mb-8 md:mb-10">
-              <p className="max-w-4xl md:text-left text-center text-[#002C5F] font-open-sans font-normal text-lg md:text-xl lg:text-2xl pr-40" style={{lineHeight: '1.7'}}>
+              <p className="max-w-4xl md:text-left text-center text-[#002C5F] font-open-sans font-semibold text-lg md:text-xl lg:text-2xl pr-45" style={{lineHeight: '1.7'}}>
                 Premium, dedicated approach to identifying and securing top-tier leadership talent for your organization through our boutique partnership model.
               </p>
             </div>

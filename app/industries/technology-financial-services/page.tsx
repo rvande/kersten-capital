@@ -92,7 +92,7 @@ export default function TechnologyFinancialServicesPage() {
             priority
           />
           {/* Dark overlay for better text readability */}
-          <div className="absolute inset-0 bg-black/30"></div>
+          <div className="absolute inset-0 bg-black/50"></div>
         </div>
         {/* Gradient Background */}
         <div className="absolute inset-0 z-10">
@@ -106,7 +106,7 @@ export default function TechnologyFinancialServicesPage() {
 
         {/* Main Content */}
         <div className="relative z-20 flex flex-col h-[80vh] sm:h-[70vh] md:h-[80vh] w-full px-4 md:px-8 lg:px-16">
-          <div className="flex flex-col justify-center h-full md:items-start items-center md:text-left text-center max-w-5xl">
+          <div className="flex flex-col justify-start md:justify-center h-full md:items-start items-center md:text-left text-center max-w-5xl pt-16 md:pt-0 md:-mt-5">
             {/* Main headline */}
             <div className="w-full md:flex md:justify-start flex justify-center mb-6 md:mb-8">
               <h1
@@ -117,8 +117,8 @@ export default function TechnologyFinancialServicesPage() {
                   animation: isLoaded ? 'slideRight 1.5s cubic-bezier(0.4,0,0.2,1)' : 'none',
                 }}
               >
-                Technology &
-                <span className="text-white block">Financial Services</span>
+                <span className="block md:inline">Financial Services</span>
+                <span className="text-white block">Technology &</span>
               </h1>
             </div>
             {/* Subheadline */}
