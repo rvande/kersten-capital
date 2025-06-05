@@ -110,6 +110,23 @@ export default function Navbar({ navbar }: NavbarProps) {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center">
             <nav className="flex items-center space-x-8 xl:space-x-10 mr-6" aria-label="Main Navigation">
+               {/* Our Approach Link */}
+               <Link 
+                href="/our-approach" 
+                className="font-montserrat text-[#002C5F] hover:text-[#0C6BAF] text-lg font-semibold transition-all duration-200 py-2 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-[#0C6BAF] after:transition-all after:duration-300 hover:after:w-full flex items-center"
+              >
+                <svg 
+                  className="w-5 h-5 mr-2 text-current" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none"/>
+                  <circle cx="12" cy="12" r="6" stroke="currentColor" strokeWidth="2" fill="none"/>
+                  <circle cx="12" cy="12" r="2" fill="currentColor"/>
+                </svg>
+                Our Approach
+              </Link>
               {navbar.menu?.map((menuItem) => (
                 <div key={menuItem.id} className="relative group">
                   <button
@@ -207,7 +224,7 @@ export default function Navbar({ navbar }: NavbarProps) {
             {navbar.menu?.map((menuItem) => (
               <div key={menuItem.id} className="py-2">
                 <button 
-                  className="font-montserrat w-full font-semibold text-lg text-[#002C5F] px-4 py-3 mb-2 flex justify-between items-center hover:text-[#0C6BAF] focus:outline-none focus:ring-2 focus:ring-[#0C6BAF] rounded-md transition-colors hover:bg-gray-50"
+                  className="font-montserrat w-full font-semibold text-lg text-[#002C5F] px-2 py-3 mb-2 flex justify-between items-center hover:text-[#0C6BAF] focus:outline-none focus:ring-2 focus:ring-[#0C6BAF] rounded-md transition-colors hover:bg-gray-50"
                   onClick={() => setActiveMenu(activeMenu === menuItem.id ? null : menuItem.id)}
                   aria-expanded={activeMenu === menuItem.id}
                   aria-controls={`mobile-dropdown-${menuItem.id}`}
@@ -230,7 +247,7 @@ export default function Navbar({ navbar }: NavbarProps) {
                     activeMenu === menuItem.id ? 'max-h-screen opacity-100 bg-gray-50' : 'max-h-0 opacity-0'
                   }`}
                 >
-                  <div className="ml-4 border-l-2 border-[#0C6BAF] pl-4">
+                  <div className="ml-4 border-l-3 border-[#0C6BAF] pl-4">
                     {menuItem.links?.map((link) => (
                       <Link
                         key={link.id}
@@ -250,6 +267,27 @@ export default function Navbar({ navbar }: NavbarProps) {
                 </div>
               </div>
             ))}
+            
+            {/* Our Approach Link - Mobile */}
+            <div className="py-2">
+              <Link 
+                href="/our-approach" 
+                className="font-montserrat w-full font-semibold text-lg text-[#002C5F] px-4 py-3 flex items-center hover:text-[#0C6BAF] focus:outline-none focus:ring-2 focus:ring-[#0C6BAF] rounded-md transition-colors hover:bg-gray-50"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <svg 
+                  className="w-5 h-5 mr-3 text-current" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none"/>
+                  <circle cx="12" cy="12" r="6" stroke="currentColor" strokeWidth="2" fill="none"/>
+                  <circle cx="12" cy="12" r="2" fill="currentColor"/>
+                </svg>
+                Our Approach
+              </Link>
+            </div>
             
             {/* Mobile Contact CTA */}
             <div className="mt-6 px-4 pb-4">

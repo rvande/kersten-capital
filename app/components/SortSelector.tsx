@@ -25,7 +25,7 @@ export default function SortSelector() {
 
   return (
     <div className="flex items-center mt-6 md:mt-0">
-      <label htmlFor="sort-select" className="text-sm font-medium text-[#3D3939] mr-3">
+      <label htmlFor="sort-select" className="text-sm font-semibold text-white mr-3 font-montserrat">
         Sort by:
       </label>
       <div className="relative">
@@ -33,18 +33,16 @@ export default function SortSelector() {
           id="sort-select"
           value={currentSort}
           onChange={handleSortChange}
-          className="block w-44 py-2.5 px-4 text-gray-700 border border-gray-200 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#CA3B2A]/20 focus:border-[#CA3B2A] text-sm transition-all appearance-none cursor-pointer"
+          className="appearance-none bg-[#002C5F] border border-[#002C5F] rounded-full px-6 py-4 pr-12 md:pr-10 focus:ring-2 focus:ring-[#0C6BAF] focus:border-[#0C6BAF] outline-none font-montserrat font-semibold text-white cursor-pointer"
         >
           <option value="newest">Newest First</option>
           <option value="oldest">Oldest First</option>
           <option value="a-z">Title A-Z</option>
           <option value="z-a">Title Z-A</option>
         </select>
-        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-          <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-          </svg>
-        </div>
+        <svg className="absolute right-3 md:right-3 top-1/2 transform -translate-y-1/2 text-white h-6 w-6 md:h-5 md:w-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
       </div>
     </div>
   );

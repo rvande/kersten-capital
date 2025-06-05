@@ -63,26 +63,30 @@ function AnimatedMetricCard({ icon, title, value, suffix, description, delay }: 
       initial={{ opacity: 0, y: 60 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
       transition={{ duration: 0.6, delay, ease: "easeOut" }}
-      className="bg-white/98 backdrop-blur-sm rounded-xl p-8 md:p-10 text-center shadow-2xl border border-white/20"
+      className="bg-[#002C5F] backdrop-blur-sm rounded-xl p-4 sm:p-6 md:p-8 lg:p-10 text-center shadow-2xl border border-[#0C6BAF]"
     >
       <motion.div
         initial={{ scale: 0 }}
         animate={isInView ? { scale: 1 } : { scale: 0 }}
         transition={{ duration: 0.5, delay: delay + 0.2 }}
-        className="mb-6"
+        className="mb-3 sm:mb-4 md:mb-6"
       >
-        {icon}
+        <div className="flex justify-center">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12">
+            {icon}
+          </div>
+        </div>
       </motion.div>
-      <h3 className="font-montserrat font-black text-[#002C5F] text-base md:text-lg mb-4">{title}</h3>
+      <h3 className="font-montserrat font-black text-white text-sm sm:text-base md:text-lg mb-2 sm:mb-3 md:mb-4 leading-tight">{title}</h3>
       <motion.div
-        className="font-montserrat font-black text-4xl md:text-5xl text-[#0C6BAF] mb-4"
+        className="font-montserrat font-black text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-[#71C8F3] mb-2 sm:mb-3 md:mb-4"
         initial={{ scale: 0.5 }}
         animate={isInView ? { scale: 1 } : { scale: 0.5 }}
         transition={{ duration: 0.8, delay: delay + 0.4 }}
       >
         {animatedValue}{suffix}
       </motion.div>
-      <p className="text-sm md:text-base text-black leading-relaxed">{description}</p>
+      <p className="text-xs sm:text-sm md:text-base text-white/80 leading-relaxed">{description}</p>
     </motion.div>
   );
 }
@@ -97,22 +101,22 @@ function PerformanceChart() {
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
       transition={{ duration: 0.8, delay: 0.2 }}
-      className="bg-white rounded-xl p-8 md:p-10 shadow-lg border border-gray-100"
+      className="bg-white rounded-xl p-4 sm:p-6 md:p-8 lg:p-10 shadow-lg border border-gray-100"
     >
-      <div className="flex items-center justify-center mb-8">
-        <div className="flex items-center space-x-8">
+      <div className="flex items-center justify-center mb-4 sm:mb-6 md:mb-8">
+        <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-8">
           <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 rounded-full bg-[#0C6BAF]"></div>
-            <span className="font-montserrat font-semibold text-gray-700">Our Performance</span>
+            <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-[#0C6BAF]"></div>
+            <span className="font-montserrat font-semibold text-gray-700 text-xs sm:text-sm md:text-base">Our Performance</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 rounded-full bg-gray-400"></div>
-            <span className="font-montserrat font-semibold text-gray-700">Industry Average</span>
+            <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-gray-400"></div>
+            <span className="font-montserrat font-semibold text-gray-700 text-xs sm:text-sm md:text-base">Industry Average</span>
           </div>
         </div>
       </div>
       
-      <div className="space-y-6">
+      <div className="space-y-3 sm:space-y-4 md:space-y-6">
         {chartData.map((item, index) => {
           const maxValue = Math.max(item.ourValue, item.industryValue);
           const ourPercentage = (item.ourValue / maxValue) * 100;
@@ -124,21 +128,21 @@ function PerformanceChart() {
               initial={{ opacity: 0, x: -50 }}
               animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
               transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
-              className="space-y-3"
+              className="space-y-2 sm:space-y-3"
             >
-              <h4 className="font-montserrat font-semibold text-sm text-gray-700 mb-2">
+              <h4 className="font-montserrat font-semibold text-xs sm:text-sm md:text-base text-gray-700 mb-1 sm:mb-2">
                 {item.label}
               </h4>
               
-              <div className="space-y-2">
+              <div className="space-y-1 sm:space-y-2">
                 {/* Our Performance Bar */}
-                <div className="flex items-center space-x-3">
-                  <div className="w-20 text-right">
-                    <span className="font-montserrat font-bold text-[#0C6BAF] text-sm">
+                <div className="flex items-center space-x-2 sm:space-x-3">
+                  <div className="w-12 sm:w-16 md:w-20 text-right flex-shrink-0">
+                    <span className="font-montserrat font-bold text-[#0C6BAF] text-xs sm:text-sm">
                       {item.ourValue}{item.label.includes('(%)') ? '%' : item.label.includes('Days') || item.label.includes('Hours') ? '' : '%'}
                     </span>
                   </div>
-                  <div className="flex-1 bg-gray-100 rounded-full h-6 relative overflow-hidden">
+                  <div className="flex-1 bg-gray-100 rounded-full h-4 sm:h-5 md:h-6 relative overflow-hidden">
                     <motion.div 
                       className="h-full rounded-full"
                       style={{
@@ -152,13 +156,13 @@ function PerformanceChart() {
                 </div>
                 
                 {/* Industry Average Bar */}
-                <div className="flex items-center space-x-3">
-                  <div className="w-20 text-right">
-                    <span className="font-montserrat font-bold text-gray-500 text-sm">
+                <div className="flex items-center space-x-2 sm:space-x-3">
+                  <div className="w-12 sm:w-16 md:w-20 text-right flex-shrink-0">
+                    <span className="font-montserrat font-bold text-gray-500 text-xs sm:text-sm">
                       {item.industryValue}{item.label.includes('(%)') ? '%' : item.label.includes('Days') || item.label.includes('Hours') ? '' : '%'}
                     </span>
                   </div>
-                  <div className="flex-1 bg-gray-100 rounded-full h-6 relative overflow-hidden">
+                  <div className="flex-1 bg-gray-100 rounded-full h-4 sm:h-5 md:h-6 relative overflow-hidden">
                     <motion.div 
                       className="h-full bg-gray-400 rounded-full"
                       initial={{ width: "0%" }}
@@ -183,7 +187,7 @@ export default function AnimatedBackground() {
   const isBenchmarksInView = useInView(benchmarksRef, { once: true, margin: "-50px" });
 
   return (
-    <section className="relative w-full overflow-hidden lg:py-10 lg:mt-10">
+    <section className="relative w-full overflow-hidden lg:mt-10">
       {/* Diagonal SVG Overlay - Top */}
       <div className="absolute left-0 right-0 top-0 w-full pointer-events-none select-none z-20">
         <svg 
@@ -201,19 +205,20 @@ export default function AnimatedBackground() {
         </svg>
       </div>
 
-      {/* Animated Gradient Background */}
+      {/* Clean Animated Gradient Background */}
       <div className="relative">
         <div 
-          className="absolute inset-0 animate-gradient-x"
+          className="absolute inset-0"
           style={{
-            background: 'linear-gradient(-45deg, #002C5F, #0C6BAF, #005A9C, #187CC1, #71C8F3, #0C6BAF, #002C5F)',
-            backgroundSize: '400% 400%',
+            background: 'linear-gradient(135deg, #002C5F 0%, #0C6BAF 25%, #187CC1 50%, #005A9C 75%, #002C5F 100%)',
+            backgroundSize: '300% 300%',
+            animation: 'gentleGradient 8s ease-in-out infinite',
             minHeight: '100vh'
           }}
         />
         
         {/* Content Overlay */}
-        <div className="relative z-10 flex items-center justify-center py-20 md:py-24 lg:py-28">
+        <div className="relative z-10 flex items-center justify-center py-24 sm:py-28 md:py-32 lg:py-36 xl:py-40">
           <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 w-full">
             {/* Heading */}
             <motion.div
@@ -221,13 +226,13 @@ export default function AnimatedBackground() {
               initial={{ opacity: 0, y: 50 }}
               animate={isHeadingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="text-center mb-16 md:mb-20 lg:mb-24"
+              className="text-center mb-12 sm:mb-16 md:mb-20 lg:mb-24"
             >
               <motion.h2 
-                className="text-3xl md:text-5xl lg:text-6xl font-black text-white mb-6"
+                className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black text-white mb-4 sm:mb-6 px-4"
                 style={{
                   fontFamily: 'Montserrat, sans-serif',
-                  textShadow: '0 4px 20px rgba(0, 0, 0, 0.9)',
+                  textShadow: '0 4px 20px rgba(0, 0, 0, 0.8)',
                 }}
                 initial={{ scale: 0.9 }}
                 animate={isHeadingInView ? { scale: 1 } : { scale: 0.9 }}
@@ -238,9 +243,9 @@ export default function AnimatedBackground() {
             </motion.div>
             
             {/* Metrics Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 lg:gap-12 mb-16 md:mb-20 lg:mb-24">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-10 mb-12 sm:mb-16 md:mb-20 lg:mb-24">
               <AnimatedMetricCard
-                icon={<svg className="w-12 h-12 text-[#0C6BAF] mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                icon={<svg className="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>}
                 title="Time to Placement"
@@ -251,7 +256,7 @@ export default function AnimatedBackground() {
               />
 
               <AnimatedMetricCard
-                icon={<svg className="w-12 h-12 text-[#0C6BAF] mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                icon={<svg className="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>}
                 title="Success Rate"
@@ -262,7 +267,7 @@ export default function AnimatedBackground() {
               />
 
               <AnimatedMetricCard
-                icon={<svg className="w-12 h-12 text-[#0C6BAF] mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                icon={<svg className="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>}
                 title="Global Network"
@@ -273,7 +278,7 @@ export default function AnimatedBackground() {
               />
 
               <AnimatedMetricCard
-                icon={<svg className="w-12 h-12 text-[#0C6BAF] mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                icon={<svg className="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                 </svg>}
                 title="C-Suite Focus"
@@ -284,7 +289,7 @@ export default function AnimatedBackground() {
               />
 
               <AnimatedMetricCard
-                icon={<svg className="w-12 h-12 text-[#0C6BAF] mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                icon={<svg className="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>}
                 title="Client Retention"
@@ -295,7 +300,7 @@ export default function AnimatedBackground() {
               />
 
               <AnimatedMetricCard
-                icon={<svg className="w-12 h-12 text-[#0C6BAF] mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                icon={<svg className="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
                 </svg>}
                 title="Candidate Pipeline"
@@ -312,13 +317,13 @@ export default function AnimatedBackground() {
               initial={{ opacity: 0, y: 60 }}
               animate={isBenchmarksInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="bg-white/98 backdrop-blur-sm rounded-xl p-10 md:p-12 lg:p-16 shadow-2xl max-w-6xl mx-auto border border-white/20"
+              className="bg-white/98 backdrop-blur-sm rounded-xl p-6 sm:p-8 md:p-10 lg:p-12 xl:p-16 shadow-2xl max-w-6xl mx-auto border border-white/20"
             >
               <motion.h3
                 initial={{ opacity: 0, y: 30 }}
                 animate={isBenchmarksInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="font-montserrat font-black text-2xl md:text-3xl lg:text-4xl text-[#002C5F] text-center mb-8"
+                className="font-montserrat font-black text-xl sm:text-2xl md:text-3xl lg:text-4xl text-[#002C5F] text-center mb-4 sm:mb-6 md:mb-8"
               >
                 Performance vs Industry Benchmarks
               </motion.h3>
@@ -326,9 +331,9 @@ export default function AnimatedBackground() {
                 initial={{ opacity: 0 }}
                 animate={isBenchmarksInView ? { opacity: 1 } : { opacity: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="text-center mb-12"
+                className="text-center mb-8 sm:mb-10 md:mb-12"
               >
-                <p className="font-open-sans text-lg md:text-xl lg:text-2xl text-black leading-relaxed max-w-4xl mx-auto">
+                <p className="font-open-sans text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-black leading-relaxed max-w-4xl mx-auto px-2">
                   Our proven methodology consistently outperforms industry standards across all key metrics, 
                   delivering exceptional results for our clients in executive placement and retention.
                 </p>
@@ -365,6 +370,18 @@ export default function AnimatedBackground() {
             </g>
           </svg>
         </div>
+
+      {/* Simple CSS animation */}
+      <style jsx>{`
+        @keyframes gentleGradient {
+          0%, 100% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+        }
+      `}</style>
     </section>
   );
 }

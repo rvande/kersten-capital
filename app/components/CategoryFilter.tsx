@@ -30,15 +30,15 @@ export default function CategoryFilter({ categories, activeCategorySlug }: Categ
   };
 
   return (
-    <div className="mb-8 md:mb-0">
-      <h3 className="text-lg font-semibold mb-4 text-[#3D3939]">Categories</h3>
+    <div className="mb-8 md:mb-0 bg-[#002C5F] rounded-2xl p-6">
+      <h3 className="text-lg font-semibold mb-4 text-white font-montserrat">Categories</h3>
       <div className="flex flex-wrap gap-2.5">
         <button
           onClick={() => handleCategoryChange(null)}
           className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
             selectedCategory === null 
-              ? 'bg-[#CA3B2A] text-white shadow-sm' 
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-[#3D3939]'
+              ? 'bg-white text-[#002C5F] shadow-lg font-montserrat' 
+              : 'bg-white/20 text-white hover:bg-white/30 hover:text-white font-montserrat'
           }`}
         >
           All Posts
@@ -50,8 +50,8 @@ export default function CategoryFilter({ categories, activeCategorySlug }: Categ
             onClick={() => handleCategoryChange(category.slug)}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
               selectedCategory === category.slug 
-                ? 'bg-[#CA3B2A] text-gray-100 shadow-sm' 
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-[#3D3939]'
+                ? 'bg-white text-[#002C5F] shadow-lg font-montserrat' 
+                : 'bg-white/20 text-white hover:bg-white/30 hover:text-white font-montserrat'
             }`}
           >
             {category.name}

@@ -203,6 +203,7 @@ export default function Footer({ footer }: FooterProps) {
           </motion.div>
         </div>
         
+        {/* Bottom section */}
         <motion.div 
           className="mt-20 pt-10 border-t border-white/20"
           initial={{ opacity: 0 }}
@@ -215,6 +216,9 @@ export default function Footer({ footer }: FooterProps) {
               © {new Date().getFullYear()} Kersten Talent Capital. All rights reserved.
             </p>
             <div className="flex justify-center space-x-8">
+              <a href="/our-approach" className="text-white/80 hover:text-[#71C8F3] transition-colors duration-300 font-open-sans text-lg hover:font-semibold">
+                Our Approach
+              </a>
               <a href="#" className="text-white/80 hover:text-[#71C8F3] transition-colors duration-300 font-open-sans text-lg hover:font-semibold">
                 Privacy Policy
               </a>

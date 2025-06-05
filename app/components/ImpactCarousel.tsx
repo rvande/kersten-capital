@@ -42,29 +42,29 @@ function TestimonialCard({ testimonial, delay }: { testimonial: Testimonial; del
       transition={{ duration: 0.6, delay, ease: "easeOut" }}
       className="relative group cursor-default"
     >
-      {/* Blue background - positioned behind card */}
-      <div className="absolute inset-0 bg-[#0C6BAF] rounded-xl transform translate-x-2 translate-y-2 transition-transform duration-300 group-hover:translate-x-3 group-hover:translate-y-3" />
+      {/* Light blue background - positioned behind card */}
+      <div className="absolute inset-0 bg-[#71C8F3] rounded-xl transform translate-x-2 translate-y-2 transition-transform duration-300 group-hover:translate-x-3 group-hover:translate-y-3" />
       
-      {/* Main card */}
+      {/* Main card with dark blue background */}
       <motion.div 
-        className="relative bg-white rounded-xl p-8 md:p-10 shadow-lg border border-gray-100 transition-transform duration-300 group-hover:-translate-x-1 group-hover:-translate-y-1"
+        className="relative bg-[#002C5F] rounded-xl p-8 md:p-10 shadow-lg border border-[#0C6BAF] transition-transform duration-300 group-hover:-translate-x-1 group-hover:-translate-y-1"
         whileHover={{ scale: 1.02 }}
         transition={{ duration: 0.2 }}
       >
         <div className="text-center">
-          {/* Quote Icon */}
+          {/* Quote Icon - now white */}
           <motion.div 
             className="mb-6"
             initial={{ scale: 0 }}
             animate={isInView ? { scale: 1 } : { scale: 0 }}
             transition={{ duration: 0.5, delay: delay + 0.2 }}
           >
-            <svg className="w-12 h-12 text-[#0C6BAF] mx-auto" fill="currentColor" viewBox="0 0 24 24">
+            <svg className="w-12 h-12 text-white mx-auto" fill="currentColor" viewBox="0 0 24 24">
               <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
             </svg>
           </motion.div>
           
-          <blockquote className="font-open-sans text-lg md:text-xl text-black leading-relaxed">
+          <blockquote className="font-open-sans text-lg md:text-xl text-white leading-relaxed">
             "{testimonial.quote}"
           </blockquote>
         </div>
@@ -119,7 +119,7 @@ function MobileCarousel() {
 
   return (
     <div 
-      className="relative overflow-hidden lg:hidden"
+      className="relative overflow-hidden lg:hidden px-2 sm:px-4"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -133,20 +133,20 @@ function MobileCarousel() {
           transition={{ duration: 0.5 }}
           className="relative group cursor-default"
         >
-          {/* Blue background - positioned behind card */}
-          <div className="absolute inset-0 bg-[#0C6BAF] rounded-xl transform translate-x-2 translate-y-2" />
+          {/* Light blue background - positioned behind card with smaller offset on mobile */}
+          <div className="absolute inset-0 bg-[#71C8F3] rounded-xl transform translate-x-1 translate-y-1 sm:translate-x-2 sm:translate-y-2" />
           
-          {/* Main card */}
-          <div className="relative bg-white rounded-xl p-8 md:p-10 shadow-lg border border-gray-100">
+          {/* Main card with dark blue background */}
+          <div className="relative bg-[#002C5F] rounded-xl p-6 sm:p-8 md:p-10 shadow-lg border border-[#0C6BAF]">
             <div className="text-center">
-              {/* Quote Icon */}
+              {/* Quote Icon - now white */}
               <div className="mb-6">
-                <svg className="w-12 h-12 text-[#0C6BAF] mx-auto" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-10 h-10 sm:w-12 sm:h-12 text-white mx-auto" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
                 </svg>
               </div>
               
-              <blockquote className="font-open-sans text-lg md:text-xl text-black leading-relaxed">
+              <blockquote className="font-open-sans text-base sm:text-lg md:text-xl text-white leading-relaxed">
                 "{testimonials[currentIndex].quote}"
               </blockquote>
             </div>
@@ -155,26 +155,26 @@ function MobileCarousel() {
       </AnimatePresence>
 
       {/* Navigation Controls */}
-      <div className="flex justify-between items-center mt-12">
+      <div className="flex justify-between items-center mt-8 sm:mt-12 px-2 py-2">
         <button 
           onClick={handlePrev}
-          className="p-3 rounded-full bg-white shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 text-[#0C6BAF] hover:text-[#002C5F] focus:outline-none focus:ring-2 focus:ring-[#0C6BAF]"
+          className="p-2 sm:p-3 rounded-full bg-white shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 text-[#0C6BAF] hover:text-[#002C5F] focus:outline-none focus:ring-2 focus:ring-[#0C6BAF]"
           aria-label="Previous testimonial"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </button>
         
-        <div className="flex space-x-3">
+        <div className="flex space-x-2 sm:space-x-3">
           {testimonials.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
-              className={`h-3 rounded-full transition-all duration-300 ${
+              className={`h-2 sm:h-3 rounded-full transition-all duration-300 ${
                 index === currentIndex 
-                  ? 'bg-[#0C6BAF] w-8' 
-                  : 'bg-gray-300 w-3 hover:bg-[#0C6BAF]/50'
+                  ? 'bg-[#0C6BAF] w-6 sm:w-8' 
+                  : 'bg-gray-300 w-2 sm:w-3 hover:bg-[#0C6BAF]/50'
               }`}
               aria-label={`Go to testimonial ${index + 1}`}
             />
@@ -183,10 +183,10 @@ function MobileCarousel() {
         
         <button 
           onClick={handleNext}
-          className="p-3 rounded-full bg-white shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 text-[#0C6BAF] hover:text-[#002C5F] focus:outline-none focus:ring-2 focus:ring-[#0C6BAF]"
+          className="p-2 sm:p-3 rounded-full bg-white shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 text-[#0C6BAF] hover:text-[#002C5F] focus:outline-none focus:ring-2 focus:ring-[#0C6BAF]"
           aria-label="Next testimonial"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </button>
