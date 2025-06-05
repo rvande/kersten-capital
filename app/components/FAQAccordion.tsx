@@ -82,26 +82,27 @@ export function FAQGroup({ categoryName, faqs }: FAQGroupProps) {
       >
         {categoryName}
       </motion.h2>
-      <div className="relative group">
-        {/* Blue background - positioned behind card */}
-        <div className="absolute inset-0 bg-[#0C6BAF] rounded-xl transform translate-x-2 translate-y-2 transition-transform duration-300 group-hover:translate-x-3 group-hover:translate-y-3" />
-        
-        {/* Main card */}
-        <div className="relative bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden divide-y divide-gray-100 transition-transform duration-300 group-hover:-translate-x-1 group-hover:-translate-y-1">
-          {faqs.map((faq, index) => (
-            <motion.div
-              key={faq.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-            >
+      <div className="space-y-4">
+        {faqs.map((faq, index) => (
+          <motion.div
+            key={faq.id}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4, delay: index * 0.1 }}
+            className="relative group"
+          >
+            {/* Blue background - positioned behind individual card */}
+            <div className="absolute inset-0 bg-[#0C6BAF] rounded-xl transform translate-x-2 translate-y-2 transition-transform duration-300 group-hover:translate-x-3 group-hover:translate-y-3" />
+            
+            {/* Individual FAQ card */}
+            <div className="relative bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden transition-transform duration-300 group-hover:-translate-x-1 group-hover:-translate-y-1">
               <FAQAccordionItem 
                 question={faq.Question} 
                 answer={faq.Answer} 
               />
-            </motion.div>
-          ))}
-        </div>
+            </div>
+          </motion.div>
+        ))}
       </div>
     </motion.div>
   );

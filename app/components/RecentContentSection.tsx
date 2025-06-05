@@ -182,94 +182,134 @@ export default function RecentContentSection({ blogPosts, whitepapers = [] }: Re
   });
 
   return (
-    <section className="relative w-full overflow-hidden py-16 md:py-24 lg:py-32">
-      {/* Animated Gradient Background */}
-      <div className="absolute inset-0">
-        <div 
-          className="absolute inset-0 animate-gradient-x"
-          style={{
-            background: 'linear-gradient(-45deg, #002C5F, #0C6BAF, #005A9C, #187CC1, #71C8F3, #0C6BAF, #002C5F)',
-            backgroundSize: '400% 400%',
-          }}
-        />
-      </div>
+    <section className="relative w-full overflow-hidden">
+      {/* Solid Dark Blue Background for entire page */}
+      <div className="absolute inset-0 bg-[#002C5F]"></div>
 
-      <div className="relative z-10 container mx-auto px-4">
+      {/* Hero Section with Image Background */}
+      <section className="relative w-full overflow-hidden py-24 md:py-32 lg:py-40">
+        {/* Hero Background Image with Overlay */}
+        <div className="absolute inset-0">
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: 'url(/insights.jpg)',
+            }}
+          />
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-black/40"></div>
+          {/* Additional gradient overlay */}
+          <div 
+            className="absolute inset-0 opacity-60"
+            style={{
+              background: 'linear-gradient(-45deg, #002C5F, #0C6BAF, #005A9C, #187CC1, #71C8F3, #0C6BAF, #002C5F)',
+              backgroundSize: '400% 400%',
+            }}
+          />
+        </div>
+
+        {/* Diagonal SVG Overlay - Top */}
+        <div className="absolute left-0 right-0 top-0 w-full pointer-events-none select-none z-20">
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            width="100%" 
+            height="130px" 
+            viewBox="0 0 1280 140" 
+            preserveAspectRatio="none"
+            className="w-full h-[75px] md:h-[130px] rotate-180"
+          >
+            <g fill="#002c5f">
+              <path d="M1280 0l-266 91.52a72.59 72.59 0 0 1-30.76 3.71L0 0v140h1280z" />
+              <path d="M1280 0l-262.1 116.26a73.29 73.29 0 0 1-39.09 6L0 0v140h1280z" fill="#ffffff" />
+            </g>
+          </svg>
+        </div>
+
+        {/* Content */}
+        <div className="relative z-10 container mx-auto px-4">
+          <div className="max-w-7xl mt-8 mx-auto">
+            
+            {/* Header Section */}
+            <motion.div
+              ref={headingRef}
+              initial={{ opacity: 0, y: 50 }}
+              animate={isHeadingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="text-center mb-16"
+            >
+              <motion.h2 
+                className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 font-montserrat"
+                style={{ textShadow: '0 4px 20px rgba(0, 0, 0, 0.9)' }}
+                initial={{ scale: 0.9 }}
+                animate={isHeadingInView ? { scale: 1 } : { scale: 0.9 }}
+                transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+              >
+                Latest Insights
+              </motion.h2>
+              <motion.p 
+                className="text-xl md:text-2xl text-white/95 max-w-4xl mx-auto font-open-sans leading-relaxed"
+                style={{ textShadow: '0 2px 10px rgba(0, 0, 0, 0.7)' }}
+                initial={{ opacity: 0 }}
+                animate={isHeadingInView ? { opacity: 1 } : { opacity: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                Stay ahead with our latest thinking on executive talent acquisition, 
+                leadership trends, and strategic hiring practices.
+              </motion.p>
+            </motion.div>
+
+            {/* Search and Filter Section */}
+            <motion.div
+              ref={searchRef}
+              initial={{ opacity: 0, y: 40 }}
+              animate={isSearchInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 md:p-10 shadow-2xl max-w-4xl mx-auto mb-16 border border-white/20"
+            >
+              <div className="flex flex-col md:flex-row gap-6">
+                {/* Search Input */}
+                <div className="flex-1 relative">
+                  <svg 
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white h-5 w-5"
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                  <input
+                    type="text"
+                    placeholder="Search content..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full pl-12 pr-6 py-4 rounded-full bg-[#002C5F] border border-[#002C5F] focus:ring-2 focus:ring-[#0C6BAF] focus:border-[#0C6BAF] outline-none font-open-sans text-white placeholder:text-white/70"
+                  />
+                </div>
+                
+                {/* Category Filter */}
+                <div className="relative">
+                  <select
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="appearance-none bg-[#002C5F] border border-[#002C5F] rounded-full px-6 py-4 pr-12 md:pr-10 focus:ring-2 focus:ring-[#0C6BAF] focus:border-[#0C6BAF] outline-none font-montserrat font-semibold text-white cursor-pointer"
+                  >
+                    <option value="all">All Content</option>
+                    <option value="blog">Articles</option>
+                    <option value="whitepaper">Whitepapers</option>
+                  </select>
+                  <svg className="absolute right-3 md:right-3 top-1/2 transform -translate-y-1/2 text-white h-6 w-6 md:h-5 md:w-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Content Section */}
+      <div className="relative z-10 container mx-auto px-4 pt-16 md:pt-24 lg:pt-32 pb-16 md:pb-24 lg:pb-32">
         <div className="max-w-7xl mx-auto">
-          
-          {/* Header Section */}
-          <motion.div
-            ref={headingRef}
-            initial={{ opacity: 0, y: 50 }}
-            animate={isHeadingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-center mb-16"
-          >
-            <motion.h2 
-              className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 font-montserrat"
-              style={{ textShadow: '0 4px 20px rgba(0, 0, 0, 0.9)' }}
-              initial={{ scale: 0.9 }}
-              animate={isHeadingInView ? { scale: 1 } : { scale: 0.9 }}
-              transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-            >
-              Latest Insights
-            </motion.h2>
-            <motion.p 
-              className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto font-open-sans leading-relaxed"
-              initial={{ opacity: 0 }}
-              animate={isHeadingInView ? { opacity: 1 } : { opacity: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              Stay ahead with our latest thinking on executive talent acquisition, 
-              leadership trends, and strategic hiring practices.
-            </motion.p>
-          </motion.div>
-
-          {/* Search and Filter Section */}
-          <motion.div
-            ref={searchRef}
-            initial={{ opacity: 0, y: 40 }}
-            animate={isSearchInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 md:p-10 shadow-2xl max-w-4xl mx-auto mb-16 border border-white/20"
-          >
-            <div className="flex flex-col md:flex-row gap-6">
-              {/* Search Input */}
-              <div className="flex-1 relative">
-                <svg 
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5"
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                <input
-                  type="text"
-                  placeholder="Search articles and resources..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 rounded-full border border-gray-200 focus:ring-2 focus:ring-[#0C6BAF] focus:border-transparent outline-none font-open-sans text-black"
-                />
-              </div>
-              
-              {/* Category Filter */}
-              <div className="relative">
-                <select
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="appearance-none bg-white border border-gray-200 rounded-full px-6 py-4 pr-10 focus:ring-2 focus:ring-[#0C6BAF] focus:border-transparent outline-none font-montserrat font-semibold text-[#002C5F] cursor-pointer"
-                >
-                  <option value="all">All Content</option>
-                  <option value="blog">Articles</option>
-                  <option value="whitepaper">Whitepapers</option>
-                </select>
-                <svg className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-            </div>
-          </motion.div>
           
           {/* Blog Posts Section */}
           {(selectedCategory === 'all' || selectedCategory === 'blog') && filteredBlogPosts.length > 0 && (

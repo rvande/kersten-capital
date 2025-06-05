@@ -219,58 +219,107 @@ export default async function CategoryPage(props: { params: Params, searchParams
     const totalPages = pagination.pageCount;
     
     return (
-      <main className="min-h-screen bg-gradient-to-b from-[#3A3A40] via-[#2A2A30] to-[#1E1E24]">
-        <div className="container mx-auto px-4 py-16">
-          <div className="max-w-screen-xl mx-auto">
-            <header className="mb-12">
-              <h1 className="text-5xl font-bold text-white mb-6 text-center md:text-left">
+      <main className="relative w-full overflow-hidden">
+        {/* Hero Section with Gradient Background */}
+        <section className="relative w-full overflow-hidden py-20 md:py-24 lg:py-32">
+          {/* Animated Gradient Background */}
+          <div className="absolute inset-0">
+            <div 
+              className="absolute inset-0 animate-gradient-x"
+              style={{
+                background: 'linear-gradient(-45deg, #002C5F, #0C6BAF, #005A9C, #187CC1, #71C8F3, #0C6BAF, #002C5F)',
+                backgroundSize: '400% 400%',
+              }}
+            />
+          </div>
+
+          {/* Content */}
+          <div className="relative z-10 container mx-auto px-4 md:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto text-center">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 font-montserrat"
+                  style={{ textShadow: '0 4px 20px rgba(0, 0, 0, 0.9)' }}>
                 {category.data.name}
               </h1>
-              
-              <div className="mb-8">
-                <p className="text-xl text-gray-200 border-l-4 border-[#CA3B2A] pl-4 py-2">
-                  Browse all blog posts in the {category.data.name} category.
-                </p>
-              </div>
-            </header>
-            
-            <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-12 bg-white p-5 rounded-xl shadow-sm border border-gray-100">
-              <CategoryFilter categories={categories} activeCategorySlug={slug} />
-              <SortSelector />
+              <p className="text-lg sm:text-xl md:text-2xl text-white/90 max-w-4xl mx-auto font-open-sans leading-relaxed">
+                Browse all blog posts in the {category.data.name} category.
+              </p>
             </div>
-            
-            {posts.length > 0 ? (
-              <>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {posts.map((post, index) => (
-                    <BlogPostCard 
-                      key={post.id} 
-                      post={post} 
-                      featured={index === 0 && page === 1} 
-                    />
-                  ))}
-                </div>
-                
-                <div className="mt-16">
-                  <Pagination 
-                    currentPage={currentPage} 
-                    totalPages={totalPages} 
-                  />
-                </div>
-              </>
-            ) : (
-              <div className="text-center py-20 bg-white rounded-xl shadow-sm border border-gray-100">
-                <h2 className="text-2xl font-semibold mb-4 text-[#3D3939]">No posts found</h2>
-                <p className="text-gray-600 max-w-md mx-auto mb-6">
-                  We couldn't find any blog posts in this category.
-                </p>
-                <a href="/blog" className="inline-block px-6 py-3 bg-[#CA3B2A] text-white rounded-md hover:bg-[#B02F22] transition-colors">
-                  View all posts
-                </a>
-              </div>
-            )}
           </div>
-        </div>
+
+          {/* Bottom SVG Overlay */}
+          <div className="absolute left-0 right-0 bottom-0 w-full pointer-events-none select-none z-20">
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              width="100%" 
+              height="130px" 
+              viewBox="0 0 1280 140" 
+              preserveAspectRatio="none"
+              className="w-full h-[75px] md:h-[130px]"
+            >
+              <g fill="#002c5f">
+                <path d="M1280 0l-266 91.52a72.59 72.59 0 0 1-30.76 3.71L0 0v140h1280z" />
+                <path d="M1280 0l-262.1 116.26a73.29 73.29 0 0 1-39.09 6L0 0v140h1280z" fill="#ffffff" />
+              </g>
+            </svg>
+          </div>
+        </section>
+
+        {/* Main Content Section */}
+        <section className="relative bg-white py-16 md:py-24">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto">
+              
+              {/* Search and Filter Controls */}
+              <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 sm:p-8 md:p-10 shadow-2xl max-w-4xl mx-auto mb-16 border border-gray-100">
+                <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-6">
+                  <CategoryFilter categories={categories} activeCategorySlug={slug} />
+                  <SortSelector />
+                </div>
+              </div>
+              
+              {/* Blog Posts Grid */}
+              {posts.length > 0 ? (
+                <>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-10 lg:gap-12 mb-16">
+                    {posts.map((post, index) => (
+                      <BlogPostCard 
+                        key={post.id} 
+                        post={post} 
+                        featured={index === 0 && page === 1} 
+                      />
+                    ))}
+                  </div>
+                  
+                  {/* Pagination */}
+                  {totalPages > 1 && (
+                    <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-100">
+                      <Pagination 
+                        currentPage={currentPage} 
+                        totalPages={totalPages} 
+                      />
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-12 shadow-2xl max-w-2xl mx-auto text-center border border-gray-100">
+                  <svg className="w-16 h-16 text-[#0C6BAF] mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  <h2 className="text-2xl md:text-3xl font-black mb-4 text-[#002C5F] font-montserrat">No Posts Found</h2>
+                  <p className="text-black/70 max-w-md mx-auto mb-8 font-open-sans text-lg leading-relaxed">
+                    We couldn't find any blog posts in this category. Try browsing other categories or view all posts.
+                  </p>
+                  <a 
+                    href="/blog" 
+                    className="inline-block px-8 py-4 bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] text-white rounded-full hover:shadow-lg hover:shadow-[#0C6BAF]/30 transition-all duration-300 font-montserrat font-semibold"
+                  >
+                    View All Posts
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
       </main>
     );
   } catch (error) {

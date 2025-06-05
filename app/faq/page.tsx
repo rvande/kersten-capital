@@ -10,10 +10,9 @@ export default async function FAQPage() {
   const faqData = await getFAQs();
   
   return (
-    <div className="flex flex-col flex-1 bg-gradient-to-b from-[#3A3A40] via-[#2A2A30] to-[#1E1E24]">
-      <FAQHeader />
+    <main className="relative w-full overflow-hidden">
       <FAQPageContent faqs={faqData.data || []} />
-    </div>
+    </main>
   );
 }
 

@@ -58,7 +58,7 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
   if (totalPages <= 1) return null;
 
   return (
-    <nav className="flex justify-center" aria-label="Pagination">
+    <nav className="flex justify-center font-montserrat" aria-label="Pagination">
       <ul className="flex items-center space-x-2">
         <li>
           <button
@@ -67,7 +67,7 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
             className={`flex items-center justify-center w-10 h-10 rounded-md transition-all duration-300 ${
               currentPage === 1
                 ? 'text-gray-300 cursor-not-allowed'
-                : 'text-gray-600 hover:bg-gray-100 hover:text-[#CA3B2A]'
+                : 'text-gray-600 hover:bg-gray-100 hover:text-[#0C6BAF]'
             }`}
             aria-label="Previous page"
           >
@@ -86,8 +86,8 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
                 onClick={() => navigateToPage(page as number)}
                 className={`flex items-center justify-center w-10 h-10 rounded-md font-medium transition-all duration-300 ${
                   currentPage === page
-                    ? 'bg-[#CA3B2A] text-white shadow-sm'
-                    : 'text-gray-700 hover:bg-gray-100 hover:text-[#CA3B2A]'
+                    ? 'bg-[#0C6BAF] text-white shadow-sm'
+                    : 'text-gray-700 hover:bg-gray-100 hover:text-[#0C6BAF]'
                 }`}
                 aria-current={currentPage === page ? 'page' : undefined}
               >
@@ -104,7 +104,7 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
             className={`flex items-center justify-center w-10 h-10 rounded-md transition-all duration-300 ${
               currentPage === totalPages
                 ? 'text-gray-300 cursor-not-allowed'
-                : 'text-gray-600 hover:bg-gray-100 hover:text-[#CA3B2A]'
+                : 'text-gray-600 hover:bg-gray-100 hover:text-[#0C6BAF]'
             }`}
             aria-label="Next page"
           >
