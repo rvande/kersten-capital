@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Navbar as NavbarType } from '../types/navigation';
 import { getStrapiMedia } from '../utils/media';
+import SearchBar from './SearchBar';
 
 interface NavbarProps {
   navbar: NavbarType | null;
@@ -75,6 +76,9 @@ export default function Navbar({ navbar }: NavbarProps) {
           <Link href="/" className="font-montserrat font-black text-2xl md:text-3xl lg:text-4xl text-[#002C5F]">
             Kersten Talent Capital
           </Link>
+          <div className="hidden lg:block w-80">
+            <SearchBar placeholder="Search..." />
+          </div>
         </div>
       </div>
     );
@@ -108,8 +112,8 @@ export default function Navbar({ navbar }: NavbarProps) {
           </Link>
           
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center">
-            <nav className="flex items-center space-x-8 xl:space-x-10 mr-6" aria-label="Main Navigation">
+          <div className="hidden lg:flex items-center space-x-6">
+            <nav className="flex items-center space-x-8 xl:space-x-10" aria-label="Main Navigation">
                {/* Our Approach Link */}
                <Link 
                 href="/our-approach" 
@@ -181,16 +185,12 @@ export default function Navbar({ navbar }: NavbarProps) {
               ))}
             </nav>
             
-            {/* Desktop Contact CTA */}
-            <Link 
-              href="/contact" 
-              className="bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] hover:from-[#187CC1] hover:to-[#71C8F3] text-white text-lg font-semibold font-open-sans py-3 px-6 rounded-md shadow-md transition-all duration-200 flex items-center"
-            >
-              <span>Contact Us</span>
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </Link>
+            {/* Desktop Search Bar */}
+            <div className="w-80">
+              <SearchBar placeholder="Search..." />
+            </div>
+            
+         
           </div>
           
           {/* Mobile menu button */}
@@ -221,6 +221,11 @@ export default function Navbar({ navbar }: NavbarProps) {
           }`}
         >
           <nav className="flex flex-col space-y-1 py-4 border-t border-gray-200 mt-4">
+            {/* Mobile Search Bar */}
+            <div className="px-2 py-4">
+              <SearchBar placeholder="Search..." />
+            </div>
+            
             {navbar.menu?.map((menuItem) => (
               <div key={menuItem.id} className="py-2">
                 <button 
