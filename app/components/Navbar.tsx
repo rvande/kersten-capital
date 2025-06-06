@@ -223,7 +223,10 @@ export default function Navbar({ navbar }: NavbarProps) {
           <nav className="flex flex-col space-y-1 py-4 border-t border-gray-200 mt-4">
             {/* Mobile Search Bar */}
             <div className="px-2 py-4">
-              <SearchBar placeholder="Search..." />
+              <SearchBar 
+                placeholder="Search..." 
+                onResultSelect={() => setMobileMenuOpen(false)}
+              />
             </div>
             
             {navbar.menu?.map((menuItem) => (

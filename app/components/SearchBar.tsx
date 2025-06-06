@@ -11,13 +11,15 @@ interface SearchBarProps {
   placeholder?: string;
   showSuggestions?: boolean;
   onSearch?: (query: string) => void;
+  onResultSelect?: () => void;
 }
 
 export default function SearchBar({ 
   className = '', 
   placeholder = 'Search our site...', 
   showSuggestions = true,
-  onSearch 
+  onSearch,
+  onResultSelect
 }: SearchBarProps) {
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState<SearchResult[]>([]);
@@ -156,6 +158,11 @@ export default function SearchBar({
       setIsOpen(false);
       setQuery('');
       inputRef.current?.blur();
+      
+      // Call the callback to notify parent (e.g., to close mobile menu)
+      if (onResultSelect) {
+        onResultSelect();
+      }
     }
   };
 
@@ -164,6 +171,11 @@ export default function SearchBar({
     setIsOpen(false);
     setQuery('');
     inputRef.current?.blur();
+    
+    // Call the callback to notify parent (e.g., to close mobile menu)
+    if (onResultSelect) {
+      onResultSelect();
+    }
   };
 
   const getTypeIcon = (type: string) => {
@@ -323,6 +335,11 @@ export default function SearchBar({
                   onClick={() => {
                     setIsOpen(false);
                     setQuery('');
+                    
+                    // Call the callback to notify parent (e.g., to close mobile menu)
+                    if (onResultSelect) {
+                      onResultSelect();
+                    }
                   }}
                 >
                   <span>View all results for "{query}"</span>
