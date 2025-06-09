@@ -106,6 +106,27 @@ const STATIC_PAGES = [
     category: 'Industries'
   },
   {
+    id: 'utilities-industry-leadership',
+    title: 'Utilities Industry Leadership Excellence',
+    excerpt: 'Specialized commercial leadership for utilities companies across electric, gas, water, and renewable energy sectors with comprehensive GTM expertise.',
+    url: '/industries/manufacturing-distribution-industrial/utilities',
+    category: 'Industries'
+  },
+  {
+    id: 'pe-backed-entities',
+    title: 'PE-Backed Manufacturing Entities',
+    excerpt: 'Specialized commercial leadership for private equity-backed manufacturing and industrial companies driving accelerated growth and value creation.',
+    url: '/industries/manufacturing-distribution-industrial/pe-backed-entities',
+    category: 'Industries'
+  },
+  {
+    id: 'sales-marketing-gtm',
+    title: 'Sales, Marketing & Go-to-Market Leadership',
+    excerpt: 'Comprehensive revenue leadership roles across industrial and utilities sectors with specialized GTM expertise and commercial strategy development.',
+    url: '/industries/sales-marketing-go-to-market',
+    category: 'Industries'
+  },
+  {
     id: 'tech-stack',
     title: 'Tech Stack - Our Technology Platform',
     excerpt: 'Learn about the technology and tools we use to deliver exceptional recruitment results.',

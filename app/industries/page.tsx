@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaLaptopCode, FaIndustry, FaShoppingCart, FaBolt, FaArrowRight } from 'react-icons/fa';
+import { FaLaptopCode, FaIndustry, FaShoppingCart, FaBolt, FaArrowRight, FaChartLine } from 'react-icons/fa';
 
 // Animation variants
 const containerVariants = {
@@ -46,7 +46,7 @@ const cardVariants = {
 const industries = [
   {
     title: "Technology & Financial Services",
-    description: "Navigating the rapidly evolving landscape of technology and financial services to identify forward-thinking leaders who drive innovation and growth.",
+    description: "Navigating the rapidly evolving landscape of technology and financial services to identify forward-thinking leaders who drive innovation, growth, and sophisticated go-to-market strategies.",
     href: "/industries/technology-financial-services",
     icon: <FaLaptopCode className="w-16 h-16 text-white" />,
     focusAreas: [
@@ -54,27 +54,27 @@ const industries = [
       "Financial Technology Innovation",
       "Cybersecurity Excellence",
       "Enterprise Software Leadership",
-      "Digital Banking Transformation"
+      "Digital Banking Transformation & GTM"
     ],
     gradient: "from-[#0C6BAF] to-[#187CC1]"
   },
   {
     title: "Manufacturing, Distribution & Industrial",
-    description: "Identifying transformational leaders who balance operational excellence with visionary strategy in today's evolving industrial landscape.",
+    description: "Identifying transformational leaders who balance operational excellence with visionary strategy and comprehensive go-to-market approaches in today's evolving industrial landscape.",
     href: "/industries/manufacturing-distribution-industrial",
     icon: <FaIndustry className="w-16 h-16 text-white" />,
     focusAreas: [
-      "Advanced Manufacturing Leadership",
+      "Advanced Manufacturing Leadership & GTM",
       "Global Supply Chain Optimization",
       "Industrial Automation Excellence",
-      "Operational Excellence & Continuous Improvement",
+      "Operational Excellence & GTM Strategy",
       "Industrial Technology Implementation"
     ],
     gradient: "from-[#187CC1] to-[#71C8F3]"
   },
   {
     title: "E-Commerce & Digital Retail",
-    description: "Finding leaders who combine customer-centric vision with technical and operational excellence at the intersection of technology, marketing, and consumer experience.",
+    description: "Finding leaders who combine customer-centric vision with technical and operational excellence at the intersection of technology, marketing, and consumer experience through innovative GTM strategies.",
     href: "/industries/e-commerce-digital-retail",
     icon: <FaShoppingCart className="w-16 h-16 text-white" />,
     focusAreas: [
@@ -82,23 +82,37 @@ const industries = [
       "Omnichannel Integration & Experience",
       "Consumer Analytics & Personalization",
       "Digital Merchandising Excellence",
-      "Last-Mile Innovation & Fulfillment"
+      "Last-Mile Innovation & GTM Strategy"
     ],
     gradient: "from-[#71C8F3] to-[#005A9C]"
   },
   {
     title: "Energy, Renewables & Mining",
-    description: "Recruiting leaders capable of navigating complex regulatory environments while driving innovation and sustainability initiatives across the energy sector.",
+    description: "Placing leaders who navigate complex regulatory environments while driving innovation, sustainability initiatives, and comprehensive go-to-market strategies in evolving energy markets.",
     href: "/industries/energy-renewables-mining",
     icon: <FaBolt className="w-16 h-16 text-white" />,
     focusAreas: [
       "Renewable Energy Leadership",
-      "Energy Transition & Traditional Energy Transformation",
-      "Mining Operations & Sustainability",
-      "Energy Technology & Innovation",
-      "ESG Leadership & Sustainable Operations"
+      "Energy Market Navigation & GTM",
+      "Regulatory Compliance Excellence",
+      "Sustainable Technology Innovation",
+      "Mining Operations & Commercial Strategy"
     ],
     gradient: "from-[#005A9C] to-[#002C5F]"
+  },
+  {
+    title: "Sales, Marketing & Go-to-Market Leadership",
+    description: "Identifying revenue leaders who drive growth in complex B2B environments, specializing in industrial and utilities sectors with deep understanding of technical sales cycles.",
+    href: "/industries/sales-marketing-go-to-market",
+    icon: <FaChartLine className="w-16 h-16 text-white" />,
+    focusAreas: [
+      "Revenue Leadership - Industrial & Utilities",
+      "Strategic Account Management",
+      "Specialized Sales Leadership",
+      "Marketing & Brand Leadership",
+      "Go-to-Market Strategy"
+    ],
+    gradient: "from-[#002C5F] to-[#0C6BAF]"
   }
 ];
 
@@ -204,11 +218,76 @@ export default function IndustriesPage() {
             </motion.div>
 
             {/* Industries Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-              {industries.map((industry, index) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-12">
+              {industries.slice(0, 3).map((industry, index) => (
                 <motion.div
                   key={industry.title}
                   custom={index}
+                  variants={cardVariants}
+                  whileHover={{ 
+                    y: -10,
+                    transition: { duration: 0.3, ease: "easeOut" }
+                  }}
+                  className="group"
+                >
+                  <Link href={industry.href} className="block h-full">
+                    <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden h-full border border-gray-100 hover:border-[#0C6BAF]/20">
+                      {/* Industry Icon & Header */}
+                      <div className={`bg-gradient-to-br ${industry.gradient} p-8 relative overflow-hidden`}>
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16" />
+                        <div className="relative z-10">
+                          <div className="mb-6">
+                            {industry.icon}
+                          </div>
+                          <h3 className="text-2xl md:text-3xl font-black text-white mb-4 font-montserrat">
+                            {industry.title}
+                          </h3>
+                        </div>
+                      </div>
+
+                      {/* Industry Content */}
+                      <div className="p-8">
+                        <p className="text-black/80 mb-6 font-open-sans text-base leading-relaxed">
+                          {industry.description}
+                        </p>
+
+                        {/* Focus Areas */}
+                        <div className="mb-6">
+                          <h4 className="text-lg font-black text-[#002C5F] mb-3 font-montserrat">
+                            Focus Areas:
+                          </h4>
+                          <ul className="space-y-2">
+                            {industry.focusAreas.map((area, areaIndex) => (
+                              <li key={areaIndex} className="flex items-start">
+                                <div className="w-2 h-2 bg-[#0C6BAF] rounded-full mt-2 mr-3 flex-shrink-0" />
+                                <span className="text-black/70 font-open-sans text-sm">
+                                  {area}
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        {/* CTA */}
+                        <div className="pt-4 border-t border-gray-100">
+                          <div className="flex items-center text-[#0C6BAF] font-semibold font-montserrat group-hover:text-[#187CC1] transition-colors">
+                            <span>Explore Sector</span>
+                            <FaArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Second Row for remaining industries */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mt-8 lg:mt-12 max-w-4xl mx-auto">
+              {industries.slice(3).map((industry, index) => (
+                <motion.div
+                  key={industry.title}
+                  custom={index + 3}
                   variants={cardVariants}
                   whileHover={{ 
                     y: -10,

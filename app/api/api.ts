@@ -193,7 +193,7 @@ export function getS3URL(path = '') {
  * Includes metadata, navigation, footer, etc.
  */
 export async function getGlobalData() {
-  // Deep populate to fetch all necessary navbar data
+  // Use the populate structure that we confirmed works from debugging
   const queryParams = {
     populate: {
       metadata: {
@@ -242,6 +242,17 @@ export async function getGlobalData() {
   
   try {
     const data = await fetchAPI('/global', queryParams);
+    
+    // Log a summary for debugging
+    console.log('Global data fetched successfully');
+    if (data?.data?.navbar?.menu) {
+      console.log(`Navbar menu loaded with ${data.data.navbar.menu.length} menu items`);
+      data.data.navbar.menu.forEach((menuItem: any, index: number) => {
+        const linkCount = menuItem.links ? menuItem.links.length : 0;
+        console.log(`  Menu ${index}: "${menuItem.title}" (${linkCount} links)`);
+      });
+    }
+    
     return data;
   } catch (error) {
     console.error('Failed to fetch global data:', error);

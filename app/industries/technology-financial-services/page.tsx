@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaRobot, FaShieldAlt, FaLaptopCode, FaUniversity, FaCogs, FaIndustry, FaShoppingCart, FaBolt, FaArrowRight } from 'react-icons/fa';
+import { FaRobot, FaShieldAlt, FaLaptopCode, FaUniversity, FaCogs, FaIndustry, FaShoppingCart, FaBolt, FaArrowRight, FaChartLine } from 'react-icons/fa';
 
 // Animation variants
 const containerVariants = {
@@ -306,7 +306,7 @@ export default function TechnologyFinancialServicesPage() {
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               <motion.div custom={0} variants={cardVariants}>
                 <Link href="/industries/manufacturing-distribution-industrial" className="block group">
                   <div className="bg-gradient-to-br from-[#F8F9FA] to-[#E9ECEF] rounded-2xl p-8 hover:shadow-lg transition-all duration-300 border border-gray-100">
@@ -352,6 +352,24 @@ export default function TechnologyFinancialServicesPage() {
                     </h3>
                     <p className="text-black/70 font-open-sans leading-relaxed mb-4">
                       Leaders navigating complex regulatory environments while driving innovation.
+                    </p>
+                    <div className="flex items-center text-[#0C6BAF] group-hover:text-[#187CC1] transition-colors font-montserrat font-semibold">
+                      <span>Learn More</span>
+                      <FaArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+
+              <motion.div custom={3} variants={cardVariants}>
+                <Link href="/industries/sales-marketing-go-to-market" className="block group">
+                  <div className="bg-gradient-to-br from-[#F8F9FA] to-[#E9ECEF] rounded-2xl p-8 hover:shadow-lg transition-all duration-300 border border-gray-100">
+                    <FaChartLine className="w-12 h-12 text-[#0C6BAF] mb-6" />
+                    <h3 className="text-xl font-black text-[#002C5F] mb-4 font-montserrat">
+                      Sales, Marketing & Go-to-Market
+                    </h3>
+                    <p className="text-black/70 font-open-sans leading-relaxed mb-4">
+                      Revenue leaders driving growth in complex B2B industrial and utilities environments.
                     </p>
                     <div className="flex items-center text-[#0C6BAF] group-hover:text-[#187CC1] transition-colors font-montserrat font-semibold">
                       <span>Learn More</span>

@@ -231,7 +231,7 @@ export default function SearchBar({
             }
           }}
           placeholder={placeholder}
-          className="w-full pl-12 pr-12 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#0C6BAF] focus:border-transparent transition-all duration-200 text-base"
+          className="w-full pl-12 pr-12 py-3 border-2 border-[#187CC1] rounded-lg bg-white text-gray-900 placeholder-[#005A9C] focus:outline-none focus:ring-2 focus:ring-[#0C6BAF] focus:border-[#0C6BAF] transition-all duration-200 text-base shadow-md"
         />
         
         {/* Search Icon */}
@@ -240,7 +240,7 @@ export default function SearchBar({
             <div className="animate-spin rounded-full h-5 w-5 border-2 border-[#0C6BAF] border-t-transparent"></div>
           ) : (
             <svg 
-              className="h-5 w-5 text-gray-500" 
+              className="h-5 w-5 text-[#187CC1]" 
               fill="none" 
               stroke="currentColor" 
               viewBox="0 0 24 24"
@@ -253,7 +253,7 @@ export default function SearchBar({
         {/* Search Button */}
         <button
           onClick={handleSearch}
-          className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-500 hover:text-[#0C6BAF] transition-colors duration-200"
+          className="absolute inset-y-0 right-0 pr-4 flex items-center text-[#187CC1] hover:text-[#0C6BAF] transition-colors duration-200"
           aria-label="Search"
         >
           <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

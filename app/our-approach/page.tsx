@@ -843,13 +843,13 @@ export default function OurApproachPage() {
               variants={slideInVariants}
               className="bg-gradient-to-br from-[#187CC1] to-[#0C6BAF] text-white p-6 rounded-2xl shadow-lg"
             >
-              <h4 className="font-montserrat text-xl font-bold mb-4">Sales, Marketing & Revenue Operations</h4>
+              <h4 className="font-montserrat text-xl font-bold mb-4">Sales, Marketing & GTM Operations</h4>
               <ul className="space-y-2 font-open-sans">
-                <li>• CCO</li>
-                <li>• CRO, CMO</li>
+                <li>• CCO, CRO, CMO</li>
                 <li>• VP Sales, VP Marketing</li>
                 <li>• Key Account Director</li>
                 <li>• Director of Marketing Strategy</li>
+                <li>• VP of Go-to-Market Strategy</li>
               </ul>
             </motion.div>
 
