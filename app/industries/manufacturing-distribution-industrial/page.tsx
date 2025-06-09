@@ -117,8 +117,9 @@ export default function ManufacturingDistributionIndustrialPage() {
                   animation: isLoaded ? 'slideRight 1.5s cubic-bezier(0.4,0,0.2,1)' : 'none',
                 }}
               >
-                <span className="block md:inline">Industrial</span>
+                
                 <span className="text-white block">Manufacturing &</span>
+                <span className="block md:inline">Industrial</span>
               </h1>
             </div>
             {/* Subheadline */}
