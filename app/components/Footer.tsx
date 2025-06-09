@@ -287,7 +287,7 @@ export default function Footer({ footer }: FooterProps) {
               <a href="/privacy-policy" className="text-white/80 hover:text-[#71C8F3] transition-colors duration-300 font-open-sans text-lg hover:font-semibold">
                 Privacy Policy
               </a>
-              <a href="/terms-of-service" className="text-white/80 hover:text-[#71C8F3] transition-colors duration-300 font-open-sans text-lg hover:font-semibold">
+              <a href="/terms-conditions" className="text-white/80 hover:text-[#71C8F3] transition-colors duration-300 font-open-sans text-lg hover:font-semibold">
                 Terms of Service
               </a>
             </div>
