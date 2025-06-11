@@ -273,3 +273,25 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* Stylish pattern background for sections */
+.stylish-pattern-bg {
+  background-color: #f8f9fa;
+  position: relative;
+}
+
+.stylish-pattern-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.10;
+  background-color: #e5e5f7;
+  background: linear-gradient(135deg, #0C6BAF55 25%, transparent 25%) -10px 0/ 20px 20px, 
+              linear-gradient(225deg, #0C6BAF 25%, transparent 25%) -10px 0/ 20px 20px, 
+              linear-gradient(315deg, #0C6BAF55 25%, transparent 25%) 0px 0/ 20px 20px, 
+              linear-gradient(45deg, #0C6BAF 25%, #e5e5f7 25%) 0px 0/ 20px 20px;
+  z-index: 1;
+}
+

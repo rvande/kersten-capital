@@ -145,7 +145,7 @@ export default function Hero2() {
           {/* Subheadline/Description */}
           <div className="w-full md:flex md:justify-start flex justify-center mb-8 md:mb-10">
             <p className="max-w-3xl md:text-left text-center text-white font-open-sans font-normal text-base md:text-lg lg:text-xl text-body">
-              Kersten Talent Capital strives to revolutionize organizational performance through strategic talent intelligence and executive placement solutions that catalyze growth, innovation, and sustainable competitive advantages for forward-thinking enterprises across global markets.
+              Kersten Talent Capital strives to revolutionize organizational performance through strategic talent intelligence and executive placement solutions that catalyze growth, innovation, and sustainable competitive advantages for forward-thinking enterprises across global markets. Serving companies in Europe and North America.
             </p>
           </div>
           {/* CTA Button */}

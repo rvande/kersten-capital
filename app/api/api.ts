@@ -1,4 +1,5 @@
 import qs from 'qs';
+import { GetIndustriesParams, IndustriesResponse, IndustryResponse } from '../types/pages';
 
 
 /**
@@ -282,5 +283,136 @@ export async function getGlobalData() {
       },
       meta: {}
     };
+  }
+}
+
+/**
+ * Fetch all industries from Strapi
+ * @param {GetIndustriesParams} params Query parameters
+ * @returns {Promise<IndustriesResponse>} Industries data
+ */
+export async function getIndustries(params: any = {}) {
+  const defaultParams = {
+    populate: {
+      heroImage: {
+        populate: '*'
+      },
+      overviewSection: {
+        populate: '*'
+      },
+      focusAreas: {
+        populate: '*'
+      }
+    },
+    filters: {
+      isActive: {
+        $eq: true
+      }
+    },
+    sort: ['displayOrder:asc', 'title:asc']
+  };
+
+  const mergedParams = { ...defaultParams, ...params };
+  
+  try {
+    const data = await fetchAPI('/industries', mergedParams);
+    return data;
+  } catch (error) {
+    console.error('Failed to fetch industries:', error);
+    throw error;
+  }
+}
+
+/**
+ * Fetch a single industry by slug
+ * @param {string} slug Industry slug
+ * @returns {Promise<IndustryResponse>} Industry data
+ */
+export async function getIndustryBySlug(slug: string) {
+  const params = {
+    populate: {
+      heroImage: {
+        populate: '*'
+      },
+      overviewSection: {
+        populate: '*'
+      },
+      focusAreas: {
+        populate: '*'
+      }
+    },
+    filters: {
+      $or: [
+        {
+          slug: {
+            $eq: slug
+          }
+        },
+        {
+          slug: {
+            $eq: `industries/${slug}`
+          }
+        }
+      ],
+      isActive: {
+        $eq: true
+      }
+    }
+  };
+
+  try {
+    const data = await fetchAPI('/industries', params);
+    
+    // Return the first item since we're filtering by unique slug
+    if (data?.data && Array.isArray(data.data) && data.data.length > 0) {
+      return {
+        data: data.data[0],
+        meta: data.meta
+      };
+    }
+    
+    // Return null if no industry found
+    return {
+      data: null,
+      meta: data?.meta || {}
+    };
+  } catch (error) {
+    console.error(`Failed to fetch industry with slug "${slug}":`, error);
+    throw error;
+  }
+}
+
+/**
+ * Get all industry slugs for static generation
+ * @returns {Promise<string[]>} Array of industry slugs
+ */
+export async function getIndustrySlugs() {
+  const params = {
+    fields: ['slug'],
+    filters: {
+      isActive: {
+        $eq: true
+      }
+    },
+    pagination: {
+      pageSize: 100 // Get all active industries
+    }
+  };
+
+  try {
+    const data = await fetchAPI('/industries', params);
+    
+    if (data?.data && Array.isArray(data.data)) {
+      return data.data.map((industry: any) => {
+        // Remove "industries/" prefix if present to match URL structure
+        const slug = industry.slug;
+        return slug.startsWith('industries/') ? slug.replace('industries/', '') : slug;
+      }).filter(Boolean);
+    }
+    
+    return [];
+  } catch (error) {
+    console.error('Failed to fetch industry slugs:', error);
+    return [];
   }
 } 

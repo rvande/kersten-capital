@@ -11,10 +11,11 @@ interface RichTextRendererProps {
 /**
  * RichTextRenderer component to render Strapi content blocks
  * Supports paragraphs, headings, lists, quotes, images and formatting
+ * Updated to match site's brand styling
  */
 const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content }) => {
   if (!content || !Array.isArray(content) || content.length === 0) {
-    return <p className="text-gray-500">No content available.</p>;
+    return <p className="text-gray-500 font-open-sans">No content available.</p>;
   }
 
   const renderNode = (node: any, index: number | string): ReactNode => {
@@ -25,7 +26,7 @@ const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content }) => {
     switch (node.type) {
       case 'paragraph':
         return (
-          <p key={`p-${index}`} className="mb-5 text-gray-800 leading-relaxed">
+          <p key={`p-${index}`} className="mb-6 text-black/80 leading-relaxed font-open-sans text-lg">
             {node.children && node.children.map((child: any, childIndex: number) => 
               renderTextNode(child, `p-${index}-${childIndex}`)
             )}
@@ -36,14 +37,14 @@ const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content }) => {
         // Use createElement instead of dynamic JSX tag
         const level = node.level || 2;
         
-        // Define heading styles based on level
+        // Define heading styles based on level - using site's brand colors
         const headingStyles = {
-          1: "text-4xl font-bold mt-10 mb-6 text-[#3D3939]",
-          2: "text-3xl font-bold mt-8 mb-5 text-[#3D3939]",
-          3: "text-2xl font-bold mt-7 mb-4 text-[#3D3939]",
-          4: "text-xl font-bold mt-6 mb-3 text-[#3D3939]",
-          5: "text-lg font-bold mt-5 mb-3 text-[#3D3939]",
-          6: "text-base font-bold mt-4 mb-2 text-[#3D3939]",
+          1: "text-4xl md:text-5xl font-black mt-12 mb-8 text-[#002C5F] font-montserrat leading-tight",
+          2: "text-3xl md:text-4xl font-black mt-10 mb-6 text-[#002C5F] font-montserrat leading-tight",
+          3: "text-2xl md:text-3xl font-black mt-8 mb-5 text-[#002C5F] font-montserrat leading-tight",
+          4: "text-xl md:text-2xl font-black mt-7 mb-4 text-[#002C5F] font-montserrat leading-tight",
+          5: "text-lg md:text-xl font-black mt-6 mb-3 text-[#002C5F] font-montserrat leading-tight",
+          6: "text-base md:text-lg font-black mt-5 mb-3 text-[#002C5F] font-montserrat leading-tight",
         };
         
         return createElement(
@@ -60,9 +61,9 @@ const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content }) => {
       case 'list':
         if (node.format === 'ordered') {
           return (
-            <ol key={`ol-${index}`} className="list-decimal pl-8 mb-6 text-gray-800 space-y-2">
+            <ol key={`ol-${index}`} className="list-decimal pl-8 mb-8 text-black/80 space-y-3 font-open-sans text-lg">
               {node.children && node.children.map((item: any, itemIndex: number) => 
-                <li key={`li-${index}-${itemIndex}`} className="pl-2 pb-1">
+                <li key={`li-${index}-${itemIndex}`} className="pl-3 leading-relaxed">
                   {item.children && item.children.map((child: any, childIndex: number) => 
                     renderNode(child, `li-${index}-${itemIndex}-${childIndex}`)
                   )}
@@ -72,9 +73,9 @@ const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content }) => {
           );
         } else {
           return (
-            <ul key={`ul-${index}`} className="list-disc pl-8 mb-6 text-gray-800 space-y-2">
+            <ul key={`ul-${index}`} className="list-disc pl-8 mb-8 text-black/80 space-y-3 font-open-sans text-lg">
               {node.children && node.children.map((item: any, itemIndex: number) => 
-                <li key={`li-${index}-${itemIndex}`} className="pl-2 pb-1">
+                <li key={`li-${index}-${itemIndex}`} className="pl-3 leading-relaxed">
                   {item.children && item.children.map((child: any, childIndex: number) => 
                     renderNode(child, `li-${index}-${itemIndex}-${childIndex}`)
                   )}
@@ -86,7 +87,7 @@ const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content }) => {
       
       case 'list-item':
         return (
-          <li key={`li-${index}`} className="mb-2">
+          <li key={`li-${index}`} className="mb-3 leading-relaxed">
             {node.children && node.children.map((child: any, childIndex: number) => 
               renderNode(child, `li-child-${index}-${childIndex}`)
             )}
@@ -96,7 +97,7 @@ const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content }) => {
       case 'quote':
       case 'blockquote':
         return (
-          <blockquote key={`quote-${index}`} className="border-l-4 border-[#CA3B2A] pl-6 italic my-8 py-3 bg-[#CA3B2A]/5 text-gray-700 rounded-r text-lg">
+          <blockquote key={`quote-${index}`} className="border-l-4 border-[#0C6BAF] pl-8 italic my-10 py-6 bg-gradient-to-r from-[#0C6BAF]/5 to-transparent text-black/80 rounded-r-lg text-xl font-open-sans leading-relaxed">
             {node.children && node.children.map((child: any, childIndex: number) => 
               renderNode(child, `quote-${index}-${childIndex}`)
             )}
@@ -105,8 +106,8 @@ const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content }) => {
       
       case 'code':
         return (
-          <pre key={`code-${index}`} className="bg-gray-100 p-5 rounded-lg my-6 overflow-x-auto border border-gray-200 shadow-sm">
-            <code className="text-[#3D3939] text-sm">
+          <pre key={`code-${index}`} className="bg-gray-50 border border-gray-200 p-6 rounded-xl my-8 overflow-x-auto shadow-sm">
+            <code className="text-[#002C5F] text-sm font-mono leading-relaxed">
               {node.children && node.children.map((child: any, childIndex: number) => 
                 renderTextNode(child, `code-${index}-${childIndex}`, false)
               )}
@@ -120,16 +121,20 @@ const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content }) => {
         const caption = node.caption || '';
         
         return (
-          <figure key={`img-${index}`} className="my-8">
-            <div className="relative h-80 w-full rounded-lg overflow-hidden shadow-md">
+          <figure key={`img-${index}`} className="my-10">
+            <div className="relative h-96 w-full rounded-xl overflow-hidden shadow-lg border border-gray-100">
               <Image 
                 src={imageUrl} 
                 alt={altText} 
                 fill 
-                className="object-contain"
+                className="object-cover"
               />
             </div>
-            {caption && <figcaption className="text-center text-sm text-gray-600 mt-3 italic">{caption}</figcaption>}
+            {caption && (
+              <figcaption className="text-center text-sm text-black/60 mt-4 italic font-open-sans">
+                {caption}
+              </figcaption>
+            )}
           </figure>
         );
       
@@ -169,19 +174,19 @@ const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content }) => {
       let formattedText = <span key={key}>{text}</span>;
       
       if (node.bold) {
-        formattedText = <strong key={`bold-${key}`} className="font-bold text-[#3D3939]">{formattedText}</strong>;
+        formattedText = <strong key={`bold-${key}`} className="font-black text-[#002C5F]">{formattedText}</strong>;
       }
       
       if (node.italic) {
-        formattedText = <em key={`italic-${key}`}>{formattedText}</em>;
+        formattedText = <em key={`italic-${key}`} className="italic">{formattedText}</em>;
       }
       
       if (node.underline) {
-        formattedText = <u key={`underline-${key}`}>{formattedText}</u>;
+        formattedText = <u key={`underline-${key}`} className="underline decoration-[#0C6BAF]">{formattedText}</u>;
       }
       
       if (node.code) {
-        formattedText = <code key={`inline-code-${key}`} className="bg-gray-100 px-1.5 py-0.5 rounded text-[#CA3B2A] text-sm">{formattedText}</code>;
+        formattedText = <code key={`inline-code-${key}`} className="bg-gray-100 px-2 py-1 rounded text-[#0C6BAF] text-sm font-mono border border-gray-200">{formattedText}</code>;
       }
       
       return formattedText;
@@ -199,7 +204,7 @@ const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content }) => {
             href={url} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-[#CA3B2A] hover:underline font-medium bg-transparent"
+            className="text-[#0C6BAF] hover:text-[#187CC1] font-semibold underline decoration-2 underline-offset-2 hover:decoration-[#187CC1] transition-all duration-300"
           >
             {node.children && node.children.map((child: any, index: number) => 
               renderTextNode(child, `link-${key}-${index}`)
@@ -211,7 +216,7 @@ const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content }) => {
           <Link 
             key={key}
             href={url}
-            className="text-[#CA3B2A] hover:underline font-medium bg-transparent"
+            className="text-[#0C6BAF] hover:text-[#187CC1] font-semibold underline decoration-2 underline-offset-2 hover:decoration-[#187CC1] transition-all duration-300"
           >
             {node.children && node.children.map((child: any, index: number) => 
               renderTextNode(child, `link-${key}-${index}`)

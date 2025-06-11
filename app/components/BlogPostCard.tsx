@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { BlogPost } from '@/app/types/blog';
 import { getS3URL } from '@/app/api/api';
+import { FaClock, FaArrowRight } from 'react-icons/fa6';
 
 interface BlogPostCardProps {
   post: BlogPost;
@@ -53,15 +54,30 @@ export default function BlogPostCard({ post, featured = false }: BlogPostCardPro
     day: 'numeric'
   });
 
+  // Calculate reading time (rough estimate)
+  const getReadingTime = () => {
+    const wordsPerMinute = 200;
+    const wordCount = post.excerpt ? post.excerpt.split(' ').length : 100;
+    return Math.ceil(wordCount / wordsPerMinute);
+  };
+
+  const readingTime = getReadingTime();
+
   const navigateToPost = () => {
     router.push(`/blog/${post.slug}`);
   };
 
-  // Create a placeholder for the image
+  // Create a sophisticated placeholder for the image
   const placeholderImage = (
-    <div className="bg-gradient-to-br from-[#0C6BAF] to-[#005A9C] w-full h-full flex items-center justify-center">
+    <div className="bg-gradient-to-br from-[#0C6BAF] via-[#187CC1] to-[#71C8F3] w-full h-full flex items-center justify-center relative overflow-hidden">
+      {/* Background pattern */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.3'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        }} />
+      </div>
       <svg 
-        className="w-12 h-12 text-white/70" 
+        className="w-16 h-16 text-white/80 relative z-10" 
         fill="none" 
         stroke="currentColor" 
         viewBox="0 0 24 24" 
@@ -70,71 +86,102 @@ export default function BlogPostCard({ post, featured = false }: BlogPostCardPro
         <path 
           strokeLinecap="round" 
           strokeLinejoin="round" 
-          strokeWidth={1} 
-          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" 
+          strokeWidth={1.5} 
+          d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" 
         />
       </svg>
     </div>
   );
 
   return (
-    <article className={`relative group cursor-pointer ${featured ? 'md:col-span-2' : ''}`}>
-      {/* Blue background - positioned behind card */}
-      <div className="absolute inset-0 bg-[#0C6BAF] rounded-xl transform translate-x-2 translate-y-2 transition-transform duration-300 group-hover:translate-x-3 group-hover:translate-y-3" />
-      
+    <article className={`group cursor-pointer ${featured ? 'md:col-span-2 lg:col-span-1' : ''}`}>
       {/* Main card */}
-      <div className="relative bg-white rounded-xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 group-hover:-translate-x-1 group-hover:-translate-y-1 flex flex-col">
+      <div className="relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl border border-gray-100 hover:border-[#0C6BAF]/20 transition-all duration-500 group-hover:-translate-y-2 flex flex-col h-full">
         {/* Main card content (clickable) */}
         <div 
           className="cursor-pointer flex flex-col flex-grow" 
           onClick={navigateToPost}
         >
-          <div className="relative aspect-video overflow-hidden">
+          {/* Image Container */}
+          <div className="relative aspect-[16/10] overflow-hidden">
             {imageUrl ? (
               <Image 
                 src={imageUrl} 
                 alt={typeof post.coverImage === 'object' && post.coverImage?.alternativeText || post.title}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                className="object-cover transition-transform duration-700 group-hover:scale-110"
                 placeholder="blur"
                 blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
               />
             ) : placeholderImage}
+            
+            {/* Gradient overlay on hover */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            
+            {/* Featured badge */}
+            {featured && (
+              <div className="absolute top-4 left-4 bg-gradient-to-r from-[#0C6BAF] to-[#187CC1] text-white px-3 py-1 rounded-full text-xs font-bold font-montserrat shadow-lg">
+                Featured
+              </div>
+            )}
           </div>
           
-          <div className="p-6 flex flex-col flex-grow">
-            <p className="text-sm text-[#0C6BAF] mb-2 font-montserrat font-semibold">{formattedDate}</p>
+          {/* Content Container */}
+          <div className="p-6 lg:p-8 flex flex-col flex-grow">
+            {/* Meta Information */}
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center text-[#0C6BAF] text-sm font-montserrat font-semibold">
+                <FaClock className="w-3 h-3 mr-2" />
+                <span>{readingTime} min read</span>
+              </div>
+              <span className="text-sm text-gray-500 font-open-sans">{formattedDate}</span>
+            </div>
             
             {/* Categories */}
             {post.categories && post.categories.length > 0 && (
               <div className="flex flex-wrap gap-2 mb-4">
-                {post.categories.map(category => (
+                {post.categories.slice(0, 2).map(category => (
                   <Link 
                     key={category.id}
                     href={`/blog/category/${category.slug}`}
-                    className="text-xs font-semibold bg-[#0C6BAF]/10 text-[#0C6BAF] px-3 py-1 rounded-full hover:bg-[#0C6BAF]/20 transition-colors font-montserrat"
+                    className="text-xs font-semibold bg-gradient-to-r from-[#0C6BAF]/10 to-[#187CC1]/10 text-[#0C6BAF] px-3 py-1.5 rounded-full hover:from-[#0C6BAF]/20 hover:to-[#187CC1]/20 transition-all duration-300 font-montserrat border border-[#0C6BAF]/20"
                     onClick={(e) => e.stopPropagation()} // Prevent triggering the parent onClick
                   >
                     {category.name}
                   </Link>
                 ))}
+                {post.categories.length > 2 && (
+                  <span className="text-xs font-semibold text-gray-400 px-3 py-1.5 font-montserrat">
+                    +{post.categories.length - 2} more
+                  </span>
+                )}
               </div>
             )}
             
-            <h2 className="text-xl md:text-2xl font-black mb-3 text-[#002C5F] group-hover:text-[#0C6BAF] transition-colors line-clamp-2 font-montserrat">
+            {/* Title */}
+            <h2 className={`${featured ? 'text-2xl lg:text-3xl' : 'text-xl lg:text-2xl'} font-black mb-4 text-[#002C5F] group-hover:text-[#0C6BAF] transition-colors duration-300 line-clamp-2 font-montserrat leading-tight`}>
               {post.title}
             </h2>
             
-            <p className="text-black/70 line-clamp-3 mb-6 font-open-sans leading-relaxed flex-grow">
+            {/* Excerpt */}
+            <p className="text-black/70 line-clamp-3 mb-6 font-open-sans leading-relaxed flex-grow text-base">
               {post.excerpt}
             </p>
             
-            <div className="text-[#0C6BAF] font-semibold group-hover:text-[#002C5F] flex items-center transition-colors duration-300 font-montserrat self-start">
-              <span>Read Article</span>
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
+            {/* Read More Link */}
+            <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+              <div className="text-[#0C6BAF] font-semibold group-hover:text-[#187CC1] flex items-center transition-all duration-300 font-montserrat">
+                <span>Read Article</span>
+                <FaArrowRight className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
+              </div>
+              
+              {/* Author or additional meta could go here */}
+              <div className="w-8 h-8 bg-gradient-to-br from-[#0C6BAF] to-[#187CC1] rounded-full flex items-center justify-center">
+                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                </svg>
+              </div>
             </div>
           </div>
         </div>
