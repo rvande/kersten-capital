@@ -8,6 +8,8 @@ import { FaClock, FaArrowLeft, FaShare, FaLinkedin, FaXTwitter, FaFacebook } fro
 import { getS3URL } from '../../api/api';
 import { formatDate, getReadingTime } from '../../utils/blog-helpers';
 import RichTextRenderer from '../../components/RichTextRenderer';
+import MarkdownRenderer from '@/app/components/MarkdownRenderer';
+import TableOfContents from '@/app/components/TableOfContents';
 
 // Animation variants
 const containerVariants = {
@@ -42,6 +44,7 @@ interface BlogPostClientProps {
     coverImage?: any;
     categories?: any[];
     slug: string;
+    markdownContent?: string;
   };
 }
 
@@ -50,12 +53,25 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
   
   useEffect(() => {
     setIsLoaded(true);
-  }, []);
+    // Debug logging to see what content we're receiving
+    console.log('BlogPostClient received post:', {
+      title: post.title,
+      hasContent: !!post.content,
+      contentType: typeof post.content,
+      contentIsArray: Array.isArray(post.content),
+      contentLength: Array.isArray(post.content) ? post.content.length : 'n/a',
+      hasMarkdownContent: !!post.markdownContent,
+      markdownContentType: typeof post.markdownContent,
+      markdownContentLength: post.markdownContent ? post.markdownContent.length : 'n/a',
+      contentPreview: post.content ? JSON.stringify(post.content).substring(0, 200) : 'none',
+      markdownPreview: post.markdownContent ? post.markdownContent.substring(0, 200) : 'none'
+    });
+  }, [post]);
 
   // Get cover image URL
   const getCoverImageUrl = () => {
     if (!post.coverImage) {
-      return '/images/blog-placeholder.jpg';
+      return null; // Return null instead of placeholder to use gradient
     }
     
     const image = post.coverImage as any;
@@ -88,7 +104,7 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
       }
     }
     
-    return '/images/blog-placeholder.jpg';
+    return null; // Return null instead of placeholder to use gradient
   };
 
   const coverImageUrl = getCoverImageUrl();
@@ -121,33 +137,37 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
   return (
     <main className="flex flex-col w-full">
       {/* Hero Section */}
-      <div className="relative w-full overflow-hidden">
+      <div className="hero-section relative w-full overflow-hidden">
         {/* Image Background */}
         <div className="absolute inset-0 w-full h-full z-0">
-          <Image
-            src={coverImageUrl}
-            alt={post.title}
-            fill
-            className="object-cover"
-            priority
-          />
-          {/* Dark overlay for better text readability */}
-          <div className="absolute inset-0 bg-black/60"></div>
+          {coverImageUrl ? (
+            <>
+              <Image
+                src={coverImageUrl}
+                alt={post.title}
+                fill
+                className="object-cover"
+                priority
+              />
+              {/* Blue gradient overlay for brand consistency */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#0C6BAF]/70 via-[#187CC1]/60 to-[#71C8F3]/70"></div>
+            </>
+          ) : (
+            /* Soft blue gradient background when no image */
+            <div className="absolute inset-0 bg-gradient-to-br from-[#0C6BAF] to-[#71C8F3]"></div>
+          )}
         </div>
         
-        {/* Gradient Background */}
+        {/* Additional gradient overlay for enhanced brand effect */}
         <div className="absolute inset-0 z-10">
           <div 
-            className="absolute inset-0"
-            style={{
-              background: 'linear-gradient(135deg, #0C6BAF/90 0%, #187CC1/85 50%, #71C8F3/90 100%)',
-            }}
+            className="absolute inset-0 bg-gradient-to-r from-[#002C5F]/30 via-transparent to-[#005A9C]/20"
           />
         </div>
 
         {/* Main Content */}
-        <div className="relative z-20 flex flex-col h-[80vh] sm:h-[70vh] md:h-[80vh] w-full px-4 md:px-8 lg:px-16">
-          <div className="flex flex-col justify-start md:justify-center h-full md:items-start items-center md:text-left text-center max-w-5xl pt-16 md:pt-0 md:-mt-5">
+        <div className="relative z-20 flex flex-col h-[90vh] sm:h-[80vh] md:h-[85vh] w-full px-4 md:px-8 lg:px-16">
+          <div className="flex flex-col justify-start md:justify-center h-full md:items-start items-center md:text-left text-center max-w-5xl pt-20 md:pt-16 lg:pt-20 md:-mt-5">
             
             {/* Categories */}
             {post.categories && Array.isArray(post.categories) && post.categories.length > 0 && (
@@ -155,7 +175,7 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="flex flex-wrap gap-2 mb-6"
+                className="flex flex-wrap gap-2 mb-6 md:mb-8"
               >
                 {post.categories.map(category => (
                   <Link 
@@ -172,7 +192,7 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
             {/* Main headline */}
             <div className="w-full md:flex md:justify-start flex justify-center mb-6 md:mb-8">
               <h1
-                className="relative font-montserrat text-[2.5rem] md:text-[4rem] lg:text-[5rem] leading-tight font-black text-white drop-shadow-lg"
+                className="relative font-montserrat text-[2rem] sm:text-[2.5rem] md:text-[3.5rem] lg:text-[4.5rem] leading-tight font-black text-white drop-shadow-lg"
                 style={{
                   letterSpacing: '-0.04em',
                   textShadow: '0 2px 8px rgba(0,0,0,0.3)',
@@ -188,12 +208,12 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex items-center text-white/90 mb-8 md:mb-10 font-open-sans"
+              className="flex items-center text-white/90 mb-6 md:mb-8 lg:mb-10 font-open-sans"
             >
-              <span className="mr-4 text-lg">{formattedDate}</span>
+              <span className="mr-4 text-base md:text-lg">{formattedDate}</span>
               <span className="mr-4">•</span>
               <FaClock className="w-4 h-4 mr-2" />
-              <span className="text-lg">{readingTime} min read</span>
+              <span className="text-base md:text-lg">{readingTime} min read</span>
             </motion.div>
 
             {/* Excerpt */}
@@ -202,9 +222,9 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.6 }}
-                className="w-full md:flex md:justify-start flex justify-center mb-8 md:mb-10"
+                className="w-full md:flex md:justify-start flex justify-center mb-8 md:mb-10 lg:mb-12"
               >
-                <p className="max-w-4xl md:text-left text-center text-white font-open-sans text-lg md:text-xl lg:text-2xl" style={{lineHeight: '1.7'}}>
+                <p className="max-w-4xl md:text-left text-center text-white font-open-sans text-xl sm:text-xl md:text-xl lg:text-2xl" style={{lineHeight: '1.7'}}>
                   {post.excerpt}
                 </p>
               </motion.div>
@@ -283,14 +303,64 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
 
             {/* Article Content */}
             <motion.div variants={itemVariants} className="prose prose-lg max-w-none">
+              {/* Table of Contents - Mobile version appears here */}
+              {(post.markdownContent || (post.content && typeof post.content === 'string')) && (
+                <TableOfContents 
+                  content={post.markdownContent || (typeof post.content === 'string' ? post.content : '')} 
+                />
+              )}
+              
               <div className="text-lg text-black/80 font-open-sans leading-relaxed space-y-6">
-                {post.content && Array.isArray(post.content) && post.content.length > 0 ? (
-                  <RichTextRenderer content={post.content} />
-                ) : (
-                  <p className="text-gray-600 italic">
-                    Content is not available in a renderable format.
-                  </p>
-                )}
+                {(() => {
+                  // Check for markdown content first
+                  if (post.markdownContent && typeof post.markdownContent === 'string' && post.markdownContent.trim()) {
+                    console.log('Rendering markdown content');
+                    return <MarkdownRenderer content={post.markdownContent} />;
+                  }
+                  
+                  // Check for rich text blocks
+                  if (post.content && Array.isArray(post.content) && post.content.length > 0) {
+                    console.log('Rendering rich text blocks');
+                    return <RichTextRenderer content={post.content} />;
+                  }
+                  
+                  // Check if content is a string (might be HTML or markdown)
+                  if (post.content && typeof post.content === 'string' && post.content.trim()) {
+                    console.log('Rendering string content as markdown');
+                    return <MarkdownRenderer content={post.content} />;
+                  }
+                  
+                  // Check if content is an object with a specific structure
+                  if (post.content && typeof post.content === 'object' && !Array.isArray(post.content)) {
+                    console.log('Content is object, checking for text fields');
+                    // Try to extract text from various possible fields
+                    const textContent = post.content.text || post.content.content || post.content.body || post.content.description;
+                    if (textContent && typeof textContent === 'string') {
+                      console.log('Found text content in object, rendering as markdown');
+                      return <MarkdownRenderer content={textContent} />;
+                    }
+                  }
+                  
+                  console.log('No renderable content found, showing fallback');
+                  return (
+                    <div className="text-gray-600 italic space-y-4">
+                      <p>Content is not available in a renderable format.</p>
+                      <details className="text-sm">
+                        <summary className="cursor-pointer">Debug Info (click to expand)</summary>
+                        <pre className="mt-2 p-4 bg-gray-100 rounded text-xs overflow-auto">
+                          {JSON.stringify({
+                            hasContent: !!post.content,
+                            contentType: typeof post.content,
+                            contentIsArray: Array.isArray(post.content),
+                            hasMarkdownContent: !!post.markdownContent,
+                            markdownContentType: typeof post.markdownContent,
+                            contentKeys: post.content && typeof post.content === 'object' ? Object.keys(post.content) : 'n/a'
+                          }, null, 2)}
+                        </pre>
+                      </details>
+                    </div>
+                  );
+                })()}
               </div>
             </motion.div>
           </motion.div>

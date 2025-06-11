@@ -14,7 +14,8 @@ export interface BlogPost {
   title: string;
   slug: string;
   excerpt: string;
-  content: any; // Using 'any' for blocks content, can be refined if needed
+  content: any; // Can be rich text blocks or markdown string
+  markdownContent?: string; // Optional markdown content field
   coverImage: StrapiImage | null;
   seo: SeoMetadata;
   categories: Category[];

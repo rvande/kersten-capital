@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { BlogPost } from '@/app/types/blog';
 import { getS3URL } from '@/app/api/api';
+import { getReadingTime } from '@/app/utils/blog-helpers';
 import { FaClock, FaArrowRight } from 'react-icons/fa6';
 
 interface BlogPostCardProps {
@@ -54,14 +55,29 @@ export default function BlogPostCard({ post, featured = false }: BlogPostCardPro
     day: 'numeric'
   });
 
-  // Calculate reading time (rough estimate)
-  const getReadingTime = () => {
-    const wordsPerMinute = 200;
-    const wordCount = post.excerpt ? post.excerpt.split(' ').length : 100;
-    return Math.ceil(wordCount / wordsPerMinute);
-  };
-
-  const readingTime = getReadingTime();
+  // Calculate reading time using the same logic as individual blog posts
+  const readingTime = (() => {
+    // Try to get content for reading time calculation
+    let contentForReading = '';
+    
+    if (post.markdownContent && typeof post.markdownContent === 'string') {
+      contentForReading = post.markdownContent;
+    } else if (post.content) {
+      if (typeof post.content === 'string') {
+        contentForReading = post.content;
+      } else if (Array.isArray(post.content)) {
+        // Convert rich text blocks to string for reading time calculation
+        contentForReading = JSON.stringify(post.content);
+      }
+    }
+    
+    // Fallback to excerpt if no content available
+    if (!contentForReading && post.excerpt) {
+      contentForReading = post.excerpt;
+    }
+    
+    return getReadingTime(contentForReading);
+  })();
 
   const navigateToPost = () => {
     router.push(`/blog/${post.slug}`);
@@ -103,25 +119,33 @@ export default function BlogPostCard({ post, featured = false }: BlogPostCardPro
           onClick={navigateToPost}
         >
           {/* Image Container */}
-          <div className="relative aspect-[16/10] overflow-hidden">
+          <div className="relative h-48 overflow-hidden rounded-t-2xl">
             {imageUrl ? (
-              <Image 
-                src={imageUrl} 
-                alt={typeof post.coverImage === 'object' && post.coverImage?.alternativeText || post.title}
+              <Image
+                src={imageUrl}
+                alt={post.title}
                 fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
-                placeholder="blur"
-                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
-            ) : placeholderImage}
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-[#0C6BAF] to-[#71C8F3] flex items-center justify-center">
+                <div className="text-white text-center p-6">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center">
+                    <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <p className="text-sm font-montserrat font-semibold">Featured Article</p>
+                </div>
+              </div>
+            )}
             
-            {/* Gradient overlay on hover */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            {/* Gradient overlay for better text readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             
             {/* Featured badge */}
             {featured && (
-              <div className="absolute top-4 left-4 bg-gradient-to-r from-[#0C6BAF] to-[#187CC1] text-white px-3 py-1 rounded-full text-xs font-bold font-montserrat shadow-lg">
+              <div className="absolute top-4 left-4 bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] text-white px-3 py-1 rounded-full text-xs font-montserrat font-semibold">
                 Featured
               </div>
             )}

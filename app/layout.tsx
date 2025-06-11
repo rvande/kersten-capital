@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Cormorant_Garamond, Montserrat } from "next/font/google";
+import { Inter, Cormorant_Garamond, Montserrat, Open_Sans } from "next/font/google";
 import "../app/globals.css";
 import { getGlobalData } from "./api/api";
 import { getStrapiMedia } from "./utils/media";
@@ -26,6 +26,13 @@ const montserrat = Montserrat({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-montserrat",
+  display: "swap",
+});
+
+const openSans = Open_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-open-sans",
   display: "swap",
 });
 
@@ -93,7 +100,7 @@ export default async function RootLayout({
     const globalData = await getGlobalData();
     
     return (
-      <html lang="en" className={`${inter.variable} ${cormorant.variable} ${montserrat.variable} h-full`}>
+      <html lang="en" className={`${inter.variable} ${cormorant.variable} ${montserrat.variable} ${openSans.variable} h-full`}>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
           <Header global={globalData.data} />
           <main className="flex-1 flex flex-col">{children}</main>
@@ -107,7 +114,7 @@ export default async function RootLayout({
     console.error('Error in RootLayout:', error);
     // Fallback rendering without header that requires global data
     return (
-      <html lang="en" className={`${inter.variable} ${cormorant.variable} ${montserrat.variable} h-full`}>
+      <html lang="en" className={`${inter.variable} ${cormorant.variable} ${montserrat.variable} ${openSans.variable} h-full`}>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
           <header className="bg-gradient-to-b from-gray-100 to-gray-200 shadow-sm">
           </header>

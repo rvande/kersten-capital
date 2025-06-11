@@ -39,6 +39,7 @@ module.exports = {
         inter: ['var(--font-inter)', 'sans-serif'],
         cormorant: ['var(--font-cormorant)', 'serif'],
         montserrat: ['var(--font-montserrat)', 'sans-serif'],
+        'open-sans': ['var(--font-open-sans)', 'sans-serif'],
         headline: ['var(--font-montserrat)', 'sans-serif'],
         body: ['var(--font-inter)', 'sans-serif'],
       },

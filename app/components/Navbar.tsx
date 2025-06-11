@@ -231,7 +231,7 @@ export default function Navbar({ navbar }: NavbarProps) {
                                 <Link
                                   href={link.url || '#'}
                                   target={link.newTab ? '_blank' : '_self'}
-                                  className="flex-1 font-open-sans font-semibold hover:text-[#0C6BAF] transition-all duration-200"
+                                  className="flex-1 font-montserrat font-semibold hover:text-[#0C6BAF] transition-all duration-200"
                                   onClick={() => {
                                     setActiveMenu(null);
                                     setMobileMenuOpen(false);
@@ -270,7 +270,7 @@ export default function Navbar({ navbar }: NavbarProps) {
                                       key={subItem.id}
                                       href={subItem.url || '#'}
                                       target={subItem.newTab ? '_blank' : '_self'}
-                                      className="font-open-sans block py-2 px-3 text-sm text-[#002C5F]/80 hover:text-[#0C6BAF] transition-all duration-200 hover:pl-5"
+                                      className="font-montserrat block py-2 px-3 text-sm text-[#002C5F]/80 hover:text-[#0C6BAF] transition-all duration-200 hover:pl-5"
                                       onClick={() => {
                                         setActiveMenu(null);
                                         setMobileMenuOpen(false);
@@ -289,7 +289,7 @@ export default function Navbar({ navbar }: NavbarProps) {
                             <Link
                               href={link.url || '#'}
                               target={link.newTab ? '_blank' : '_self'}
-                              className="font-open-sans block px-4 py-3 text-base text-[#002C5F] hover:bg-[#F8F9FA] hover:text-[#0C6BAF] transition-all duration-200 hover:pl-6"
+                              className="font-montserrat block px-4 py-3 text-base text-[#002C5F] hover:bg-[#F8F9FA] hover:text-[#0C6BAF] transition-all duration-200 hover:pl-6"
                               onClick={() => setActiveMenu(null)}
                               tabIndex={activeMenu === menuItem.id ? 0 : -1}
                               rel={link.newTab ? "noopener noreferrer" : undefined}
@@ -387,7 +387,7 @@ export default function Navbar({ navbar }: NavbarProps) {
                               <Link
                                 href={link.url || '#'}
                                 target={link.newTab ? '_blank' : '_self'}
-                                className="flex-1 font-open-sans font-semibold hover:text-[#0C6BAF] transition-all duration-200"
+                                className="flex-1 font-montserrat font-semibold hover:text-[#0C6BAF] transition-all duration-200"
                                 onClick={() => {
                                   setActiveMenu(null);
                                   setMobileMenuOpen(false);
@@ -426,7 +426,7 @@ export default function Navbar({ navbar }: NavbarProps) {
                                     key={subItem.id}
                                     href={subItem.url || '#'}
                                     target={subItem.newTab ? '_blank' : '_self'}
-                                    className="font-open-sans block py-2 px-3 text-sm text-[#002C5F]/80 hover:text-[#0C6BAF] transition-all duration-200 hover:pl-5"
+                                    className="font-montserrat block py-2 px-3 text-sm text-[#002C5F]/80 hover:text-[#0C6BAF] transition-all duration-200 hover:pl-5"
                                     onClick={() => {
                                       setActiveMenu(null);
                                       setMobileMenuOpen(false);
@@ -445,7 +445,7 @@ export default function Navbar({ navbar }: NavbarProps) {
                           <Link
                             href={link.url || '#'}
                             target={link.newTab ? '_blank' : '_self'}
-                            className="font-open-sans block py-3 px-3 text-base text-[#002C5F] hover:text-[#0C6BAF] transition-all duration-200 hover:pl-5"
+                            className="font-montserrat block py-3 px-3 text-base text-[#002C5F] hover:text-[#0C6BAF] transition-all duration-200 hover:pl-5"
                             onClick={() => {
                               setActiveMenu(null);
                               setMobileMenuOpen(false);
@@ -488,7 +488,7 @@ export default function Navbar({ navbar }: NavbarProps) {
             <div className="mt-6 px-4 pb-4">
               <Link 
                 href="/contact" 
-                className="bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] hover:from-[#187CC1] hover:to-[#71C8F3] text-white text-lg font-semibold font-open-sans py-3 px-6 rounded-md shadow-md transition-all duration-200 flex items-center justify-center w-full"
+                className="bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] hover:from-[#187CC1] hover:to-[#71C8F3] text-white text-lg font-semibold font-montserrat py-3 px-6 rounded-md shadow-md transition-all duration-200 flex items-center justify-center w-full"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <span>Contact Us</span>

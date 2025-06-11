@@ -274,6 +274,7 @@ export default async function BlogPostPage({ params }: { params: Params }) {
       publishedAt = new Date().toISOString(), 
       excerpt = '', 
       content = null, 
+      markdownContent = null,
       coverImage = null, 
       categories = [],
       slug: postSlug = slug
@@ -285,6 +286,7 @@ export default async function BlogPostPage({ params }: { params: Params }) {
       publishedAt,
       excerpt,
       content,
+      markdownContent,
       coverImage,
       categories,
       slug: postSlug
