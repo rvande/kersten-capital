@@ -73,6 +73,12 @@ span.font-open-sans {
   font-family: var(--font-open-sans) !important;
 }
 
+/* Global styling for strong tags to use brand blue */
+strong {
+  font-weight: 900;
+  color: #002C5F;
+}
+
 .font-header {
   font-family: var(--font-montserrat);
 }

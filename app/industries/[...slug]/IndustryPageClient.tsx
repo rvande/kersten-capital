@@ -168,7 +168,7 @@ export default function IndustryPageClient({ industry }: IndustryPageClientProps
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#002C5F] mb-8 font-montserrat text-center">
                   {industry.overviewSection.title || 'Innovation at the Intersection'}
                 </h2>
-                <div className="text-lg text-black/80 font-open-sans leading-relaxed space-y-6">
+                <div className="text-lg text-black/80 font-open-sans leading-relaxed space-y-6 [&_strong]:font-black [&_strong]:text-[#002C5F]">
                   <div dangerouslySetInnerHTML={{ __html: industry.overviewSection.content }} />
                 </div>
               </motion.div>
