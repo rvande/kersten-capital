@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Navbar as NavbarType } from '../types/navigation';
 import { getStrapiMedia } from '../utils/media';
+import SearchBar from './SearchBar';
 
 interface NavbarProps {
   navbar: NavbarType | null;
@@ -13,8 +14,42 @@ interface NavbarProps {
 export default function Navbar({ navbar }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<number | null>(null);
+  const [expandedSubMenus, setExpandedSubMenus] = useState<number[]>([]);
   const dropdownRefs = useRef<Map<number, HTMLDivElement>>(new Map());
   const [scrolled, setScrolled] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  
+  // Ensure client-side hydration is complete before using client-only features
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  
+  // Debug logging to see if subMenuItems are being fetched
+  useEffect(() => {
+    if (navbar?.menu) {
+      console.log('Navbar menu loaded successfully');
+      console.log(`Found ${navbar.menu.length} menu sections`);
+      
+      // Check if any links have sub-menu data
+      let hasSubMenus = false;
+      navbar.menu.forEach((menuItem, index) => {
+        if (menuItem.links) {
+          menuItem.links.forEach((link) => {
+            if (link.subMenuItems && link.subMenuItems.length > 0) {
+              hasSubMenus = true;
+              console.log(`Sub-menu found for: ${link.text} (${link.subMenuItems.length} items)`);
+            }
+          });
+        }
+      });
+      
+      if (!hasSubMenus) {
+        console.log('No sub-menu items found.');
+      }
+    } else {
+      console.log('Navbar menu is null or undefined');
+    }
+  }, [navbar]);
   
   // Handle ref for dropdown menus
   const setDropdownRef = (el: HTMLDivElement | null, id: number) => {
@@ -23,8 +58,19 @@ export default function Navbar({ navbar }: NavbarProps) {
     }
   };
   
-  // Handle scroll events for navbar appearance
+  // Toggle sub-menu expansion in mobile
+  const toggleSubMenu = (linkId: number) => {
+    setExpandedSubMenus(prev => 
+      prev.includes(linkId) 
+        ? prev.filter(id => id !== linkId) 
+        : [...prev, linkId]
+    );
+  };
+  
+  // Handle scroll events for navbar appearance - only on client
   useEffect(() => {
+    if (!isClient) return;
+    
     const handleScroll = () => {
       if (window.scrollY > 20) {
         setScrolled(true);
@@ -33,12 +79,17 @@ export default function Navbar({ navbar }: NavbarProps) {
       }
     };
     
+    // Set initial scroll state
+    handleScroll();
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isClient]);
   
-  // Close mobile menu when clicking outside
+  // Close mobile menu when clicking outside - only on client
   useEffect(() => {
+    if (!isClient) return;
+    
     const handleClickOutside = (event: MouseEvent) => {
       if (mobileMenuOpen && !event.target) return;
       const target = event.target as HTMLElement;
@@ -49,12 +100,13 @@ export default function Navbar({ navbar }: NavbarProps) {
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [mobileMenuOpen]);
+  }, [mobileMenuOpen, isClient]);
 
   // Reset active menu when mobile menu closes
   useEffect(() => {
     if (!mobileMenuOpen) {
       setActiveMenu(null);
+      setExpandedSubMenus([]);
     }
   }, [mobileMenuOpen]);
 
@@ -75,6 +127,9 @@ export default function Navbar({ navbar }: NavbarProps) {
           <Link href="/" className="font-montserrat font-black text-2xl md:text-3xl lg:text-4xl text-[#002C5F]">
             Kersten Talent Capital
           </Link>
+          <div className="hidden lg:block w-80">
+            <SearchBar placeholder="Search..." />
+          </div>
         </div>
       </div>
     );
@@ -85,7 +140,7 @@ export default function Navbar({ navbar }: NavbarProps) {
   
   return (
     <header className={`bg-white fixed top-7 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled ? 'shadow-lg py-3' : 'shadow-md py-2'
+      isClient && scrolled ? 'shadow-lg py-3' : 'shadow-md py-2'
     }`}>
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <div className="flex justify-between items-center">
@@ -97,7 +152,7 @@ export default function Navbar({ navbar }: NavbarProps) {
                 alt="Kersten Talent Capital"
                 width={320}
                 height={80}
-                className={`w-auto transition-all duration-300 ${scrolled ? 'h-14 md:h-16' : 'h-16 md:h-20 lg:h-24'}`}
+                className={`w-auto transition-all duration-300 ${isClient && scrolled ? 'h-14 md:h-16' : 'h-16 md:h-20 lg:h-24'}`}
                 priority
               />
             ) : (
@@ -108,8 +163,8 @@ export default function Navbar({ navbar }: NavbarProps) {
           </Link>
           
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center">
-            <nav className="flex items-center space-x-8 xl:space-x-10 mr-6" aria-label="Main Navigation">
+          <div className="hidden lg:flex items-center space-x-6">
+            <nav className="flex items-center space-x-8 xl:space-x-10" aria-label="Main Navigation">
                {/* Our Approach Link */}
                <Link 
                 href="/our-approach" 
@@ -140,22 +195,25 @@ export default function Navbar({ navbar }: NavbarProps) {
                     aria-controls={`dropdown-menu-${menuItem.id}`}
                   >
                     {menuItem.title}
-                    <svg 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      className={`h-4 w-4 ml-1 transition-transform duration-200 ${activeMenu === menuItem.id ? 'transform rotate-180' : ''}`}
-                      viewBox="0 0 20 20" 
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
+                    {/* Show arrow if there are any links */}
+                    {menuItem.links && menuItem.links.length > 0 && (
+                      <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        className={`h-5 w-5 ml-1 transition-transform duration-200 ${activeMenu === menuItem.id ? 'transform rotate-180' : ''}`}
+                        viewBox="0 0 20 20" 
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
+                    )}
                   </button>
                   
                   {/* Dropdown for desktop */}
                   <div 
                     id={`dropdown-menu-${menuItem.id}`}
                     ref={(el) => setDropdownRef(el, menuItem.id)}
-                    className={`absolute left-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg transition-all duration-200 ${
+                    className={`absolute left-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg transition-all duration-200 z-50 ${
                       activeMenu === menuItem.id ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
                     }`}
                     onMouseEnter={() => setActiveMenu(menuItem.id)}
@@ -163,17 +221,83 @@ export default function Navbar({ navbar }: NavbarProps) {
                   >
                     <div className="py-2">
                       {menuItem.links?.map((link, index) => (
-                        <Link
-                          key={link.id}
-                          href={link.url || '#'}
-                          target={link.newTab ? '_blank' : '_self'}
-                          className="font-open-sans block px-4 py-3 text-base text-[#002C5F] hover:bg-[#F8F9FA] hover:text-[#0C6BAF] transition-all duration-200 hover:pl-6"
-                          onClick={() => setActiveMenu(null)}
-                          tabIndex={activeMenu === menuItem.id ? 0 : -1}
-                          rel={link.newTab ? "noopener noreferrer" : undefined}
-                        >
-                          {link.text}
-                        </Link>
+                        <div key={link.id} className="relative">
+                          {/* Check if this link has subMenuItems */}
+                          {link.subMenuItems && link.subMenuItems.length > 0 ? (
+                            // Parent item with expandable sub-menu
+                            <div>
+                              <div className="flex items-center justify-between py-3 px-3 text-base text-[#002C5F] hover:bg-gray-50 transition-all duration-200">
+                                {/* Clickable link for the parent item */}
+                                <Link
+                                  href={link.url || '#'}
+                                  target={link.newTab ? '_blank' : '_self'}
+                                  className="flex-1 font-montserrat font-semibold hover:text-[#0C6BAF] transition-all duration-200"
+                                  onClick={() => {
+                                    setActiveMenu(null);
+                                    setMobileMenuOpen(false);
+                                    setExpandedSubMenus([]);
+                                  }}
+                                  rel={link.newTab ? "noopener noreferrer" : undefined}
+                                >
+                                  {link.text}
+                                </Link>
+                                {/* Expand button for submenu */}
+                                <button
+                                  className="p-2 hover:text-[#0C6BAF] transition-all duration-200 ml-2"
+                                  onClick={() => toggleSubMenu(link.id)}
+                                  aria-expanded={expandedSubMenus.includes(link.id)}
+                                  aria-label={`Toggle ${link.text} submenu`}
+                                >
+                                  <svg 
+                                    xmlns="http://www.w3.org/2000/svg" 
+                                    className={`h-5 w-5 transition-transform duration-200 ${
+                                      expandedSubMenus.includes(link.id) ? 'transform rotate-90' : ''
+                                    }`}
+                                    viewBox="0 0 20 20" 
+                                    fill="currentColor"
+                                  >
+                                    <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                                  </svg>
+                                </button>
+                              </div>
+                              {/* Expandable sub-menu */}
+                              <div className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                                expandedSubMenus.includes(link.id) ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+                              }`}>
+                                <div className="ml-4 border-l-2 border-[#0C6BAF]/30 pl-3">
+                                  {link.subMenuItems.map((subItem) => (
+                                    <Link
+                                      key={subItem.id}
+                                      href={subItem.url || '#'}
+                                      target={subItem.newTab ? '_blank' : '_self'}
+                                      className="font-montserrat block py-2 px-3 text-sm text-[#002C5F]/80 hover:text-[#0C6BAF] transition-all duration-200 hover:pl-5"
+                                      onClick={() => {
+                                        setActiveMenu(null);
+                                        setMobileMenuOpen(false);
+                                        setExpandedSubMenus([]);
+                                      }}
+                                      rel={subItem.newTab ? "noopener noreferrer" : undefined}
+                                    >
+                                      {subItem.text}
+                                    </Link>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          ) : (
+                            // Regular link without sub-menu
+                            <Link
+                              href={link.url || '#'}
+                              target={link.newTab ? '_blank' : '_self'}
+                              className="font-montserrat block px-4 py-3 text-base text-[#002C5F] hover:bg-[#F8F9FA] hover:text-[#0C6BAF] transition-all duration-200 hover:pl-6"
+                              onClick={() => setActiveMenu(null)}
+                              tabIndex={activeMenu === menuItem.id ? 0 : -1}
+                              rel={link.newTab ? "noopener noreferrer" : undefined}
+                            >
+                              {link.text}
+                            </Link>
+                          )}
+                        </div>
                       ))}
                     </div>
                   </div>
@@ -181,16 +305,12 @@ export default function Navbar({ navbar }: NavbarProps) {
               ))}
             </nav>
             
-            {/* Desktop Contact CTA */}
-            <Link 
-              href="/contact" 
-              className="bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] hover:from-[#187CC1] hover:to-[#71C8F3] text-white text-lg font-semibold font-open-sans py-3 px-6 rounded-md shadow-md transition-all duration-200 flex items-center"
-            >
-              <span>Contact Us</span>
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </Link>
+            {/* Desktop Search Bar */}
+            <div className="w-80">
+              <SearchBar placeholder="Search..." />
+            </div>
+            
+         
           </div>
           
           {/* Mobile menu button */}
@@ -221,6 +341,14 @@ export default function Navbar({ navbar }: NavbarProps) {
           }`}
         >
           <nav className="flex flex-col space-y-1 py-4 border-t border-gray-200 mt-4">
+            {/* Mobile Search Bar */}
+            <div className="px-2 py-4">
+              <SearchBar 
+                placeholder="Search..." 
+                onResultSelect={() => setMobileMenuOpen(false)}
+              />
+            </div>
+            
             {navbar.menu?.map((menuItem) => (
               <div key={menuItem.id} className="py-2">
                 <button 
@@ -232,7 +360,7 @@ export default function Navbar({ navbar }: NavbarProps) {
                   <span>{menuItem.title}</span>
                   <svg 
                     xmlns="http://www.w3.org/2000/svg" 
-                    className={`h-5 w-5 transition-transform duration-200 ${activeMenu === menuItem.id ? 'transform rotate-180 text-[#0C6BAF]' : ''}`}
+                    className={`h-6 w-6 transition-transform duration-200 ${activeMenu === menuItem.id ? 'transform rotate-180 text-[#0C6BAF]' : ''}`}
                     viewBox="0 0 20 20" 
                     fill="currentColor"
                     aria-hidden="true"
@@ -249,19 +377,86 @@ export default function Navbar({ navbar }: NavbarProps) {
                 >
                   <div className="ml-4 border-l-3 border-[#0C6BAF] pl-4">
                     {menuItem.links?.map((link) => (
-                      <Link
-                        key={link.id}
-                        href={link.url || '#'}
-                        target={link.newTab ? '_blank' : '_self'}
-                        className="font-open-sans block py-3 px-3 text-base text-[#002C5F] hover:text-[#0C6BAF] transition-all duration-200 hover:pl-5"
-                        onClick={() => {
-                          setActiveMenu(null);
-                          setMobileMenuOpen(false);
-                        }}
-                        rel={link.newTab ? "noopener noreferrer" : undefined}
-                      >
-                        {link.text}
-                      </Link>
+                      <div key={link.id}>
+                        {/* Check if this link has subMenuItems */}
+                        {link.subMenuItems && link.subMenuItems.length > 0 ? (
+                          // Parent item with expandable sub-menu
+                          <div>
+                            <div className="flex items-center justify-between py-3 px-3 text-base text-[#002C5F] hover:bg-gray-50 transition-all duration-200">
+                              {/* Clickable link for the parent item */}
+                              <Link
+                                href={link.url || '#'}
+                                target={link.newTab ? '_blank' : '_self'}
+                                className="flex-1 font-montserrat font-semibold hover:text-[#0C6BAF] transition-all duration-200"
+                                onClick={() => {
+                                  setActiveMenu(null);
+                                  setMobileMenuOpen(false);
+                                  setExpandedSubMenus([]);
+                                }}
+                                rel={link.newTab ? "noopener noreferrer" : undefined}
+                              >
+                                {link.text}
+                              </Link>
+                              {/* Expand button for submenu */}
+                              <button
+                                className="p-2 hover:text-[#0C6BAF] transition-all duration-200 ml-2"
+                                onClick={() => toggleSubMenu(link.id)}
+                                aria-expanded={expandedSubMenus.includes(link.id)}
+                                aria-label={`Toggle ${link.text} submenu`}
+                              >
+                                <svg 
+                                  xmlns="http://www.w3.org/2000/svg" 
+                                  className={`h-5 w-5 transition-transform duration-200 ${
+                                    expandedSubMenus.includes(link.id) ? 'transform rotate-90' : ''
+                                  }`}
+                                  viewBox="0 0 20 20" 
+                                  fill="currentColor"
+                                >
+                                  <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                                </svg>
+                              </button>
+                            </div>
+                            {/* Expandable sub-menu */}
+                            <div className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                              expandedSubMenus.includes(link.id) ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+                            }`}>
+                              <div className="ml-4 border-l-2 border-[#0C6BAF]/30 pl-3">
+                                {link.subMenuItems.map((subItem) => (
+                                  <Link
+                                    key={subItem.id}
+                                    href={subItem.url || '#'}
+                                    target={subItem.newTab ? '_blank' : '_self'}
+                                    className="font-montserrat block py-2 px-3 text-sm text-[#002C5F]/80 hover:text-[#0C6BAF] transition-all duration-200 hover:pl-5"
+                                    onClick={() => {
+                                      setActiveMenu(null);
+                                      setMobileMenuOpen(false);
+                                      setExpandedSubMenus([]);
+                                    }}
+                                    rel={subItem.newTab ? "noopener noreferrer" : undefined}
+                                  >
+                                    {subItem.text}
+                                  </Link>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          // Regular link without sub-menu
+                          <Link
+                            href={link.url || '#'}
+                            target={link.newTab ? '_blank' : '_self'}
+                            className="font-montserrat block py-3 px-3 text-base text-[#002C5F] hover:text-[#0C6BAF] transition-all duration-200 hover:pl-5"
+                            onClick={() => {
+                              setActiveMenu(null);
+                              setMobileMenuOpen(false);
+                              setExpandedSubMenus([]);
+                            }}
+                            rel={link.newTab ? "noopener noreferrer" : undefined}
+                          >
+                            {link.text}
+                          </Link>
+                        )}
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -293,7 +488,7 @@ export default function Navbar({ navbar }: NavbarProps) {
             <div className="mt-6 px-4 pb-4">
               <Link 
                 href="/contact" 
-                className="bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] hover:from-[#187CC1] hover:to-[#71C8F3] text-white text-lg font-semibold font-open-sans py-3 px-6 rounded-md shadow-md transition-all duration-200 flex items-center justify-center w-full"
+                className="bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] hover:from-[#187CC1] hover:to-[#71C8F3] text-white text-lg font-semibold font-montserrat py-3 px-6 rounded-md shadow-md transition-all duration-200 flex items-center justify-center w-full"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <span>Contact Us</span>

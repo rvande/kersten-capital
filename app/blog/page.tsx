@@ -135,7 +135,7 @@ export default async function BlogPage(props: { searchParams?: SearchParams }) {
             {posts.length > 0 ? (
               <>
                 <div 
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-10 lg:gap-12 mb-16"
+                  className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-10 xl:gap-12 mb-16"
                   role="feed"
                   aria-label="Blog posts"
                 >

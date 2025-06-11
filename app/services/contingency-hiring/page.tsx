@@ -129,7 +129,7 @@ export default function ContingencyHiringPage() {
             {/* Main headline */}
             <div className="w-full md:flex md:justify-start flex justify-center mb-6 md:mb-8">
               <h1
-                className="relative font-montserrat text-[4rem] md:text-[4.5rem] lg:text-[6rem] leading-tight font-black text-white drop-shadow-lg"
+                className="relative font-montserrat text-3xl sm:text-4xl md:text-[4.5rem] lg:text-[6rem] leading-tight font-black text-white drop-shadow-lg"
                 style={{
                   letterSpacing: '-0.04em',
                   textShadow: '0 2px 8px rgba(0,0,0,0.3)',

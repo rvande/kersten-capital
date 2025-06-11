@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { getBlogPosts, getCategories } from './api/blog/api';
+import { getIndustrySlugs } from './api/api';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Base URL from environment or default
@@ -12,6 +13,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 1.0,
+    },
+    {
+      url: `${baseUrl}/industries`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/blog`,
@@ -44,6 +51,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.5,
     },
   ];
+  
+  // Fetch industry pages for dynamic routes
+  let industryRoutes: MetadataRoute.Sitemap = [];
+  try {
+    const industrySlugs = await getIndustrySlugs();
+    
+    if (industrySlugs && Array.isArray(industrySlugs)) {
+      industryRoutes = industrySlugs.map(slug => {
+        // Handle both single-level and nested slugs
+        const urlPath = slug.includes('/') 
+          ? `/industries/${slug}` // For nested routes like manufacturing-distribution-industrial/pe-backed-entities
+          : `/industries/${slug}`; // For single-level routes like technology-financial-services
+        
+        return {
+          url: `${baseUrl}${urlPath}`,
+          lastModified: new Date(),
+          changeFrequency: 'monthly' as const,
+          priority: 0.8,
+        };
+      });
+    }
+  } catch (error) {
+    console.error('Error fetching industry slugs for sitemap:', error);
+  }
   
   // Fetch blog posts for dynamic routes
   let blogRoutes: MetadataRoute.Sitemap = [];
@@ -83,5 +114,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
   
   // Combine all routes
-  return [...staticRoutes, ...blogRoutes, ...categoryRoutes];
+  return [...staticRoutes, ...industryRoutes, ...blogRoutes, ...categoryRoutes];
 } 

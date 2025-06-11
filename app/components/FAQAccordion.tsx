@@ -3,45 +3,50 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FAQ } from '../types/faq';
+import { formatTextWithBullets } from '../utils/textFormatting';
 
 interface FAQAccordionProps {
   question: string;
   answer: string;
+  faqId?: number;
 }
 
-export function FAQAccordionItem({ question, answer }: FAQAccordionProps) {
+export function FAQAccordionItem({ question, answer, faqId }: FAQAccordionProps) {
   const [isOpen, setIsOpen] = useState(false);
 
+  // Format the answer to convert simple text patterns to HTML bullets
+  const formattedAnswer = formatTextWithBullets(answer);
+
   return (
-    <div className="border-b border-gray-200 last:border-b-0">
-      <motion.button
-        className="flex justify-between items-center w-full py-6 px-6 text-left font-semibold hover:bg-gradient-to-r hover:from-gray-50 hover:to-blue-50/30 transition-all duration-300 group relative"
+    <div 
+      id={faqId ? `faq-${faqId}` : undefined}
+      className="border-b border-gray-200 last:border-b-0 scroll-mt-32"
+    >
+      <button
+        className="w-full px-6 py-6 text-left focus:outline-none focus:ring-2 focus:ring-[#0C6BAF] focus:ring-inset transition-colors duration-200 hover:bg-gray-50/50"
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
-        whileHover={{ scale: 1.01 }}
-        transition={{ duration: 0.2 }}
       >
-        {/* Subtle accent line on hover */}
-        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[#0C6BAF] to-[#71C8F3] transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top rounded-r-full" />
-        
-        <span className={`pr-8 text-lg font-montserrat font-black transition-colors duration-300 ${
-          isOpen ? 'text-[#0C6BAF]' : 'text-[#002C5F] group-hover:text-[#0C6BAF]'
-        }`}>
-          {question}
-        </span>
-        <motion.svg 
-          className={`flex-shrink-0 w-6 h-6 transition-colors duration-300 ${
-            isOpen ? 'text-[#0C6BAF]' : 'text-gray-500 group-hover:text-[#0C6BAF]'
-          }`}
-          fill="none" 
-          stroke="currentColor" 
-          viewBox="0 0 24 24"
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
-        </motion.svg>
-      </motion.button>
+        <div className="flex justify-between items-start">
+          <h3 className="text-lg md:text-xl font-semibold text-[#002C5F] pr-8 font-montserrat leading-tight">
+            {question}
+          </h3>
+          <motion.div
+            animate={{ rotate: isOpen ? 180 : 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="flex-shrink-0 ml-4"
+          >
+            <svg 
+              className="w-6 h-6 text-[#0C6BAF]" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </motion.div>
+        </div>
+      </button>
       
       <motion.div 
         initial={false}
@@ -54,7 +59,7 @@ export function FAQAccordionItem({ question, answer }: FAQAccordionProps) {
       >
         <div className="px-6 pb-6 bg-gray-50/30">
           <div className="prose max-w-none text-black/80 font-open-sans leading-relaxed text-base" 
-               dangerouslySetInnerHTML={{ __html: answer }} />
+               dangerouslySetInnerHTML={{ __html: formattedAnswer }} />
         </div>
       </motion.div>
     </div>
@@ -98,7 +103,8 @@ export function FAQGroup({ categoryName, faqs }: FAQGroupProps) {
             <div className="relative bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden transition-transform duration-300 group-hover:-translate-x-1 group-hover:-translate-y-1">
               <FAQAccordionItem 
                 question={faq.Question} 
-                answer={faq.Answer} 
+                answer={faq.Answer}
+                faqId={faq.id}
               />
             </div>
           </motion.div>

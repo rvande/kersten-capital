@@ -1,5 +1,12 @@
 import { StrapiImage } from './global';
 
+export interface SubMenuItem {
+  id: number;
+  url?: string;
+  newTab: boolean;
+  text: string;
+}
+
 export interface ButtonLink {
   id: number;
   url?: string;
@@ -13,6 +20,7 @@ export interface NavbarLink {
   url?: string;
   newTab: boolean;
   text: string;
+  subMenuItems?: SubMenuItem[];
 }
 
 export interface Navbar {
@@ -27,6 +35,7 @@ export interface Navbar {
       url?: string;
       newTab: boolean;
       text: string;
+      subMenuItems?: SubMenuItem[];
     }[];
   }[];
 }
@@ -36,6 +45,7 @@ export interface FooterLink {
   url?: string;
   newTab: boolean;
   text: string;
+  subMenuItems?: SubMenuItem[];
 }
 
 export interface FooterColumn {

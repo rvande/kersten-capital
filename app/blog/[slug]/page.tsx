@@ -1,20 +1,12 @@
 import { Metadata, ResolvingMetadata } from 'next';
-import Image from 'next/image';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getBlogPostBySlug, getBlogPosts } from '@/app/api/blog/api';
 import { getS3URL } from '@/app/api/api';
-import { formatDate, getReadingTime } from '@/app/utils/blog-helpers';
 import qs from 'qs';
-import RichTextRenderer from '@/app/components/RichTextRenderer';
+import BlogPostClient from './BlogPostClient';
 
 // Next.js 15 compatible type definitions
 type Params = Promise<{ slug: string }>;
-
-/**
- * @typedef {Object} BlogParams
- * @property {string} slug - The slug of the blog post
- */
 
 /**
  * Generate metadata for the page
@@ -33,7 +25,7 @@ export async function generateMetadata(
     
     if (!post || !post.data) {
       return {
-        title: 'Post Not Found',
+        title: 'Post Not Found | Kersten Talent Capital',
         description: 'The requested blog post could not be found.',
       };
     }
@@ -63,15 +55,19 @@ export async function generateMetadata(
     }
     
     return {
-      title: seo?.metaTitle || title || 'Blog Post',
-      description: seo?.metaDescription || excerpt || 'Kersten Talent Capital blog post',
+      title: seo?.metaTitle || `${title} | Kersten Talent Capital` || 'Blog Post | Kersten Talent Capital',
+      description: seo?.metaDescription || excerpt || 'Insights on leadership and talent acquisition from Kersten Talent Capital',
       openGraph: imageUrl ? {
         images: [{ url: imageUrl }],
         type: 'article',
         url: canonicalUrl,
+        title: seo?.metaTitle || title || 'Blog Post',
+        description: seo?.metaDescription || excerpt || 'Insights on leadership and talent acquisition',
       } : {
         type: 'article',
         url: canonicalUrl,
+        title: seo?.metaTitle || title || 'Blog Post',
+        description: seo?.metaDescription || excerpt || 'Insights on leadership and talent acquisition',
       },
       alternates: {
         canonical: canonicalUrl,
@@ -80,8 +76,8 @@ export async function generateMetadata(
   } catch (error) {
     console.error('Error generating metadata:', error);
     return {
-      title: 'Blog Post',
-      description: 'Kersten Talent Capital blog post',
+      title: 'Blog Post | Kersten Talent Capital',
+      description: 'Insights on leadership and talent acquisition from Kersten Talent Capital',
     };
   }
 }
@@ -116,9 +112,8 @@ export async function generateStaticParams() {
 
 /**
  * Direct API fetch to be used as fallback if needed
- * @param {string} slug - The blog post slug
  */
-async function fetchPostDirectly(slug) {
+async function fetchPostDirectly(slug: string) {
   try {
     console.log(`Trying direct fetch for post with slug: ${slug}`);
     
@@ -261,28 +256,7 @@ export default async function BlogPostPage({ params }: { params: Params }) {
       
       if (!directPost || !directPost.data) {
         console.error(`Post not found with slug: ${slug} after all attempts`);
-        
-        // Instead of immediate 404, create fallback content for debugging
-        return (
-          <main className="container mx-auto px-4 py-12">
-            <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-3xl font-bold text-red-600 mb-4">Post Loading Error</h1>
-              <p className="mb-4">We're having trouble loading the post: <strong>{slug}</strong></p>
-              <p className="mb-8">This could be due to a temporary API issue or the post may no longer exist.</p>
-              <div className="flex justify-center">
-                <a href="/blog" className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700">
-                  Return to Blog
-                </a>
-                <button 
-                  onClick={() => window.location.reload()} 
-                  className="ml-4 bg-gray-200 text-gray-800 px-6 py-2 rounded-md hover:bg-gray-300"
-                >
-                  Try Again
-                </button>
-              </div>
-            </div>
-          </main>
-        );
+        notFound();
       }
       
       post = directPost;
@@ -300,141 +274,25 @@ export default async function BlogPostPage({ params }: { params: Params }) {
       publishedAt = new Date().toISOString(), 
       excerpt = '', 
       content = null, 
+      markdownContent = null,
       coverImage = null, 
-      categories = [] 
+      categories = [],
+      slug: postSlug = slug
     } = post.data || {};
     
-    // Get image URL with better handling of different formats
-    const getImageUrl = () => {
-      if (!coverImage) {
-        return '/images/blog-placeholder.jpg';
-      }
-      
-      // Cast to any to handle different potential structures
-      const image = coverImage as any;
-      
-      if (typeof image === 'string') {
-        return image.startsWith('http') ? image : getS3URL(image);
-      }
-      
-      if (image.url) {
-        return image.url.startsWith('http') ? image.url : getS3URL(image.url);
-      }
-      
-      // Try to handle formats[large] for Strapi v5
-      if (image.formats && image.formats.large && image.formats.large.url) {
-        return image.formats.large.url.startsWith('http') 
-          ? image.formats.large.url 
-          : getS3URL(image.formats.large.url);
-      }
-      
-      // Check for nested data
-      if (image.data && image.data.attributes) {
-        const attrs = image.data.attributes;
-        if (attrs.url) {
-          return attrs.url.startsWith('http') ? attrs.url : getS3URL(attrs.url);
-        }
-        if (attrs.formats && attrs.formats.large && attrs.formats.large.url) {
-          return attrs.formats.large.url.startsWith('http') 
-            ? attrs.formats.large.url 
-            : getS3URL(attrs.formats.large.url);
-        }
-      }
-      
-      return '/images/blog-placeholder.jpg';
+    // Prepare the post data for the client component
+    const postData = {
+      title,
+      publishedAt,
+      excerpt,
+      content,
+      markdownContent,
+      coverImage,
+      categories,
+      slug: postSlug
     };
     
-    const imageUrl = getImageUrl();
-    const formattedDate = formatDate(publishedAt);
-    const readingTime = content ? getReadingTime(JSON.stringify(content)) : 0;
-    
-    return (
-      <main className="min-h-screen bg-gradient-to-b from-[#3A3A40] via-[#2A2A30] to-[#1E1E24] px-4 py-12">
-        <div className="container mx-auto">
-          <article className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
-            {/* Featured Image */}
-            {imageUrl && (
-              <div className="relative aspect-[16/9] w-full">
-                <Image 
-                  src={imageUrl} 
-                  alt={typeof coverImage === 'object' && coverImage?.alternativeText || title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 70vw"
-                  className="object-cover"
-                  priority
-                />
-              </div>
-            )}
-            
-            <div className="p-6 md:p-10">
-              <header className="mb-8">
-                {/* Categories - with null check */}
-                {categories && Array.isArray(categories) && categories.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {categories.map(category => (
-                      <Link 
-                        key={category?.id || `cat-${Math.random()}`}
-                        href={`/blog/category/${category?.slug || 'uncategorized'}`}
-                        className="text-xl font-semibold bg-[#CA3B2A]/10 text-[#CA3B2A] px-3 py-1 rounded-full hover:bg-[#CA3B2A]/20 transition-colors"
-                      >
-                        {category?.name || 'Uncategorized'}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-                
-                {/* Title */}
-                <h1 className="text-4xl md:text-5xl font-bold mb-4 text-[#3D3939]">{title}</h1>
-                
-                {/* Meta */}
-                <div className="flex items-center text-gray-600 mb-6">
-                  <span className="mr-4">{formattedDate}</span>
-                  <span>•</span>
-                  <span className="ml-4">{readingTime} min read</span>
-                </div>
-                
-                {/* Excerpt */}
-                {excerpt && (
-                  <div className="text-xl text-gray-700 font-medium mb-8 border-l-4 border-[#CA3B2A] pl-4 py-2 bg-[#CA3B2A]/5">
-                    {excerpt}
-                  </div>
-                )}
-              </header>
-              
-              {/* Content */}
-              <div className="prose-lg max-w-none">
-                {content && Array.isArray(content) && content.length > 0 ? (
-                  <RichTextRenderer content={content} />
-                ) : (
-                  <p className="text-gray-600 italic">
-                    Content is not available in a renderable format.
-                  </p>
-                )}
-              </div>
-              
-              {/* Back to blog link */}
-              <div className="mt-12 pt-6 border-t border-gray-200">
-                <Link 
-                  href="/blog"
-                  className="inline-flex items-center text-[#CA3B2A] font-medium hover:underline group"
-                >
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    className="h-5 w-5 mr-2 transition-transform group-hover:-translate-x-1" 
-                    fill="none" 
-                    viewBox="0 0 24 24" 
-                    stroke="currentColor"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                  Back to all posts
-                </Link>
-              </div>
-            </div>
-          </article>
-        </div>
-      </main>
-    );
+    return <BlogPostClient post={postData} />;
   } catch (error) {
     console.error('Error fetching blog post:', error);
     notFound();

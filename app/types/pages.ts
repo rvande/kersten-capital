@@ -177,4 +177,56 @@ export interface GetPagesParams {
   filters?: Record<string, any>;
   locale?: string;
   populate?: Record<string, any>;
+}
+
+// Industry-specific types
+export interface FocusArea {
+  id: number;
+  title: string;
+  description: string;
+  icon?: string; // Icon name or class
+}
+
+export interface IndustryOverview {
+  id: number;
+  title?: string;
+  content: string; // Rich text content
+  highlights?: string[]; // Array of highlight points
+}
+
+export interface Industry {
+  id: number;
+  documentId: string;
+  title: string;
+  slug: string;
+  shortDescription: string;
+  isActive: boolean;
+  displayOrder: number;
+  heroTitle?: string;
+  heroSubtitle?: string;
+  heroImage?: StrapiImage;
+  gradient: string; // CSS gradient class
+  overviewSection?: IndustryOverview;
+  focusAreas?: FocusArea[];
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  locale?: string;
+  localizations?: Industry[];
+}
+
+// Response types for industries
+export type IndustriesResponse = StrapiResponse<Industry[]>;
+export type IndustryResponse = StrapiResponse<Industry>;
+
+// Parameters for fetching industries
+export interface GetIndustriesParams {
+  pagination?: {
+    page?: number;
+    pageSize?: number;
+  };
+  sort?: string[];
+  filters?: Record<string, any>;
+  locale?: string;
+  populate?: Record<string, any>;
 } 

@@ -13,6 +13,7 @@ interface FooterProps {
 
 export default function Footer({ footer }: FooterProps) {
   const [expandedColumns, setExpandedColumns] = useState<number[]>([]);
+  const [expandedSubMenus, setExpandedSubMenus] = useState<number[]>([]);
   const [isMobile, setIsMobile] = useState(false);
   
   // Detect if we're on mobile
@@ -36,6 +37,14 @@ export default function Footer({ footer }: FooterProps) {
       prev.includes(columnId) 
         ? prev.filter(id => id !== columnId) 
         : [...prev, columnId]
+    );
+  };
+  
+  const toggleSubMenu = (linkId: number) => {
+    setExpandedSubMenus(prev => 
+      prev.includes(linkId) 
+        ? prev.filter(id => id !== linkId) 
+        : [...prev, linkId]
     );
   };
   
@@ -138,14 +147,70 @@ export default function Footer({ footer }: FooterProps) {
                 <ul className={`space-y-0 md:space-y-3 ${expandedColumns.includes(column.id) ? 'mt-2 pl-4 border-l-2 border-[#71C8F3] ml-3 md:mt-0 md:pl-0 md:border-l-0 md:ml-0' : ''}`}>
                   {column.links?.map((link) => (
                     <li key={link.id}>
-                      <Link
-                        href={link.url || '#'}
-                        target={link.newTab ? '_blank' : '_self'}
-                        className="block py-3 px-3 md:px-0 md:py-2 text-white/80 hover:text-[#71C8F3] transition-all duration-300 font-open-sans text-lg hover:pl-5 md:hover:pl-2 hover:font-semibold"
-                        rel={link.newTab ? "noopener noreferrer" : undefined}
-                      >
-                        {link.text}
-                      </Link>
+                      {/* Check if this link has subMenuItems */}
+                      {link.subMenuItems && link.subMenuItems.length > 0 ? (
+                        // Parent item with expandable sub-menu
+                        <div>
+                          <div className="flex items-center justify-between py-3 px-3 md:px-0 md:py-2 text-white/80 hover:text-[#71C8F3] transition-all duration-300">
+                            {/* Clickable link for the parent item */}
+                            <Link
+                              href={link.url || '#'}
+                              target={link.newTab ? '_blank' : '_self'}
+                              className="flex-1 font-open-sans text-lg hover:pl-5 md:hover:pl-2 hover:font-semibold transition-all duration-300"
+                              rel={link.newTab ? "noopener noreferrer" : undefined}
+                            >
+                              {link.text}
+                            </Link>
+                            {/* Expand button for submenu */}
+                            <button
+                              className="p-2 hover:text-[#71C8F3] transition-all duration-300 ml-2"
+                              onClick={() => toggleSubMenu(link.id)}
+                              aria-expanded={expandedSubMenus.includes(link.id)}
+                              aria-label={`Toggle ${link.text} submenu`}
+                            >
+                              <svg 
+                                xmlns="http://www.w3.org/2000/svg" 
+                                className={`h-6 w-6 transition-transform duration-200 ${
+                                  expandedSubMenus.includes(link.id) ? 'transform rotate-90' : ''
+                                }`}
+                                viewBox="0 0 20 20" 
+                                fill="currentColor"
+                              >
+                                <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                              </svg>
+                            </button>
+                          </div>
+                          {/* Expandable sub-menu */}
+                          <div className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                            expandedSubMenus.includes(link.id) ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+                          }`}>
+                            <ul className="ml-4 md:ml-2 border-l-2 border-[#71C8F3]/30 pl-3 mt-2 space-y-1">
+                              {link.subMenuItems.map((subItem) => (
+                                <li key={subItem.id}>
+                                  <Link
+                                    href={subItem.url || '#'}
+                                    target={subItem.newTab ? '_blank' : '_self'}
+                                    className="block py-2 px-3 md:px-0 md:py-1 text-white/70 hover:text-[#71C8F3] transition-all duration-300 font-open-sans text-base hover:pl-5 md:hover:pl-2 hover:font-semibold"
+                                    rel={subItem.newTab ? "noopener noreferrer" : undefined}
+                                  >
+                                    {subItem.text}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      ) : (
+                        // Regular link without sub-menu
+                        <Link
+                          href={link.url || '#'}
+                          target={link.newTab ? '_blank' : '_self'}
+                          className="block py-3 px-3 md:px-0 md:py-2 text-white/80 hover:text-[#71C8F3] transition-all duration-300 font-open-sans text-lg hover:pl-5 md:hover:pl-2 hover:font-semibold"
+                          rel={link.newTab ? "noopener noreferrer" : undefined}
+                        >
+                          {link.text}
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -219,14 +284,11 @@ export default function Footer({ footer }: FooterProps) {
               <a href="/our-approach" className="text-white/80 hover:text-[#71C8F3] transition-colors duration-300 font-open-sans text-lg hover:font-semibold">
                 Our Approach
               </a>
-              <a href="#" className="text-white/80 hover:text-[#71C8F3] transition-colors duration-300 font-open-sans text-lg hover:font-semibold">
+              <a href="/privacy-policy" className="text-white/80 hover:text-[#71C8F3] transition-colors duration-300 font-open-sans text-lg hover:font-semibold">
                 Privacy Policy
               </a>
-              <a href="#" className="text-white/80 hover:text-[#71C8F3] transition-colors duration-300 font-open-sans text-lg hover:font-semibold">
+              <a href="/terms-conditions" className="text-white/80 hover:text-[#71C8F3] transition-colors duration-300 font-open-sans text-lg hover:font-semibold">
                 Terms of Service
-              </a>
-              <a href="/tech-stack" className="text-white/80 hover:text-[#71C8F3] transition-colors duration-300 font-open-sans text-lg hover:font-semibold">
-                Tech Stack
               </a>
             </div>
           </div>

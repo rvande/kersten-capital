@@ -110,12 +110,12 @@ export default function Hero2() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/80 z-10" />
 
       {/* Main Content */}
-      <div className="relative z-20 flex flex-col h-[100vh] sm:h-[80vh] md:h-screen w-full px-4 md:px-8 lg:px-16">
+      <div className="relative z-20 flex flex-col h-[100vh] sm:h-[80vh] md:h-screen w-full mobile-spacing-normal md:px-8 lg:px-16">
         <div className="flex flex-col justify-center h-full md:items-start items-center md:text-left text-center max-w-4xl">
           {/* TRANSFORM headline */}
           <div className="w-full md:flex md:justify-start flex justify-center mb-2 md:mb-4">
             <span
-              className="text-[3.5rem] md:text-[5rem] lg:text-[7rem] font-black font-montserrat text-white drop-shadow-lg tracking-tight"
+              className="text-[3.5rem] md:text-[5rem] lg:text-[7rem] font-black font-montserrat text-white drop-shadow-lg tracking-tight text-heading"
               style={{
                 letterSpacing: '-0.04em',
                 textShadow: '0 2px 8px rgba(0,0,0,0.3)',
@@ -127,11 +127,10 @@ export default function Hero2() {
           {/* Animated Headline */}
           <div className="w-full md:flex md:justify-start flex justify-center mb-6 md:mb-8">
             <h1
-              className="relative font-montserrat text-[1.6rem] md:text-[4rem] lg:text-[5.5rem] leading-tight font-black"
-              
+              className="relative font-montserrat text-[1.6rem] md:text-[4rem] lg:text-[5.5rem] font-black text-heading"
             >
               <span
-                className="inline-block whitespace-nowrap transition-transform duration-1500 ease-in-out gradient-text"
+                className="inline-block whitespace-nowrap transition-transform duration-1500 ease-in-out bg-gradient-to-b from-[#0C6BAF] to-[#71C8F3] bg-clip-text text-transparent"
                 style={{
                   transform: `translateX(${isLoaded ? '0' : '-40px'})`,
                   animation: isLoaded ? 'slideRight 2.2s cubic-bezier(0.4,0,0.2,1)' : 'none',
@@ -145,15 +144,15 @@ export default function Hero2() {
           </div>
           {/* Subheadline/Description */}
           <div className="w-full md:flex md:justify-start flex justify-center mb-8 md:mb-10">
-            <p className="max-w-3xl md:text-left text-center text-white font-open-sans font-normal text-base md:text-lg lg:text-xl" style={{lineHeight: '1.7'}}>
-              Kersten Talent Capital strives to revolutionize organizational performance through strategic talent intelligence and executive placement solutions that catalyze growth, innovation, and sustainable competitive advantages for forward-thinking enterprises across global markets.
+            <p className="max-w-3xl md:text-left text-center text-white font-open-sans font-normal text-base md:text-lg lg:text-xl text-body">
+              Kersten Talent Capital strives to revolutionize organizational performance through strategic talent intelligence and executive placement solutions that catalyze growth, innovation, and sustainable competitive advantages for forward-thinking enterprises across global markets. Serving companies in Europe and North America.
             </p>
           </div>
           {/* CTA Button */}
           <div className="md:flex md:justify-start flex justify-center">
             <Link href="/contact">
               <div
-                className="relative bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] hover:from-[#187CC1] hover:to-[#71C8F3] text-white font-semibold font-open-sans px-8 py-4 rounded-md text-md md:text-xl sm:text-lg shadow-lg transition-all duration-300 border-0 focus:outline-none focus:ring-2 focus:ring-[#71C8F3]"
+                className="relative bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] hover:from-[#187CC1] hover:to-[#71C8F3] text-white font-semibold font-open-sans px-8 py-4 rounded-md text-md md:text-xl sm:text-lg interactive-button touch-target"
                 style={{
                   boxShadow: '0 4px 24px 0 rgba(12,107,175,0.20)',
                   fontWeight: 600,

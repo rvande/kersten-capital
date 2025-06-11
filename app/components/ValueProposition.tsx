@@ -30,8 +30,8 @@ const itemVariants = {
 
 export default function ValueProposition() {
   return (
-    <section className="relative w-full bg-white py-2 md:py-4 mb-10">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+    <section className="relative w-full bg-white section-padding-md">
+      <div className="container-content">
         <motion.div 
           initial="hidden"
           whileInView="visible"
@@ -39,18 +39,17 @@ export default function ValueProposition() {
           variants={containerVariants}
         >
           {/* Header Section */}
-          <div className="text-center max-w-4xl mx-auto mb-16 md:mb-24">
+          <div className="text-center container-text mb-16 md:mb-24">
             <motion.h2 
-              className="font-montserrat text-4xl md:text-5xl lg:text-6xl font-black text-[#002C5F] mb-8 leading-tight"
+              className="font-montserrat text-4xl md:text-5xl lg:text-6xl font-black text-[#002C5F] mb-8 text-heading"
               variants={itemVariants}
             >
               Our Value Proposition
             </motion.h2>
             
             <motion.p
-              className="font-open-sans text-lg md:text-xl lg:text-2xl text-black leading-relaxed"
+              className="font-open-sans text-lg md:text-xl lg:text-2xl text-secondary text-body"
               variants={itemVariants}
-              style={{ lineHeight: '1.7' }}
             >
               For organizational leaders who understand that company growth and valuation hinge on securing top talent, we deliver results when others cannot.
             </motion.p>
@@ -62,17 +61,17 @@ export default function ValueProposition() {
             variants={itemVariants}
           >
             {/* Text Content - Left Side */}
-            <div className="lg:w-1/2 mb-8 lg:mb-0">
-              <h3 className="font-montserrat text-3xl md:text-4xl font-black text-[#002c5f] mb-6">
+            <div className="lg:w-1/2 mb-8 lg:mb-0 mobile-spacing-normal lg:px-0">
+              <h3 className="font-montserrat text-3xl md:text-4xl font-black text-[#002c5f] mb-6 text-heading">
                 Accelerated Process
               </h3>
               
               <div className="space-y-4">
-                <p className="font-open-sans text-base md:text-lg text-black leading-relaxed">
+                <p className="font-open-sans text-base md:text-lg text-secondary text-body">
                   We accelerate your team-building process through our proven recruiting techniques, industry expertise, and cutting-edge data intelligence tools.
                 </p>
                 
-                <p className="font-open-sans text-base md:text-lg text-black leading-relaxed">
+                <p className="font-open-sans text-base md:text-lg text-secondary text-body">
                   Unlike traditional consultants, we possess deep domain knowledge across back-office operations, sales, marketing, and enterprise systems, eliminating the lengthy hiring timelines you've experienced before.
                 </p>
               </div>
@@ -80,7 +79,11 @@ export default function ValueProposition() {
 
             {/* Conference Room Image - Right Side */}
             <div className="lg:w-1/2">
-              <div className="rounded-xl overflow-hidden shadow-lg">
+              <motion.div 
+                className="rounded-2xl overflow-hidden card-shadow-md interactive-card"
+                whileHover={{ y: -5 }}
+                transition={{ duration: 0.3 }}
+              >
                 <Image 
                   src="/teambuilding.jpg" 
                   alt="Conference room meeting representing accelerated team-building process" 
@@ -88,7 +91,7 @@ export default function ValueProposition() {
                   height={400}
                   className="w-full h-auto object-cover"
                 />
-              </div>
+              </motion.div>
             </div>
           </motion.div>
 
@@ -98,17 +101,17 @@ export default function ValueProposition() {
             variants={itemVariants}
           >
             {/* Text Content - Right Side */}
-            <div className="lg:w-1/2 mb-8 lg:mb-0">
-              <h3 className="font-montserrat text-3xl md:text-4xl font-black text-[#002c5f] mb-6">
+            <div className="lg:w-1/2 mb-8 lg:mb-0 mobile-spacing-normal lg:px-0">
+              <h3 className="font-montserrat text-3xl md:text-4xl font-black text-[#002c5f] mb-6 text-heading">
                 Bottom-Line Impact
               </h3>
               
               <div className="space-y-4">
-                <p className="font-open-sans text-base md:text-lg text-black leading-relaxed">
+                <p className="font-open-sans text-base md:text-lg text-secondary text-body">
                   Kersten Talent Capital provides high-growth companies with a strategic talent acquisition advantage that directly impacts their bottom line.
                 </p>
                 
-                <p className="font-open-sans text-base md:text-lg text-black leading-relaxed">
+                <p className="font-open-sans text-base md:text-lg text-secondary text-body">
                   Partner with us to transform your hiring capabilities and unlock your organization's full potential.
                 </p>
               </div>
@@ -116,7 +119,11 @@ export default function ValueProposition() {
 
             {/* Financial Chart Image - Left Side */}
             <div className="lg:w-1/2">
-              <div className="rounded-xl overflow-hidden shadow-lg">
+              <motion.div 
+                className="rounded-2xl overflow-hidden card-shadow-md interactive-card"
+                whileHover={{ y: -5 }}
+                transition={{ duration: 0.3 }}
+              >
                 <Image 
                   src="/stocks.jpg" 
                   alt="Financial chart showing bottom-line impact and growth" 
@@ -124,7 +131,7 @@ export default function ValueProposition() {
                   height={400}
                   className="w-full h-auto object-cover"
                 />
-              </div>
+              </motion.div>
             </div>
           </motion.div>
         </motion.div>

@@ -53,14 +53,30 @@ export async function getBlogPosts(params = {}) {
 export async function getBlogPostBySlug(slug: string) {
   console.log(`Fetching blog post with slug: ${slug}`);
   
-  // First try with simple populate format
+  // First try with detailed populate to ensure we get content
   const params = {
     filters: {
       slug: {
         $eq: slug,
       },
     },
-    populate: '*'  // Use wildcard populate instead of detailed structure
+    populate: {
+      coverImage: {
+        populate: '*',
+      },
+      categories: {
+        populate: '*',
+      },
+      seo: {
+        populate: '*',
+      },
+      content: true,
+      markdownContent: true,
+      // Also try common content field variations
+      body: true,
+      text: true,
+      description: true,
+    }
   };
 
   try {
@@ -83,10 +99,40 @@ export async function getBlogPostBySlug(slug: string) {
       try {
         console.log(`Trying to fetch blog post with endpoint: ${endpoint}`);
         response = await fetchAPI(endpoint, params);
-        if (response) break;
+        if (response) {
+          console.log(`Success with endpoint: ${endpoint}`);
+          break;
+        }
       } catch (endpointError) {
         console.warn(`Failed with endpoint ${endpoint}:`, endpointError);
         error = endpointError;
+      }
+    }
+    
+    // If detailed populate failed, try with wildcard
+    if (!response) {
+      console.log('Trying with wildcard populate...');
+      const wildcardParams = {
+        filters: {
+          slug: {
+            $eq: slug,
+          },
+        },
+        populate: '*'
+      };
+      
+      for (const endpoint of endpointVariations) {
+        try {
+          console.log(`Trying wildcard populate with endpoint: ${endpoint}`);
+          response = await fetchAPI(endpoint, wildcardParams);
+          if (response) {
+            console.log(`Success with wildcard populate and endpoint: ${endpoint}`);
+            break;
+          }
+        } catch (endpointError) {
+          console.warn(`Failed wildcard with endpoint ${endpoint}:`, endpointError);
+          error = endpointError;
+        }
       }
     }
     
@@ -101,6 +147,19 @@ export async function getBlogPostBySlug(slug: string) {
       dataType: response.data ? (Array.isArray(response.data) ? 'array' : 'object') : 'none',
       length: response.data && Array.isArray(response.data) ? response.data.length : 'n/a'
     });
+    
+    // Log the actual content structure for debugging
+    const postData = Array.isArray(response.data) ? response.data[0] : response.data;
+    if (postData) {
+      console.log('Post content structure:', {
+        hasContent: !!postData.content,
+        contentType: typeof postData.content,
+        hasMarkdownContent: !!postData.markdownContent,
+        markdownContentType: typeof postData.markdownContent,
+        allFields: Object.keys(postData),
+        contentPreview: postData.content ? JSON.stringify(postData.content).substring(0, 100) : 'none'
+      });
+    }
     
     // Check if we have any data
     if (!response.data || (Array.isArray(response.data) && response.data.length === 0)) {
