@@ -148,17 +148,30 @@ export default function Hero2() {
 
   return (
     <div className="relative w-full overflow-hidden">
-      {/* Background Image - Always visible as fallback */}
+      {/* Loading Animation - Shows while video is loading */}
       <div 
-        className={`absolute inset-0 w-full h-full bg-cover bg-center z-0 transition-opacity duration-1000 ${
+        className={`absolute inset-0 w-full h-full z-0 transition-opacity duration-1000 ${
           videoLoaded && !videoError ? 'opacity-0' : 'opacity-100'
-        }`}
-        style={{
-          backgroundImage: 'url(/leadership.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      />
+        } bg-[#002C5F] flex items-center justify-center`}
+      >
+        <div className="flex flex-col items-center space-y-6">
+          {/* Spinning loader with brand gradient */}
+          <div className="relative">
+            <div className="w-16 h-16 border-4 border-white/20 rounded-full"></div>
+            <div className="absolute top-0 left-0 w-16 h-16 border-4 border-transparent border-t-[#0C6BAF] border-r-[#71C8F3] rounded-full animate-spin"></div>
+          </div>
+          
+          {/* Loading text */}
+          <div className="text-center">
+            <p className="text-white font-montserrat font-semibold text-lg mb-2">Loading Experience</p>
+            <div className="flex space-x-1">
+              <div className="w-2 h-2 bg-[#0C6BAF] rounded-full animate-pulse"></div>
+              <div className="w-2 h-2 bg-[#71C8F3] rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+              <div className="w-2 h-2 bg-[#0C6BAF] rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+            </div>
+          </div>
+        </div>
+      </div>
       
       {/* Video Background */}
       <video

@@ -187,13 +187,13 @@ export default function RecentContentSection({ blogPosts, whitepapers = [] }: Re
       <div className="absolute inset-0 bg-[#002C5F]"></div>
 
       {/* Hero Section with Image Background */}
-      <section className="relative w-full overflow-hidden py-24 md:py-32 lg:py-40">
+      <section className="relative w-full overflow-hidden pt-15 md:py-32 lg:pb-10">
         {/* Hero Background Image with Overlay */}
         <div className="absolute inset-0">
           <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            className="absolute inset-0 bg-cover bg-top bg-no-repeat"
             style={{
-              backgroundImage: 'url(/insights.jpg)',
+              backgroundImage: 'url(/mountain.jpg)',
             }}
           />
           {/* Dark overlay for text readability */}
@@ -264,7 +264,7 @@ export default function RecentContentSection({ blogPosts, whitepapers = [] }: Re
               initial={{ opacity: 0, y: 40 }}
               animate={isSearchInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 md:p-10 shadow-2xl max-w-4xl mx-auto mb-16 border border-white/20"
+              className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 md:p-10 shadow-2xl max-w-4xl mx-auto mb-8 border border-white/20"
             >
               <div className="flex flex-col md:flex-row gap-6">
                 {/* Search Input */}
@@ -308,7 +308,7 @@ export default function RecentContentSection({ blogPosts, whitepapers = [] }: Re
       </section>
 
       {/* Content Section */}
-      <div className="relative z-10 container mx-auto px-4 pt-16 md:pt-24 lg:pt-32 pb-16 md:pb-24 lg:pb-32">
+      <div className="relative z-10 container mx-auto px-4 pt-8 md:pt-12 lg:pt-16 pb-8 md:pb-12 lg:pb-16">
         <div className="max-w-7xl mx-auto">
           
           {/* Blog Posts Section */}

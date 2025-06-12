@@ -313,8 +313,8 @@ export default function TermsConditionsPage() {
                 <p className="font-open-sans leading-relaxed mb-4">
                   If you have questions about these Terms & Conditions, please contact us:
                 </p>
-                <div className="space-y-2 font-open-sans">
-                  <p><strong>Kersten Talent Capital LLC</strong></p>
+                <div className="font-bold space-y-2 font-open-sans">
+                  <p>Kersten Talent Capital LLC</p>
                   <p>Email: <a href="mailto:michael@kerstentalentcapital.com" className="text-white/90 hover:text-white underline">michael@kerstentalentcapital.com</a></p>
                   <p>Website: <a href="https://www.kerstentalentcapital.com" className="text-white/90 hover:text-white underline">www.kerstentalentcapital.com</a></p>
                   <p className="text-sm text-white/80 mt-4">

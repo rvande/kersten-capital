@@ -315,8 +315,8 @@ export default function PrivacyPolicyPage() {
                 <p className="font-open-sans leading-relaxed mb-4">
                   If you have questions about this Privacy Policy or wish to exercise your rights, please contact us:
                 </p>
-                <div className="space-y-2 font-open-sans">
-                  <p><strong>Kersten Talent Capital LLC</strong></p>
+                <div className="font-bold space-y-2 font-open-sans">
+                  <p>Kersten Talent Capital LLC</p>
                   <p>Email: <a href="mailto:michael@kerstentalentcapital.com" className="text-white/90 hover:text-white underline">michael@kerstentalentcapital.com</a></p>
                   <p>Website: <a href="https://www.kerstentalentcapital.com" className="text-white/90 hover:text-white underline">www.kerstentalentcapital.com</a></p>
                 </div>
