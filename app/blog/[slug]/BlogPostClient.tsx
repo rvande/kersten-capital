@@ -167,7 +167,7 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
 
         {/* Main Content */}
         <div className="relative z-20 flex flex-col h-[90vh] sm:h-[80vh] md:h-[85vh] w-full px-4 md:px-8 lg:px-16">
-          <div className="flex flex-col justify-start md:justify-center h-full md:items-start items-center md:text-left text-center max-w-5xl pt-20 md:pt-16 lg:pt-20 md:-mt-5">
+          <div className="flex flex-col mb-20 justify-start md:justify-center h-full md:items-start items-center md:text-left text-center max-w-5xl pt-20 md:pt-16 lg:pt-20 md:-mt-5">
             
             {/* Categories */}
             {post.categories && Array.isArray(post.categories) && post.categories.length > 0 && (
