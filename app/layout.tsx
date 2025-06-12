@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import FaqFooterWrapper from "./components/FaqFooterWrapper";
 import ScrollToTop from "./components/ScrollToTop";
 import { generateIconMetadata, generateOgImages } from "./utils/favicon";
+import Script from 'next/script';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -112,10 +113,25 @@ export default async function RootLayout({
         </head>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
           <Header global={globalData.data} />
+          {/* HubSpot embed script - using exactly the provided script */}
+          <Script
+            id="hubspot-script"
+            src="https://js-na2.hsforms.net/forms/embed/developer/242773408.js"
+            strategy="lazyOnload"
+          />
           <main className="flex-1 flex flex-col">{children}</main>
           <FaqFooterWrapper />
           <Footer footer={globalData.data.footer} />
           <ScrollToTop />
+          
+          {/* HubSpot Tracking Code - added just before closing body tag */}
+          <Script
+            id="hs-script-loader"
+            src="//js-na2.hs-scripts.com/242773408.js"
+            strategy="afterInteractive"
+            async
+            defer
+          />
         </body>
       </html>
     );
@@ -136,10 +152,25 @@ export default async function RootLayout({
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
           <header className="bg-gradient-to-b from-gray-100 to-gray-200 shadow-sm">
           </header>
+          {/* HubSpot embed script - using exactly the provided script */}
+          <Script
+            id="hubspot-script"
+            src="https://js-na2.hsforms.net/forms/embed/developer/242773408.js"
+            strategy="lazyOnload"
+          />
           <main className="flex-1 flex flex-col">{children}</main>
           <FaqFooterWrapper />
           <Footer footer={null} />
          <ScrollToTop />
+         
+         {/* HubSpot Tracking Code - added just before closing body tag */}
+         <Script
+           id="hs-script-loader"
+           src="//js-na2.hs-scripts.com/242773408.js"
+           strategy="afterInteractive"
+           async
+           defer
+         />
        </body>
      </html>
    );
