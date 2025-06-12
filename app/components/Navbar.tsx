@@ -150,9 +150,9 @@ export default function Navbar({ navbar }: NavbarProps) {
               <Image 
                 src={logoUrl}
                 alt="Kersten Talent Capital"
-                width={320}
-                height={80}
-                className={`w-auto transition-all duration-300 ${isClient && scrolled ? 'h-14 md:h-16' : 'h-16 md:h-20 lg:h-24'}`}
+                width={645}
+                height={569}
+                className={`w-auto transition-all duration-300 ${isClient && scrolled ? 'h-10 md:h-12' : 'h-16 md:h-20 lg:h-24'}`}
                 priority
               />
             ) : (
