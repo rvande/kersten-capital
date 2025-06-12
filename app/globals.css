@@ -158,9 +158,9 @@ strong {
 }
 
 /* Standardized section spacing */
-.section-padding-sm { @apply py-12 md:py-16; }
-.section-padding-md { @apply py-16 md:py-24; }
-.section-padding-lg { @apply py-20 md:py-32; }
+.section-padding-sm { @apply py-10 md:py-16; }
+.section-padding-md { @apply py-12 md:py-24; }
+.section-padding-lg { @apply py-16 md:py-32; }
 
 /* Consistent container widths */
 .container-content { @apply max-w-7xl mx-auto px-4 md:px-6 lg:px-8; }

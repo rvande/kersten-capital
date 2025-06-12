@@ -30,7 +30,7 @@ const itemVariants = {
 
 export default function ValueProposition() {
   return (
-    <section className="relative w-full bg-white section-padding-md">
+    <section className="relative w-full bg-white pb-16 md:py-24">
       <div className="container-content">
         <motion.div 
           initial="hidden"
@@ -39,7 +39,7 @@ export default function ValueProposition() {
           variants={containerVariants}
         >
           {/* Header Section */}
-          <div className="text-center container-text mb-16 md:mb-24">
+          <div className="text-center container-text mb-8 md:mb-16 lg:mb-24">
             <motion.h2 
               className="font-montserrat text-4xl md:text-5xl lg:text-6xl font-black text-[#002C5F] mb-8 text-heading"
               variants={itemVariants}
@@ -57,28 +57,11 @@ export default function ValueProposition() {
 
           {/* Accelerated Process Section */}
           <motion.div 
-            className="flex flex-col lg:flex-row lg:items-center lg:gap-16 mb-16 md:mb-24"
+            className="flex flex-col lg:flex-row lg:items-center lg:gap-16 mb-4 md:mb-8 lg:mb-16"
             variants={itemVariants}
           >
-            {/* Text Content - Left Side */}
-            <div className="lg:w-1/2 mb-8 lg:mb-0 mobile-spacing-normal lg:px-0">
-              <h3 className="font-montserrat text-3xl md:text-4xl font-black text-[#002c5f] mb-6 text-heading">
-                Accelerated Process
-              </h3>
-              
-              <div className="space-y-4">
-                <p className="font-open-sans text-base md:text-lg text-secondary text-body">
-                  We accelerate your team-building process through our proven recruiting techniques, industry expertise, and cutting-edge data intelligence tools.
-                </p>
-                
-                <p className="font-open-sans text-base md:text-lg text-secondary text-body">
-                  Unlike traditional consultants, we possess deep domain knowledge across back-office operations, sales, marketing, and enterprise systems, eliminating the lengthy hiring timelines you've experienced before.
-                </p>
-              </div>
-            </div>
-
-            {/* Conference Room Image - Right Side */}
-            <div className="lg:w-1/2">
+            {/* Conference Room Image - Show first on mobile, right side on desktop */}
+            <div className="lg:w-1/2 order-1 lg:order-2 mb-8 lg:mb-0">
               <motion.div 
                 className="rounded-2xl overflow-hidden card-shadow-md interactive-card"
                 whileHover={{ y: -5 }}
@@ -93,6 +76,23 @@ export default function ValueProposition() {
                 />
               </motion.div>
             </div>
+
+            {/* Text Content - Show second on mobile, left side on desktop */}
+            <div className="lg:w-1/2 order-2 lg:order-1 mobile-spacing-normal lg:px-0">
+              <h3 className="font-montserrat text-3xl md:text-4xl font-black text-[#002c5f] mb-6 text-heading">
+                Accelerated Process
+              </h3>
+              
+              <div className="space-y-4">
+                <p className="font-open-sans text-base md:text-lg text-secondary text-body">
+                  We accelerate your team-building process through our proven recruiting techniques, industry expertise, and cutting-edge data intelligence tools.
+                </p>
+                
+                <p className="font-open-sans text-base md:text-lg text-secondary text-body">
+                  Unlike traditional consultants, we possess deep domain knowledge across back-office operations, sales, marketing, and enterprise systems, eliminating the lengthy hiring timelines you've experienced before.
+                </p>
+              </div>
+            </div>
           </motion.div>
 
           {/* Bottom-Line Impact Section */}
@@ -100,25 +100,8 @@ export default function ValueProposition() {
             className="flex flex-col lg:flex-row-reverse lg:items-center lg:gap-16"
             variants={itemVariants}
           >
-            {/* Text Content - Right Side */}
-            <div className="lg:w-1/2 mb-8 lg:mb-0 mobile-spacing-normal lg:px-0">
-              <h3 className="font-montserrat text-3xl md:text-4xl font-black text-[#002c5f] mb-6 text-heading">
-                Bottom-Line Impact
-              </h3>
-              
-              <div className="space-y-4">
-                <p className="font-open-sans text-base md:text-lg text-secondary text-body">
-                  Kersten Talent Capital provides high-growth companies with a strategic talent acquisition advantage that directly impacts their bottom line.
-                </p>
-                
-                <p className="font-open-sans text-base md:text-lg text-secondary text-body">
-                  Partner with us to transform your hiring capabilities and unlock your organization's full potential.
-                </p>
-              </div>
-            </div>
-
-            {/* Financial Chart Image - Left Side */}
-            <div className="lg:w-1/2">
+            {/* Financial Chart Image - Show first on mobile, left side on desktop */}
+            <div className="lg:w-1/2 order-1 lg:order-2 mb-8 lg:mb-0">
               <motion.div 
                 className="rounded-2xl overflow-hidden card-shadow-md interactive-card"
                 whileHover={{ y: -5 }}
@@ -132,6 +115,23 @@ export default function ValueProposition() {
                   className="w-full h-auto object-cover"
                 />
               </motion.div>
+            </div>
+
+            {/* Text Content - Show second on mobile, right side on desktop */}
+            <div className="lg:w-1/2 order-2 lg:order-1 mobile-spacing-normal lg:px-0">
+              <h3 className="font-montserrat text-3xl md:text-4xl font-black text-[#002c5f] mb-6 text-heading">
+                Bottom-Line Impact
+              </h3>
+              
+              <div className="space-y-4">
+                <p className="font-open-sans text-base md:text-lg text-secondary text-body">
+                  Kersten Talent Capital provides high-growth companies with a strategic talent acquisition advantage that directly impacts their bottom line.
+                </p>
+                
+                <p className="font-open-sans text-base md:text-lg text-secondary text-body">
+                  Partner with us to transform your hiring capabilities and unlock your organization's full potential.
+                </p>
+              </div>
             </div>
           </motion.div>
         </motion.div>

@@ -1,12 +1,7 @@
 import { getGlobalData } from "./api/api";
 import { getBlogPosts } from "./api/blog/api";
 import Link from "next/link";
-import ValueProposition from "./components/ValueProposition";
-import Hero2 from "./components/Hero2";
-import MissionSection from "./components/MissionSection";
-import AnimatedBackground from "./components/AnimatedBackground";
-import ImpactCarousel from "./components/ImpactCarousel";
-import RecentContentSection from "./components/RecentContentSection";
+import HomePageClient from "./components/HomePageClient";
 import { fetchWhitepapers } from "./utils/blog-helpers";
 
 export default async function Home() {
@@ -33,20 +28,10 @@ export default async function Home() {
     }
     
     return (
-      <main className="flex flex-col w-full">
-        {/* Client Review Section */}
-        <div className="relative">
-          </div>
-        <Hero2 />
-        <MissionSection />
-        <ValueProposition />
-        <AnimatedBackground />
-        <ImpactCarousel />
-        <RecentContentSection 
-          blogPosts={recentPosts.data} 
-          whitepapers={whitepapers}
-        />
-      </main>
+      <HomePageClient 
+        blogPosts={recentPosts.data} 
+        whitepapers={whitepapers}
+      />
     );
   } catch (error) {
     console.error('Error on Homepage:', error);
@@ -163,13 +148,8 @@ export default async function Home() {
     
     // Fallback content if global data fails to load
     return (
-      <main className="flex flex-col w-full">
-        <Hero2 />
-        <MissionSection />
-        <ValueProposition />
-        <AnimatedBackground />
-        <ImpactCarousel />
-        <RecentContentSection 
+      <>
+        <HomePageClient 
           blogPosts={mockBlogPosts} 
           whitepapers={mockWhitepapers}
         />
@@ -181,7 +161,7 @@ export default async function Home() {
             </Link>
           </div>
         </div>
-      </main>
+      </>
     );
   }
 }

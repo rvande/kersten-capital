@@ -55,7 +55,7 @@ export async function generateMetadata(): Promise<Metadata> {
     
     // Get site URL from environment variable or default
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kersten-capital.com';
-    
+
     return {
       metadataBase: new URL(siteUrl),
       title: {
@@ -101,6 +101,15 @@ export default async function RootLayout({
     
     return (
       <html lang="en" className={`${inter.variable} ${cormorant.variable} ${montserrat.variable} ${openSans.variable} h-full`}>
+        <head>
+          {/* Preload critical assets for faster loading */}
+          <link rel="preload" href="/hero.mp4" as="video" type="video/mp4" />
+          <link rel="preload" href="/leadership.jpg" as="image" />
+          {/* DNS prefetch for external domains */}
+          <link rel="dns-prefetch" href="//perpetual-motivation-production.up.railway.app" />
+          <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+          <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+        </head>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
           <Header global={globalData.data} />
           <main className="flex-1 flex flex-col">{children}</main>
@@ -113,17 +122,26 @@ export default async function RootLayout({
   } catch (error) {
     console.error('Error in RootLayout:', error);
     // Fallback rendering without header that requires global data
-    return (
+   return (
       <html lang="en" className={`${inter.variable} ${cormorant.variable} ${montserrat.variable} ${openSans.variable} h-full`}>
+        <head>
+          {/* Preload critical assets for faster loading */}
+          <link rel="preload" href="/hero.mp4" as="video" type="video/mp4" />
+          <link rel="preload" href="/leadership.jpg" as="image" />
+          {/* DNS prefetch for external domains */}
+          <link rel="dns-prefetch" href="//perpetual-motivation-production.up.railway.app" />
+          <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+          <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+        </head>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
           <header className="bg-gradient-to-b from-gray-100 to-gray-200 shadow-sm">
           </header>
           <main className="flex-1 flex flex-col">{children}</main>
           <FaqFooterWrapper />
           <Footer footer={null} />
-          <ScrollToTop />
-        </body>
-      </html>
-    );
+         <ScrollToTop />
+       </body>
+     </html>
+   );
   }
 }

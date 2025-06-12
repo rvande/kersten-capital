@@ -152,7 +152,7 @@ export default function Navbar({ navbar }: NavbarProps) {
                 alt="Kersten Talent Capital"
                 width={645}
                 height={569}
-                className={`w-auto transition-all duration-300 ${isClient && scrolled ? 'h-10 md:h-12' : 'h-16 md:h-20 lg:h-24'}`}
+                className={`w-auto transition-all duration-300 ${isClient && scrolled ? 'h-12 md:h-12' : 'h-20 md:h-20 lg:h-24'}`}
                 priority
               />
             ) : (

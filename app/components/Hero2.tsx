@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -15,7 +15,10 @@ interface ServiceItem {
 
 export default function Hero2() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [videoError, setVideoError] = useState(false);
   const [headlineIndex, setHeadlineIndex] = useState(0);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const phrases = [
     'Your Leadership Team',
     'Your Leadership Strategy',
@@ -23,15 +26,65 @@ export default function Hero2() {
   ];
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Memoized video event handlers
+  const handleVideoLoad = useCallback(() => {
+    console.log('Video loaded successfully');
+    setVideoLoaded(true);
+    setVideoError(false);
+  }, []);
+
+  const handleVideoError = useCallback((e: Event) => {
+    console.error('Video loading error:', e);
+    setVideoError(true);
+    setVideoLoaded(false);
+  }, []);
+
+  const handleVideoCanPlay = useCallback(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.play().catch(e => {
+        console.log('Autoplay prevented, user interaction required:', e);
+      });
+    }
+  }, []);
+
+  // Initialize component
   useEffect(() => {
     setIsLoaded(true);
+    
+    // Start headline rotation
     intervalRef.current = setInterval(() => {
       setHeadlineIndex((prev) => (prev + 1) % phrases.length);
     }, 3200);
+
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     };
-  }, []);
+  }, [phrases.length]);
+
+  // Video setup and loading
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Add event listeners
+    video.addEventListener('loadeddata', handleVideoLoad);
+    video.addEventListener('error', handleVideoError);
+    video.addEventListener('canplay', handleVideoCanPlay);
+
+    // Preload and start loading the video
+    video.preload = 'auto';
+    video.load();
+
+    // Cleanup
+    return () => {
+      video.removeEventListener('loadeddata', handleVideoLoad);
+      video.removeEventListener('error', handleVideoError);
+      video.removeEventListener('canplay', handleVideoCanPlay);
+    };
+  }, [handleVideoLoad, handleVideoError, handleVideoCanPlay]);
 
   const services: ServiceItem[] = [
     {
@@ -95,27 +148,51 @@ export default function Hero2() {
 
   return (
     <div className="relative w-full overflow-hidden">
+      {/* Background Image - Always visible as fallback */}
+      <div 
+        className={`absolute inset-0 w-full h-full bg-cover bg-center z-0 transition-opacity duration-1000 ${
+          videoLoaded && !videoError ? 'opacity-0' : 'opacity-100'
+        }`}
+        style={{
+          backgroundImage: 'url(/leadership.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+      
       {/* Video Background */}
       <video
-        className="absolute inset-0 w-full h-full object-cover z-0"
-        src="/hero.mp4"
+        ref={videoRef}
+        className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-1000 ${
+          videoLoaded && !videoError ? 'opacity-100' : 'opacity-0'
+        }`}
         autoPlay
         loop
         muted
         playsInline
-        poster="/leadership.jpg"
-        style={{ minHeight: '100%', minWidth: '100%' }}
-      />
-      {/* Overlay for darkening video */}
+        preload="auto"
+        style={{ 
+          minHeight: '100%', 
+          minWidth: '100%',
+          objectFit: 'cover'
+        }}
+        aria-label="Background video showing leadership and business scenes"
+      >
+        <source src="/hero.mp4" type="video/mp4" />
+        <p>Your browser does not support the video tag.</p>
+      </video>
+      
+      {/* Dark overlay for better text readability */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/80 z-10" />
 
       {/* Main Content */}
       <div className="relative z-20 flex flex-col h-[100vh] sm:h-[80vh] md:h-screen w-full mobile-spacing-normal md:px-8 lg:px-16">
         <div className="flex flex-col justify-center h-full md:items-start items-center md:text-left text-center max-w-4xl">
+          
           {/* TRANSFORM headline */}
           <div className="w-full md:flex md:justify-start flex justify-center mb-2 md:mb-4">
             <span
-              className="text-[3.5rem] md:text-[5rem] lg:text-[7rem] font-black font-montserrat text-white drop-shadow-lg tracking-tight text-heading"
+              className="text-[3.4rem] md:text-[5rem] lg:text-[7rem] font-black font-montserrat text-white drop-shadow-lg tracking-tight text-heading"
               style={{
                 letterSpacing: '-0.04em',
                 textShadow: '0 2px 8px rgba(0,0,0,0.3)',
@@ -124,11 +201,10 @@ export default function Hero2() {
               TRANSFORM
             </span>
           </div>
+          
           {/* Animated Headline */}
           <div className="w-full md:flex md:justify-start flex justify-center mb-6 md:mb-8">
-            <h1
-              className="relative font-montserrat text-[1.6rem] md:text-[4rem] lg:text-[5.5rem] font-black text-heading"
-            >
+            <h1 className="relative font-montserrat text-[1.6rem] md:text-[4rem] lg:text-[5.5rem] font-black text-heading">
               <span
                 className="inline-block whitespace-nowrap transition-transform duration-1500 ease-in-out bg-gradient-to-b from-[#0C6BAF] to-[#71C8F3] bg-clip-text text-transparent"
                 style={{
@@ -142,17 +218,19 @@ export default function Hero2() {
               </span>
             </h1>
           </div>
-          {/* Subheadline/Description */}
+          
+          {/* Description */}
           <div className="w-full md:flex md:justify-start flex justify-center mb-8 md:mb-10">
             <p className="max-w-3xl md:text-left text-center text-white font-open-sans font-normal text-base md:text-lg lg:text-xl text-body">
               Kersten Talent Capital strives to revolutionize organizational performance through strategic talent intelligence and executive placement solutions that catalyze growth, innovation, and sustainable competitive advantages for forward-thinking enterprises across global markets. Serving companies in Europe and North America.
             </p>
           </div>
+          
           {/* CTA Button */}
-          <div className="md:flex md:justify-start flex justify-center">
+          <div className="md:flex md:justify-start flex justify-center pb-8">
             <Link href="/contact">
               <div
-                className="relative bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] hover:from-[#187CC1] hover:to-[#71C8F3] text-white font-semibold font-open-sans px-8 py-4 rounded-md text-md md:text-xl sm:text-lg interactive-button touch-target"
+                className="relative bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] hover:from-[#187CC1] hover:to-[#71C8F3] text-white font-semibold font-open-sans px-8 py-4 rounded-md text-md md:text-xl sm:text-lg interactive-button touch-target transition-all duration-300"
                 style={{
                   boxShadow: '0 4px 24px 0 rgba(12,107,175,0.20)',
                   fontWeight: 600,
@@ -164,7 +242,8 @@ export default function Hero2() {
             </Link>
           </div>
         </div>
-        {/* Bottom blue/white shape */}
+        
+        {/* Bottom decorative shape */}
         <div className="absolute left-0 right-0 bottom-0 w-full pointer-events-none select-none" style={{ zIndex: 30 }}>
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
@@ -173,14 +252,13 @@ export default function Hero2() {
             viewBox="0 0 1280 140" 
             preserveAspectRatio="none"
             className="w-full h-[50px] md:h-[130px]"
+            aria-hidden="true"
           >
             <g fill="#0C6BAF">
-              {/* First layer with transparency */}
               <path 
                 d="M1280 0l-266 91.52a72.59 72.59 0 0 1-30.76 3.71L0 0v140h1280z" 
                 fillOpacity="0.6"
               />
-              {/* Second layer solid */}
               <path 
                 d="M1280 0l-262.1 116.26a73.29 73.29 0 0 1-39.09 6L0 0v140h1280z" 
                 fill="#ffffff"
@@ -189,7 +267,8 @@ export default function Hero2() {
           </svg>
         </div>
       </div>
-      {/* Animations */}
+      
+      {/* CSS Animations */}
       <style jsx>{`
         @keyframes slideRight {
           0% { opacity: 0; transform: translateX(-60px); }
