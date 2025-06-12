@@ -194,12 +194,12 @@ export default function MissionSection() {
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
                 variants={itemVariants}
               >
-                <Link href="/about">
+                <Link href="/about-us">
                   <div className="bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] hover:from-[#187CC1] hover:to-[#71C8F3] text-white font-semibold font-montserrat px-8 py-4 rounded-md text-lg shadow-md transition-all duration-300 text-center">
                     About Us
                   </div>
                 </Link>
-                <Link href="/contact">
+                <Link href="/contact-us">
                   <div className="bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] hover:from-[#187CC1] hover:to-[#71C8F3] text-white font-semibold font-montserrat px-8 py-4 rounded-md text-lg shadow-md transition-all duration-300 text-center">
                     Contact Us
                   </div>
