@@ -9,6 +9,7 @@ import FaqFooterWrapper from "./components/FaqFooterWrapper";
 import ScrollToTop from "./components/ScrollToTop";
 import { generateIconMetadata, generateOgImages } from "./utils/favicon";
 import Script from 'next/script';
+import UtmTracker from "./components/UtmTracker";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -113,6 +114,8 @@ export default async function RootLayout({
         </head>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
           <Header global={globalData.data} />
+          {/* UTM Tracker component to capture and store UTM parameters */}
+          <UtmTracker />
           {/* HubSpot embed script - using exactly the provided script */}
           <Script
             id="hubspot-script"
@@ -152,6 +155,8 @@ export default async function RootLayout({
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
           <header className="bg-gradient-to-b from-gray-100 to-gray-200 shadow-sm">
           </header>
+          {/* UTM Tracker component to capture and store UTM parameters */}
+          <UtmTracker />
           {/* HubSpot embed script - using exactly the provided script */}
           <Script
             id="hubspot-script"

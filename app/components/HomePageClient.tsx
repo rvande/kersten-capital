@@ -55,7 +55,7 @@ export default function HomePageClient({ blogPosts, whitepapers }: HomePageClien
         <MissionSection />
         <ValueProposition />
         <AnimatedBackground />
-        <ImpactCarousel />
+        {/* <ImpactCarousel /> */}
         <RecentContentSection 
           blogPosts={blogPosts} 
           whitepapers={whitepapers}
