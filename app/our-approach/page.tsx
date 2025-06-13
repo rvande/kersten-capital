@@ -287,7 +287,7 @@ export default function OurApproachPage() {
                 {/* Top Right - Tech Stack */}
                 <motion.div 
                   variants={itemVariants}
-                  className="absolute -top-8 -right-2 bg-gradient-to-bl from-[#187CC1] to-[#005A9C] text-white p-5 rounded-xl shadow-lg max-w-sm pointer-events-auto border border-[#0C6BAF]/20"
+                  className="absolute -top-8 -right-18 bg-gradient-to-bl from-[#187CC1] to-[#005A9C] text-white p-5 rounded-xl shadow-lg max-w-sm pointer-events-auto border border-[#0C6BAF]/20"
                 >
                   <h4 className="font-montserrat font-bold text-white text-sm mb-3 uppercase tracking-wide">
                     Aligning With Your Tech Stack
@@ -321,7 +321,7 @@ export default function OurApproachPage() {
                 {/* Bottom Right - Leadership Goals */}
                 <motion.div 
                   variants={itemVariants}
-                  className="absolute -bottom-8 -right-25 bg-gradient-to-tl from-[#71C8F3] to-[#0C6BAF] text-white p-5 rounded-xl shadow-lg max-w-sm pointer-events-auto border border-[#187CC1]/20"
+                  className="absolute -bottom-8 -right-30 bg-gradient-to-tl from-[#71C8F3] to-[#0C6BAF] text-white p-5 rounded-xl shadow-lg max-w-sm pointer-events-auto border border-[#187CC1]/20"
                 >
                   <h4 className="font-montserrat font-bold text-white text-sm mb-3 uppercase tracking-wide">
                     Aligning With Your Leadership Goals

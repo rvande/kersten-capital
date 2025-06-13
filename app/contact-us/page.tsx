@@ -81,39 +81,13 @@ export default function ContactPage() {
       <section className="relative bg-white py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 max-w-7xl mx-auto">
-            {/* Contact Form (HubSpot) */}
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="order-2 lg:order-1"
-            >
-              <motion.div variants={itemVariants}>
-                <h2 className="text-3xl md:text-4xl font-black text-[#002C5F] mb-6 font-montserrat">
-                  Get In Touch
-                </h2>
-                <p className="text-gray-700 font-open-sans text-lg leading-relaxed mb-8">
-                  Fill out the form below and we'll get back to you within 24 hours to discuss your leadership opportunities.
-                </p>
-              </motion.div>
-              {/* HubSpot Form Embed - using exactly the provided div structure */}
-              <ClientOnly>
-                <div 
-                  className="hs-form-html" 
-                  data-region="na2" 
-                  data-form-id="4a6d0a43-61f6-4cac-ba87-3f56ee2ea79d" 
-                  data-portal-id="242773408"
-                ></div>
-              </ClientOnly>
-            </motion.div>
             {/* Contact Information */}
             <motion.div
               variants={containerVariants}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="order-1 lg:order-2"
+              className="order-1"
             >
               <motion.div variants={itemVariants}>
                 <h2 className="text-3xl md:text-4xl font-black text-[#002C5F] mb-6 font-montserrat">
@@ -204,6 +178,33 @@ export default function ContactPage() {
                   <span className="font-open-sans text-sm">We typically respond within 24 hours</span>
                 </div>
               </motion.div>
+            </motion.div>
+            
+            {/* Contact Form (HubSpot) */}
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="order-2"
+            >
+              <motion.div variants={itemVariants}>
+                <h2 className="text-3xl md:text-4xl font-black text-[#002C5F] mb-6 font-montserrat">
+                  Get In Touch
+                </h2>
+                <p className="text-gray-700 font-open-sans text-lg leading-relaxed mb-8">
+                  Fill out the form below and we'll get back to you within 24 hours to discuss your leadership opportunities.
+                </p>
+              </motion.div>
+              {/* HubSpot Form Embed - using exactly the provided div structure */}
+              <ClientOnly>
+                <div 
+                  className="hs-form-html" 
+                  data-region="na2" 
+                  data-form-id="4a6d0a43-61f6-4cac-ba87-3f56ee2ea79d" 
+                  data-portal-id="242773408"
+                ></div>
+              </ClientOnly>
             </motion.div>
           </div>
         </div>
