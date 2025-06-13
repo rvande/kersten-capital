@@ -12,16 +12,19 @@ import { useEffect, useState } from 'react';
  * This helps avoid hydration mismatches when third-party scripts modify the DOM.
  */
 export default function ClientOnly({ children }: { children: React.ReactNode }) {
-  const [mounted, setMounted] = useState(false);
+  // Safe check for window to ensure we're on the client
+  const [hasMounted, setHasMounted] = useState(false);
   
+  // Only run the effect on the client
   useEffect(() => {
-    setMounted(true);
+    setHasMounted(true);
   }, []);
   
-  // Only render children on the client side
-  if (!mounted) {
+  // Return null on first render (server-side)
+  if (!hasMounted) {
     return null;
   }
   
+  // Return children once mounted on client
   return <>{children}</>;
 } 

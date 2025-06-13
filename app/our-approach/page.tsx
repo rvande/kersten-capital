@@ -334,6 +334,7 @@ export default function OurApproachPage() {
                 </motion.div>
               </div>
             </div>
+            
 
             {/* Cards Below Image on Mobile */}
             <div className="md:hidden grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">

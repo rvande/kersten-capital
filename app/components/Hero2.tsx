@@ -257,23 +257,38 @@ export default function Hero2() {
         </div>
         
         {/* Bottom decorative shape */}
-        <div className="absolute left-0 right-0 bottom-0 w-full pointer-events-none select-none" style={{ zIndex: 30 }}>
+        <div className="absolute left-0 right-0 w-full pointer-events-none select-none overflow-hidden" style={{ zIndex: 30, bottom: '-2px', height: '132px' }}>
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
             width="100%" 
-            height="130px" 
+            height="132px" 
             viewBox="0 0 1280 140" 
             preserveAspectRatio="none"
-            className="w-full h-[50px] md:h-[130px]"
+            className="w-full h-full"
             aria-hidden="true"
+            style={{ 
+              transform: 'translateY(-1px)'
+            }}
           >
-            <g fill="#0C6BAF">
+            <defs>
+              <linearGradient id="shapeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#0C6BAF" stopOpacity="0.6"/>
+                <stop offset="85%" stopColor="#0C6BAF" stopOpacity="0.4"/>
+                <stop offset="100%" stopColor="rgba(255,255,255,0.9)"/>
+              </linearGradient>
+              <linearGradient id="shapeGradientWhite" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#ffffff"/>
+                <stop offset="85%" stopColor="#ffffff"/>
+                <stop offset="100%" stopColor="rgba(255,255,255,0.95)"/>
+              </linearGradient>
+            </defs>
+            <g>
               <path 
-                d="M1280 0l-266 91.52a72.59 72.59 0 0 1-30.76 3.71L0 0v140h1280z" 
-                fillOpacity="0.6"
+                d="M1280 0l-266 91.52a72.59 72.59 0 0 1-30.76 3.71L0 0v142h1280z" 
+                fill="url(#shapeGradient)"
               />
               <path 
-                d="M1280 0l-262.1 116.26a73.29 73.29 0 0 1-39.09 6L0 0v140h1280z" 
+                d="M1280 0l-262.1 116.26a73.29 73.29 0 0 1-39.09 6L0 0v142h1280z" 
                 fill="#ffffff"
               />
             </g>

@@ -5,28 +5,10 @@ import { FAQ } from '../types/faq';
 import { FAQGroup } from './FAQAccordion';
 import FAQSearch from './FAQSearch';
 import Script from 'next/script';
+import { generateFAQSchema } from '../utils/seo';
 
 interface FAQPageContentProps {
   faqs: FAQ[];
-}
-
-// Generate schema.org FAQPage JSON-LD markup
-function generateFAQSchema(faqs: FAQ[]) {
-  const schemaData = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "name": "Frequently Asked Questions",
-    "mainEntity": faqs.map(faq => ({
-      "@type": "Question",
-      "name": faq.Question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.Answer
-      }
-    }))
-  };
-
-  return JSON.stringify(schemaData);
 }
 
 export default function FAQPageContent({ faqs }: FAQPageContentProps) {

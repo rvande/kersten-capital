@@ -10,6 +10,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import { generateIconMetadata, generateOgImages } from "./utils/favicon";
 import Script from 'next/script';
 import UtmTracker from "./components/UtmTracker";
+import { generateOrganizationSchema } from "./utils/seo";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -56,7 +57,7 @@ export async function generateMetadata(): Promise<Metadata> {
       : generateOgImages(global.favicon, metaTitle);
     
     // Get site URL from environment variable or default
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kersten-capital.com';
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com';
 
     return {
       metadataBase: new URL(siteUrl),
@@ -80,12 +81,15 @@ export async function generateMetadata(): Promise<Metadata> {
         images: ogImages.length > 0 ? ogImages.map(img => img.url) : [],
       },
       icons: iconMetadata,
+      alternates: {
+        canonical: siteUrl,
+      },
     };
   } catch (error) {
     console.error('Error generating metadata:', error);
     // Fallback metadata
     return {
-      metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://kersten-capital.com'),
+      metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com'),
       title: 'Kersten Talent Capital',
       description: 'Strategic talent investment firm',
     };
@@ -100,6 +104,9 @@ export default async function RootLayout({
   // Fetch global data for header with error handling
   try {
     const globalData = await getGlobalData();
+    
+    // Generate organization schema
+    const orgSchemaMarkup = generateOrganizationSchema();
     
     return (
       <html lang="en" className={`${inter.variable} ${cormorant.variable} ${montserrat.variable} ${openSans.variable} h-full`}>
@@ -122,6 +129,14 @@ export default async function RootLayout({
             src="https://js-na2.hsforms.net/forms/embed/developer/242773408.js"
             strategy="lazyOnload"
           />
+          
+          {/* Organization Schema */}
+          <Script
+            id="organization-schema"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: orgSchemaMarkup }}
+          />
+          
           <main className="flex-1 flex flex-col">{children}</main>
           <FaqFooterWrapper />
           <Footer footer={globalData.data.footer} />
@@ -163,6 +178,14 @@ export default async function RootLayout({
             src="https://js-na2.hsforms.net/forms/embed/developer/242773408.js"
             strategy="lazyOnload"
           />
+          
+          {/* Organization Schema */}
+          <Script
+            id="organization-schema"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: generateOrganizationSchema() }}
+          />
+          
           <main className="flex-1 flex flex-col">{children}</main>
           <FaqFooterWrapper />
           <Footer footer={null} />

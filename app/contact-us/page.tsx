@@ -3,7 +3,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin, FaPaperPlane, FaCheck, FaExclamationTriangle } from 'react-icons/fa';
-import ClientOnly from '../components/ClientOnly';
+import dynamic from 'next/dynamic';
+
+// Dynamically import the HubSpotForm component with no SSR
+const HubSpotForm = dynamic(() => import('../components/HubSpotForm'), { ssr: false });
 
 // Animation variants
 const containerVariants = {
@@ -196,15 +199,14 @@ export default function ContactPage() {
                   Fill out the form below and we'll get back to you within 24 hours to discuss your leadership opportunities.
                 </p>
               </motion.div>
-              {/* HubSpot Form Embed - using exactly the provided div structure */}
-              <ClientOnly>
-                <div 
-                  className="hs-form-html" 
-                  data-region="na2" 
-                  data-form-id="4a6d0a43-61f6-4cac-ba87-3f56ee2ea79d" 
-                  data-portal-id="242773408"
-                ></div>
-              </ClientOnly>
+              
+              {/* HubSpot Form using our new component */}
+              <HubSpotForm
+                region="na2"
+                portalId="242773408"
+                formId="4a6d0a43-61f6-4cac-ba87-3f56ee2ea79d"
+                className="hubspot-form-container"
+              />
             </motion.div>
           </div>
         </div>

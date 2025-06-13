@@ -4,6 +4,17 @@ import { StrapiResponse } from '../types/global';
 import { FAQ } from '../types/faq';
 import FAQHeader from '../components/FAQHeader';
 import FAQPageContent from '../components/FAQPageContent';
+import { generatePageMetadata } from '../utils/metadata';
+import { Metadata } from 'next';
+
+// Generate metadata for this page
+export async function generateMetadata(): Promise<Metadata> {
+  return generatePageMetadata(
+    '/faq',
+    'Frequently Asked Questions',
+    'Find answers to common questions about our executive talent acquisition services, process, and how we can help transform your leadership team.'
+  );
+}
 
 // This is a server component that fetches FAQ data
 export default async function FAQPage() {

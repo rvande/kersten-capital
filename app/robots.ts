@@ -1,15 +1,23 @@
 import { MetadataRoute } from 'next';
 
+/**
+ * Generate robots.txt for Next.js
+ * This uses the Next.js built-in robots.txt generation feature
+ * @see https://nextjs.org/docs/app/api-reference/file-conventions/metadata/robots
+ */
 export default function robots(): MetadataRoute.Robots {
-  // Base URL from environment or default
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kersten-capital.com';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com';
   
   return {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/api/*'],
+      disallow: [
+        '/api/',
+        '/_next/',
+        '/admin/',
+      ],
     },
-    sitemap: `${baseUrl}/sitemap.xml`,
+    sitemap: `${siteUrl}/sitemap.xml`,
   };
 } 

@@ -189,14 +189,14 @@ export default function AnimatedBackground() {
   return (
     <section className="relative w-full overflow-hidden lg:mt-10">
       {/* Diagonal SVG Overlay - Top */}
-      <div className="absolute left-0 right-0 top-0 w-full pointer-events-none select-none z-20">
+      <div className="absolute left-0 right-0 h-full w-full pointer-events-none select-none z-20">
         <svg 
           xmlns="http://www.w3.org/2000/svg" 
           width="100%" 
-          height="130px" 
+          height="135px" 
           viewBox="0 0 1280 140" 
           preserveAspectRatio="none"
-          className="w-full h-[75px] md:h-[130px] rotate-180"
+          className="w-full h-[79px] md:h-[130px] rotate-180"
         >
           <g fill="#002c5f">
             <path d="M1280 0l-266 91.52a72.59 72.59 0 0 1-30.76 3.71L0 0v140h1280z" />
