@@ -229,7 +229,7 @@ export default function MissionSection() {
                 className="mb-6"
                 variants={itemVariants}
               >
-                <span className="text-[#0C6BAF] font-montserrat font-semibold text-lg md:text-xl tracking-wide">
+                <span className="text-[#0C6BAF] font-montserrat font-semibold text-lg md:text-xl tracking-wide" role="heading" aria-level={2}>
                   Kersten Talent Capital
                 </span>
               </motion.div>

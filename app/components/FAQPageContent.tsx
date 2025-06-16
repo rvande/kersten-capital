@@ -144,7 +144,7 @@ export default function FAQPageContent({ faqs }: FAQPageContentProps) {
                     <option value="a-z">Question A-Z</option>
                     <option value="z-a">Question Z-A</option>
                   </select>
-                  <svg className="absolute right-3 md:right-3 top-1/2 transform -translate-y-1/2 text-white h-6 w-6 md:h-5 md:w-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="absolute right-3 md:right-3 top-1/2 transform -translate-y-1/2 text-white h-6 w-6 md:h-5 md:w-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" role="presentation">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
@@ -171,7 +171,7 @@ export default function FAQPageContent({ faqs }: FAQPageContentProps) {
               </div>
             ) : (
               <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-12 shadow-2xl max-w-2xl mx-auto text-center border border-gray-100">
-                <svg className="w-16 h-16 text-[#0C6BAF] mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-16 h-16 text-[#0C6BAF] mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" role="presentation">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
                 <h2 className="text-2xl md:text-3xl font-black mb-4 text-[#002C5F] font-montserrat">No FAQs Found</h2>

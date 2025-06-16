@@ -253,6 +253,8 @@ export default function RecentContentSection({ blogPosts, whitepapers = [] }: Re
                 initial={{ opacity: 0 }}
                 animate={isHeadingInView ? { opacity: 1 } : { opacity: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
+                role="heading"
+                aria-level={3}
               >
                 Stay ahead with our latest thinking on executive talent acquisition, 
                 leadership trends, and strategic hiring practices.
@@ -392,7 +394,7 @@ export default function RecentContentSection({ blogPosts, whitepapers = [] }: Re
               transition={{ duration: 0.6 }}
             >
               <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-12 max-w-2xl mx-auto">
-                <svg className="w-16 h-16 text-[#0C6BAF] mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-16 h-16 text-[#0C6BAF] mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" role="presentation">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
                 <h3 className="text-2xl font-black text-[#002C5F] mb-4 font-montserrat">No results found</h3>

@@ -86,7 +86,7 @@ export default async function GuidesPage() {
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <div className="max-w-2xl mx-auto">
               <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-12 shadow-2xl border border-gray-100 text-center">
-                <svg className="w-16 h-16 text-[#0C6BAF] mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-16 h-16 text-[#0C6BAF] mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" role="presentation">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <h2 className="text-2xl md:text-3xl font-black mb-4 text-[#002C5F] font-montserrat">Content Temporarily Unavailable</h2>

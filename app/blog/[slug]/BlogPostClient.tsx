@@ -418,7 +418,7 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
               className="inline-flex items-center text-[#0C6BAF] hover:text-[#187CC1] font-montserrat font-semibold transition-colors"
             >
               View All Articles
-              <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" role="presentation">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </Link>

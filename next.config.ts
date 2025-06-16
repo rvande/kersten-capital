@@ -8,6 +8,22 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com',
   },
   
+  // Configure redirects for old URLs
+  async redirects() {
+    return [
+      {
+        source: '/hear-from-others',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/our-capabilities',
+        destination: '/',
+        permanent: true,
+      },
+    ];
+  },
+  
   // Configure image domains
   images: {
     remotePatterns: [

@@ -86,6 +86,8 @@ export default function ValueProposition() {
             <motion.p
               className="font-open-sans text-lg md:text-xl lg:text-2xl text-secondary text-body"
               variants={itemVariants}
+              role="heading"
+              aria-level={3}
             >
               For organizational leaders who understand that company growth and valuation hinge on securing top talent, we deliver results when others cannot.
             </motion.p>

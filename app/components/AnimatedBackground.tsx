@@ -245,7 +245,7 @@ export default function AnimatedBackground() {
             {/* Metrics Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-10 mb-12 sm:mb-16 md:mb-20 lg:mb-24">
               <AnimatedMetricCard
-                icon={<svg className="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                icon={<svg className="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" role="presentation">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>}
                 title="Time to Placement"
@@ -256,7 +256,7 @@ export default function AnimatedBackground() {
               />
 
               <AnimatedMetricCard
-                icon={<svg className="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                icon={<svg className="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" role="presentation">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>}
                 title="Success Rate"
@@ -267,7 +267,7 @@ export default function AnimatedBackground() {
               />
 
               <AnimatedMetricCard
-                icon={<svg className="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                icon={<svg className="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" role="presentation">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>}
                 title="Global Network"
@@ -278,7 +278,7 @@ export default function AnimatedBackground() {
               />
 
               <AnimatedMetricCard
-                icon={<svg className="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                icon={<svg className="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" role="presentation">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                 </svg>}
                 title="C-Suite Focus"
@@ -289,7 +289,7 @@ export default function AnimatedBackground() {
               />
 
               <AnimatedMetricCard
-                icon={<svg className="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                icon={<svg className="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" role="presentation">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>}
                 title="Client Retention"
@@ -300,7 +300,7 @@ export default function AnimatedBackground() {
               />
 
               <AnimatedMetricCard
-                icon={<svg className="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                icon={<svg className="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" role="presentation">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
                 </svg>}
                 title="Candidate Pipeline"
@@ -333,7 +333,7 @@ export default function AnimatedBackground() {
                 transition={{ duration: 0.6, delay: 0.4 }}
                 className="text-center mb-8 sm:mb-10 md:mb-12"
               >
-                <p className="font-open-sans text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-black leading-relaxed max-w-4xl mx-auto px-2">
+                <p className="font-open-sans text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-black leading-relaxed max-w-4xl mx-auto px-2" role="heading" aria-level={3}>
                   Our proven methodology consistently outperforms industry standards across all key metrics, 
                   delivering exceptional results for our clients in executive placement and retention.
                 </p>
