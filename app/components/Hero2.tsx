@@ -327,7 +327,7 @@ export default function Hero2() {
         className={`absolute left-0 right-0 bottom-0 z-50 transition-opacity duration-1000 ${
           (videoLoaded && !videoError) || isMobile ? 'opacity-0 pointer-events-none' : 'opacity-100'
         } bg-gradient-to-br from-[#F8F9FA] to-[#E9ECEF] flex items-center justify-center`}
-        style={{ top: '45px' }}
+        style={{ top: isMobile ? '20px' : '60px' }}
         role="status"
         aria-live="polite"
         aria-label="Loading page content"
