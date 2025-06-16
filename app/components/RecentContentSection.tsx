@@ -173,6 +173,8 @@ export default function RecentContentSection({ blogPosts, whitepapers = [] }: Re
     return matchesSearch && matchesCategory;
   });
 
+  // COMMENTED OUT - Whitepapers filtering temporarily disabled
+  /*
   const filteredWhitepapers = validWhitepapers.filter(whitepaper => {
     const title = whitepaper.Title || whitepaper?.attributes?.Title || "";
     const description = whitepaper.Description || whitepaper?.attributes?.Description || "";
@@ -181,6 +183,8 @@ export default function RecentContentSection({ blogPosts, whitepapers = [] }: Re
     const matchesCategory = selectedCategory === 'all' || selectedCategory === 'whitepaper';
     return matchesSearch && matchesCategory;
   });
+  */
+  const filteredWhitepapers = []; // Empty array since whitepapers are disabled
 
   return (
     <section className="relative w-full overflow-hidden">
@@ -257,7 +261,7 @@ export default function RecentContentSection({ blogPosts, whitepapers = [] }: Re
                 aria-level={3}
               >
                 Stay ahead with our latest thinking on executive talent acquisition, 
-                leadership trends, and strategic hiring practices.
+                leadership trends, and strategic hiring insights.
               </motion.p>
             </motion.div>
 
@@ -283,10 +287,10 @@ export default function RecentContentSection({ blogPosts, whitepapers = [] }: Re
                   </svg>
                   <input
                     type="text"
-                    placeholder="Search content..."
+                    placeholder="Search articles..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    aria-label="Search articles and whitepapers"
+                    aria-label="Search articles"
                     className="w-full pl-12 pr-6 py-4 rounded-full bg-[#002C5F] border border-[#002C5F] focus:ring-2 focus:ring-[#0C6BAF] focus:border-[#0C6BAF] outline-none font-open-sans text-white placeholder:text-white/70"
                   />
                 </div>
@@ -301,7 +305,7 @@ export default function RecentContentSection({ blogPosts, whitepapers = [] }: Re
                   >
                     <option value="all">All Content</option>
                     <option value="blog">Articles</option>
-                    <option value="whitepaper">Whitepapers</option>
+                    {/* <option value="whitepaper">Whitepapers</option> */}
                   </select>
                   <svg className="absolute right-3 md:right-3 top-1/2 transform -translate-y-1/2 text-white h-6 w-6 md:h-5 md:w-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" role="presentation">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -351,7 +355,8 @@ export default function RecentContentSection({ blogPosts, whitepapers = [] }: Re
             </div>
           )}
           
-          {/* Whitepapers Section */}
+          {/* Whitepapers Section - COMMENTED OUT TEMPORARILY */}
+          {/* 
           {(selectedCategory === 'all' || selectedCategory === 'whitepaper') && filteredWhitepapers.length > 0 && (
             <div className="mb-20">
               <motion.div 
@@ -384,9 +389,10 @@ export default function RecentContentSection({ blogPosts, whitepapers = [] }: Re
               </div>
             </div>
           )}
+          */}
 
           {/* No Results Message */}
-          {searchTerm && filteredBlogPosts.length === 0 && filteredWhitepapers.length === 0 && (
+          {searchTerm && filteredBlogPosts.length === 0 && (
             <motion.div 
               className="text-center py-16"
               initial={{ opacity: 0 }}

@@ -115,6 +115,7 @@ export default function FaqFooter({ faqs = [] }: FaqFooterProps) {
               stroke="currentColor"
               animate={{ rotate: isExpanded ? 180 : 0 }}
               transition={{ duration: 0.3 }}
+              role="presentation"
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </motion.svg>

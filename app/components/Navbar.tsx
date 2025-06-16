@@ -175,6 +175,7 @@ export default function Navbar({ navbar }: NavbarProps) {
                   viewBox="0 0 24 24" 
                   fill="none" 
                   xmlns="http://www.w3.org/2000/svg"
+                  role="presentation"
                 >
                   <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none"/>
                   <circle cx="12" cy="12" r="6" stroke="currentColor" strokeWidth="2" fill="none"/>
@@ -226,7 +227,7 @@ export default function Navbar({ navbar }: NavbarProps) {
                           {link.subMenuItems && link.subMenuItems.length > 0 ? (
                             // Parent item with expandable sub-menu
                             <div>
-                              <div className="flex items-center justify-between py-3 px-3 text-base text-[#002C5F] hover:bg-gray-50 transition-all duration-200">
+                              <div className="flex items-center justify-between py-4 px-6 text-base text-[#002C5F] hover:bg-gray-50 transition-all duration-200">
                                 {/* Clickable link for the parent item */}
                                 <Link
                                   href={link.url || '#'}
@@ -264,13 +265,13 @@ export default function Navbar({ navbar }: NavbarProps) {
                               <div className={`overflow-hidden transition-all duration-300 ease-in-out ${
                                 expandedSubMenus.includes(link.id) ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
                               }`}>
-                                <div className="ml-4 border-l-2 border-[#0C6BAF]/30 pl-3">
+                                <div className="ml-4 border-l-2 border-[#0C6BAF]/30 pl-4">
                                   {link.subMenuItems.map((subItem) => (
                                     <Link
                                       key={subItem.id}
                                       href={subItem.url || '#'}
                                       target={subItem.newTab ? '_blank' : '_self'}
-                                      className="font-montserrat block py-2 px-3 text-sm text-[#002C5F]/80 hover:text-[#0C6BAF] transition-all duration-200 hover:pl-5"
+                                      className="font-montserrat block py-3 px-4 text-sm text-[#002C5F]/80 hover:text-[#0C6BAF] transition-all duration-200 hover:pl-6"
                                       onClick={() => {
                                         setActiveMenu(null);
                                         setMobileMenuOpen(false);
@@ -289,7 +290,7 @@ export default function Navbar({ navbar }: NavbarProps) {
                             <Link
                               href={link.url || '#'}
                               target={link.newTab ? '_blank' : '_self'}
-                              className="font-montserrat block px-4 py-3 text-base text-[#002C5F] hover:bg-[#F8F9FA] hover:text-[#0C6BAF] transition-all duration-200 hover:pl-6"
+                              className="font-montserrat block px-6 py-4 text-base text-[#002C5F] hover:bg-[#F8F9FA] hover:text-[#0C6BAF] transition-all duration-200 hover:pl-8"
                               onClick={() => setActiveMenu(null)}
                               tabIndex={activeMenu === menuItem.id ? 0 : -1}
                               rel={link.newTab ? "noopener noreferrer" : undefined}
@@ -352,7 +353,7 @@ export default function Navbar({ navbar }: NavbarProps) {
             {navbar.menu?.map((menuItem) => (
               <div key={menuItem.id} className="py-2">
                 <button 
-                  className="font-montserrat w-full font-semibold text-lg text-[#002C5F] px-2 py-3 mb-2 flex justify-between items-center hover:text-[#0C6BAF] focus:outline-none focus:ring-2 focus:ring-[#0C6BAF] rounded-md transition-colors hover:bg-gray-50"
+                  className="font-montserrat w-full font-semibold text-lg text-[#002C5F] px-4 py-4 mb-2 flex justify-between items-center hover:text-[#0C6BAF] focus:outline-none focus:ring-2 focus:ring-[#0C6BAF] rounded-md transition-colors hover:bg-gray-50"
                   onClick={() => setActiveMenu(activeMenu === menuItem.id ? null : menuItem.id)}
                   aria-expanded={activeMenu === menuItem.id}
                   aria-controls={`mobile-dropdown-${menuItem.id}`}
@@ -375,14 +376,14 @@ export default function Navbar({ navbar }: NavbarProps) {
                     activeMenu === menuItem.id ? 'max-h-screen opacity-100 bg-gray-50' : 'max-h-0 opacity-0'
                   }`}
                 >
-                  <div className="ml-4 border-l-3 border-[#0C6BAF] pl-4">
+                  <div className="ml-6 border-l-3 border-[#0C6BAF] pl-6">
                     {menuItem.links?.map((link) => (
                       <div key={link.id}>
                         {/* Check if this link has subMenuItems */}
                         {link.subMenuItems && link.subMenuItems.length > 0 ? (
                           // Parent item with expandable sub-menu
                           <div>
-                            <div className="flex items-center justify-between py-3 px-3 text-base text-[#002C5F] hover:bg-gray-50 transition-all duration-200">
+                            <div className="flex items-center justify-between py-4 px-6 text-base text-[#002C5F] hover:bg-gray-50 transition-all duration-200">
                               {/* Clickable link for the parent item */}
                               <Link
                                 href={link.url || '#'}
@@ -420,13 +421,13 @@ export default function Navbar({ navbar }: NavbarProps) {
                             <div className={`overflow-hidden transition-all duration-300 ease-in-out ${
                               expandedSubMenus.includes(link.id) ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
                             }`}>
-                              <div className="ml-4 border-l-2 border-[#0C6BAF]/30 pl-3">
+                              <div className="ml-4 border-l-2 border-[#0C6BAF]/30 pl-4">
                                 {link.subMenuItems.map((subItem) => (
                                   <Link
                                     key={subItem.id}
                                     href={subItem.url || '#'}
                                     target={subItem.newTab ? '_blank' : '_self'}
-                                    className="font-montserrat block py-2 px-3 text-sm text-[#002C5F]/80 hover:text-[#0C6BAF] transition-all duration-200 hover:pl-5"
+                                    className="font-montserrat block py-3 px-4 text-sm text-[#002C5F]/80 hover:text-[#0C6BAF] transition-all duration-200 hover:pl-6"
                                     onClick={() => {
                                       setActiveMenu(null);
                                       setMobileMenuOpen(false);
@@ -445,7 +446,7 @@ export default function Navbar({ navbar }: NavbarProps) {
                           <Link
                             href={link.url || '#'}
                             target={link.newTab ? '_blank' : '_self'}
-                            className="font-montserrat block py-3 px-3 text-base text-[#002C5F] hover:text-[#0C6BAF] transition-all duration-200 hover:pl-5"
+                            className="font-montserrat block px-6 py-4 text-base text-[#002C5F] hover:bg-[#F8F9FA] hover:text-[#0C6BAF] transition-all duration-200 hover:pl-8"
                             onClick={() => {
                               setActiveMenu(null);
                               setMobileMenuOpen(false);
@@ -467,7 +468,7 @@ export default function Navbar({ navbar }: NavbarProps) {
             <div className="py-2">
               <Link 
                 href="/our-approach" 
-                className="font-montserrat w-full font-semibold text-lg text-[#002C5F] px-4 py-3 flex items-center hover:text-[#0C6BAF] focus:outline-none focus:ring-2 focus:ring-[#0C6BAF] rounded-md transition-colors hover:bg-gray-50"
+                className="font-montserrat w-full font-semibold text-lg text-[#002C5F] px-6 py-4 flex items-center hover:text-[#0C6BAF] focus:outline-none focus:ring-2 focus:ring-[#0C6BAF] rounded-md transition-colors hover:bg-gray-50"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <svg 

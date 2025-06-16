@@ -233,7 +233,7 @@ export default function Footer({ footer }: FooterProps) {
                             }`}
                             aria-labelledby={`submenu-button-${link.id}`}
                           >
-                            <div className="ml-4 md:ml-2 border-l-2 border-[#71C8F3]/30 pl-3 mt-2 space-y-1">
+                            <div className="ml-4 md:ml-2 border-l-4 border-[#71C8F3]/30 pl-2 mt-2 space-y-1 space-x-2">
                               {link.subMenuItems.map((subItem) => (
                                 <div key={subItem.id}>
                                   <Link
