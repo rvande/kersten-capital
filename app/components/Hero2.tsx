@@ -48,6 +48,18 @@ export default function Hero2() {
     return () => window.removeEventListener('resize', checkDevice);
   }, []);
 
+  // Initialize mobile state immediately for SSR
+  useEffect(() => {
+    // Set initial mobile state based on window size
+    const initialIsMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    if (initialIsMobile) {
+      setIsMobile(true);
+      setShowFallbackImage(true);
+      setVideoLoaded(true);
+      setIsLoaded(true);
+    }
+  }, []);
+
   // Memoized video event handlers
   const handleVideoLoad = useCallback(() => {
     console.log('Video loaded successfully');
@@ -325,7 +337,7 @@ export default function Hero2() {
         className={`absolute left-0 right-0 bottom-0 z-50 transition-opacity duration-1000 ${
           (videoLoaded && !videoError) || isMobile ? 'opacity-0 pointer-events-none' : 'opacity-100'
         } bg-gradient-to-br from-[#F8F9FA] to-[#E9ECEF] flex items-center justify-center`}
-        style={{ top: isMobile ? '20px' : '60px' }}
+        style={{ top: isMobile ? '40px' : '60px' }}
         role="status"
         aria-live="polite"
         aria-label="Loading page content"
@@ -362,11 +374,18 @@ export default function Hero2() {
             fill
             priority
             fetchPriority="high"
-            quality={85}
-            sizes="100vw"
+            quality={isMobile ? 60 : 85}
+            sizes={isMobile ? "(max-width: 768px) 100vw" : "100vw"}
             style={{
               objectFit: 'cover',
             }}
+            // Mobile-specific optimization - more aggressive
+            {...(isMobile && {
+              unoptimized: false,
+              placeholder: undefined,
+              blurDataURL: undefined,
+              loading: 'eager',
+            })}
           />
           {/* Dark overlay for better text readability - Stronger on mobile */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/60 to-black/90" aria-hidden="true" />

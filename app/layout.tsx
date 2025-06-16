@@ -163,6 +163,27 @@ export default async function RootLayout({
                 contain-intrinsic-size: 100vw 100vh;
               }
               
+              /* Mobile-specific LCP optimizations */
+              @media (max-width: 767px) {
+                img[src*="leadership.jpg"] {
+                  content-visibility: visible !important;
+                  contain: none !important;
+                  will-change: auto !important;
+                  transform: none !important;
+                }
+                
+                /* Ensure mobile hero renders immediately */
+                section[role="region"][aria-labelledby="hero-heading"] {
+                  contain: none !important;
+                }
+                
+                /* Mobile image container optimization */
+                div[style*="position: absolute"][style*="inset: 0"] img {
+                  image-rendering: optimizeSpeed;
+                  image-rendering: -webkit-optimize-contrast;
+                }
+              }
+              
               /* Prevent HubSpot layout shifts */
               #hubspot-messages-iframe-container {
                 position: fixed !important;
@@ -190,7 +211,8 @@ export default async function RootLayout({
           }} />
           
           {/* Preload critical assets for faster loading */}
-          <link rel="preload" href="/leadership.jpg" as="image" type="image/jpeg" fetchPriority="high" />
+          <link rel="preload" href="/_next/image?url=%2Fleadership.jpg&w=828&q=60" as="image" type="image/webp" fetchPriority="high" media="(max-width: 767px)" />
+          <link rel="preload" href="/leadership.jpg" as="image" type="image/jpeg" fetchPriority="high" media="(min-width: 768px)" />
           <link rel="preload" href="/kersten-logo.jpg" as="image" type="image/jpeg" />
           {/* Preload video only on desktop for better mobile performance */}
           <link rel="preload" href="/hero.mp4" as="video" type="video/mp4" media="(min-width: 768px)" />
@@ -312,6 +334,27 @@ export default async function RootLayout({
                 contain-intrinsic-size: 100vw 100vh;
               }
               
+              /* Mobile-specific LCP optimizations */
+              @media (max-width: 767px) {
+                img[src*="leadership.jpg"] {
+                  content-visibility: visible !important;
+                  contain: none !important;
+                  will-change: auto !important;
+                  transform: none !important;
+                }
+                
+                /* Ensure mobile hero renders immediately */
+                section[role="region"][aria-labelledby="hero-heading"] {
+                  contain: none !important;
+                }
+                
+                /* Mobile image container optimization */
+                div[style*="position: absolute"][style*="inset: 0"] img {
+                  image-rendering: optimizeSpeed;
+                  image-rendering: -webkit-optimize-contrast;
+                }
+              }
+              
               /* Prevent HubSpot layout shifts */
               #hubspot-messages-iframe-container {
                 position: fixed !important;
@@ -339,7 +382,8 @@ export default async function RootLayout({
           }} />
           
           {/* Preload critical assets for faster loading */}
-          <link rel="preload" href="/leadership.jpg" as="image" type="image/jpeg" fetchPriority="high" />
+          <link rel="preload" href="/_next/image?url=%2Fleadership.jpg&w=828&q=60" as="image" type="image/webp" fetchPriority="high" media="(max-width: 767px)" />
+          <link rel="preload" href="/leadership.jpg" as="image" type="image/jpeg" fetchPriority="high" media="(min-width: 768px)" />
           <link rel="preload" href="/kersten-logo.jpg" as="image" type="image/jpeg" />
           {/* Preload video only on desktop for better mobile performance */}
           <link rel="preload" href="/hero.mp4" as="video" type="video/mp4" media="(min-width: 768px)" />

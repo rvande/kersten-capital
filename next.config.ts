@@ -53,11 +53,18 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
     ],
-    // Optimize images for better LCP
+    // Optimize images for better LCP - more aggressive for mobile
     formats: ['image/webp', 'image/avif'],
     minimumCacheTTL: 31536000, // 1 year
     dangerouslyAllowSVG: false,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    // More aggressive optimization for mobile
+    domains: [],
+    loader: 'default',
+    path: '/_next/image',
+    unoptimized: false,
   },
   
   // Ensure sitemap and robots.txt are generated during build
