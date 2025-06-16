@@ -118,6 +118,13 @@ export default async function RootLayout({
               #hero-heading, #hero-description {
                 font-display: swap;
                 text-rendering: optimizeSpeed;
+                contain: layout style paint;
+              }
+              
+              /* Ensure hero section renders immediately */
+              section[role="region"][aria-labelledby="hero-heading"] {
+                min-height: 100vh;
+                contain: layout;
               }
               
               /* Preload critical font weights */
@@ -132,9 +139,9 @@ export default async function RootLayout({
               @font-face {
                 font-family: 'Open Sans';
                 font-style: normal;
-                font-weight: 400;
+                font-weight: 600;
                 font-display: swap;
-                src: local('Open Sans Regular'), local('OpenSans-Regular');
+                src: local('Open Sans SemiBold'), local('OpenSans-SemiBold');
               }
               
               /* Prevent layout shifts */
@@ -149,11 +156,41 @@ export default async function RootLayout({
                   padding-right: 2rem;
                 }
               }
+              
+              /* Optimize image loading */
+              img[src*="leadership.jpg"] {
+                content-visibility: auto;
+                contain-intrinsic-size: 100vw 100vh;
+              }
+              
+              /* Prevent HubSpot layout shifts */
+              #hubspot-messages-iframe-container {
+                position: fixed !important;
+                bottom: 20px !important;
+                right: 20px !important;
+                z-index: 1000 !important;
+                contain: layout !important;
+              }
+              
+              /* Reserve space for HubSpot widget to prevent CLS */
+              #hubspot-conversations-iframe {
+                width: 400px !important;
+                height: 400px !important;
+                max-width: calc(100vw - 40px) !important;
+                max-height: calc(100vh - 40px) !important;
+              }
+              
+              @media (max-width: 768px) {
+                #hubspot-conversations-iframe {
+                  width: 320px !important;
+                  height: 320px !important;
+                }
+              }
             `
           }} />
           
           {/* Preload critical assets for faster loading */}
-          <link rel="preload" href="/leadership.jpg" as="image" type="image/jpeg" />
+          <link rel="preload" href="/leadership.jpg" as="image" type="image/jpeg" fetchPriority="high" />
           <link rel="preload" href="/kersten-logo.jpg" as="image" type="image/jpeg" />
           {/* Preload video only on desktop for better mobile performance */}
           <link rel="preload" href="/hero.mp4" as="video" type="video/mp4" media="(min-width: 768px)" />
@@ -161,6 +198,11 @@ export default async function RootLayout({
           <link rel="dns-prefetch" href="//perpetual-motivation-production.up.railway.app" />
           <link rel="dns-prefetch" href="//fonts.googleapis.com" />
           <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+          <link rel="dns-prefetch" href="//js-na2.hsforms.net" />
+          <link rel="dns-prefetch" href="//static.hsappstatic.net" />
+          {/* Preconnect to critical domains */}
+          <link rel="preconnect" href="//perpetual-motivation-production.up.railway.app" crossOrigin="anonymous" />
+          <link rel="preconnect" href="//fonts.googleapis.com" crossOrigin="anonymous" />
         </head>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
           {/* Skip Navigation Link */}
@@ -179,7 +221,7 @@ export default async function RootLayout({
           <Script
             id="hubspot-script"
             src="https://js-na2.hsforms.net/forms/embed/developer/242773408.js"
-            strategy="lazyOnload"
+            strategy="afterInteractive"
           />
           
           {/* Organization Schema */}
@@ -225,6 +267,13 @@ export default async function RootLayout({
               #hero-heading, #hero-description {
                 font-display: swap;
                 text-rendering: optimizeSpeed;
+                contain: layout style paint;
+              }
+              
+              /* Ensure hero section renders immediately */
+              section[role="region"][aria-labelledby="hero-heading"] {
+                min-height: 100vh;
+                contain: layout;
               }
               
               /* Preload critical font weights */
@@ -239,9 +288,9 @@ export default async function RootLayout({
               @font-face {
                 font-family: 'Open Sans';
                 font-style: normal;
-                font-weight: 400;
+                font-weight: 600;
                 font-display: swap;
-                src: local('Open Sans Regular'), local('OpenSans-Regular');
+                src: local('Open Sans SemiBold'), local('OpenSans-SemiBold');
               }
               
               /* Prevent layout shifts */
@@ -256,11 +305,41 @@ export default async function RootLayout({
                   padding-right: 2rem;
                 }
               }
+              
+              /* Optimize image loading */
+              img[src*="leadership.jpg"] {
+                content-visibility: auto;
+                contain-intrinsic-size: 100vw 100vh;
+              }
+              
+              /* Prevent HubSpot layout shifts */
+              #hubspot-messages-iframe-container {
+                position: fixed !important;
+                bottom: 20px !important;
+                right: 20px !important;
+                z-index: 1000 !important;
+                contain: layout !important;
+              }
+              
+              /* Reserve space for HubSpot widget to prevent CLS */
+              #hubspot-conversations-iframe {
+                width: 400px !important;
+                height: 400px !important;
+                max-width: calc(100vw - 40px) !important;
+                max-height: calc(100vh - 40px) !important;
+              }
+              
+              @media (max-width: 768px) {
+                #hubspot-conversations-iframe {
+                  width: 320px !important;
+                  height: 320px !important;
+                }
+              }
             `
           }} />
           
           {/* Preload critical assets for faster loading */}
-          <link rel="preload" href="/leadership.jpg" as="image" type="image/jpeg" />
+          <link rel="preload" href="/leadership.jpg" as="image" type="image/jpeg" fetchPriority="high" />
           <link rel="preload" href="/kersten-logo.jpg" as="image" type="image/jpeg" />
           {/* Preload video only on desktop for better mobile performance */}
           <link rel="preload" href="/hero.mp4" as="video" type="video/mp4" media="(min-width: 768px)" />
@@ -268,6 +347,11 @@ export default async function RootLayout({
           <link rel="dns-prefetch" href="//perpetual-motivation-production.up.railway.app" />
           <link rel="dns-prefetch" href="//fonts.googleapis.com" />
           <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+          <link rel="dns-prefetch" href="//js-na2.hsforms.net" />
+          <link rel="dns-prefetch" href="//static.hsappstatic.net" />
+          {/* Preconnect to critical domains */}
+          <link rel="preconnect" href="//perpetual-motivation-production.up.railway.app" crossOrigin="anonymous" />
+          <link rel="preconnect" href="//fonts.googleapis.com" crossOrigin="anonymous" />
         </head>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
           {/* Skip Navigation Link */}
@@ -287,7 +371,7 @@ export default async function RootLayout({
           <Script
             id="hubspot-script"
             src="https://js-na2.hsforms.net/forms/embed/developer/242773408.js"
-            strategy="lazyOnload"
+            strategy="afterInteractive"
           />
           
           {/* Organization Schema */}

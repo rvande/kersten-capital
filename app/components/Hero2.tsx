@@ -35,13 +35,11 @@ export default function Hero2() {
         || window.innerWidth < 768;
       setIsMobile(isMobileDevice);
       
-      // On mobile, show fallback image immediately to improve LCP
+      // On mobile, show content immediately for better LCP
       if (isMobileDevice) {
         setShowFallbackImage(true);
-        // Allow content to show immediately on mobile
-        setTimeout(() => {
-          setVideoLoaded(true);
-        }, 100);
+        setVideoLoaded(true); // Show content immediately
+        setIsLoaded(true); // Enable animations immediately
       }
     };
     
@@ -232,7 +230,7 @@ export default function Hero2() {
               <span
                 className="inline-block whitespace-nowrap bg-gradient-to-b from-[#0C6BAF] to-[#71C8F3] bg-clip-text text-transparent"
                 style={{
-                  transform: `translateX(${isLoaded ? '0' : '-40px'})`,
+                  transform: 'translateX(0)',
                   transition: 'transform 1.5s ease-in-out',
                   willChange: 'transform',
                 }}
@@ -362,12 +360,13 @@ export default function Hero2() {
             src="/leadership.jpg"
             alt="Leadership team in professional setting"
             fill
-            className="object-cover"
-            priority={true}
+            priority
+            fetchPriority="high"
             quality={85}
             sizes="100vw"
-            placeholder="blur"
-            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+            style={{
+              objectFit: 'cover',
+            }}
           />
           {/* Dark overlay for better text readability - Stronger on mobile */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/60 to-black/90" aria-hidden="true" />

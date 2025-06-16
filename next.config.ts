@@ -24,7 +24,7 @@ const nextConfig: NextConfig = {
     ];
   },
   
-  // Configure image domains
+  // Configure image domains and optimization
   images: {
     remotePatterns: [
       {
@@ -53,13 +53,23 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
     ],
+    // Optimize images for better LCP
+    formats: ['image/webp', 'image/avif'],
+    minimumCacheTTL: 31536000, // 1 year
+    dangerouslyAllowSVG: false,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   
   // Ensure sitemap and robots.txt are generated during build
   poweredByHeader: false,
   
-  // Optimize for SEO
+  // Optimize for SEO and performance
   reactStrictMode: true,
+  
+  // Experimental features for better performance
+  experimental: {
+    optimizePackageImports: ['framer-motion'],
+  },
 };
 
 export default nextConfig;
