@@ -83,11 +83,19 @@ export default function BlogPostCard({ post, featured = false }: BlogPostCardPro
     router.push(`/blog/${post.slug}`);
   };
 
+  // Handle keyboard navigation
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      navigateToPost();
+    }
+  };
+
   // Create a sophisticated placeholder for the image
   const placeholderImage = (
     <div className="bg-gradient-to-br from-[#0C6BAF] via-[#187CC1] to-[#71C8F3] w-full h-full flex items-center justify-center relative overflow-hidden">
       {/* Background pattern */}
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-10" aria-hidden="true">
         <div className="absolute inset-0" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.3'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
         }} />
@@ -98,6 +106,7 @@ export default function BlogPostCard({ post, featured = false }: BlogPostCardPro
         stroke="currentColor" 
         viewBox="0 0 24 24" 
         xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
       >
         <path 
           strokeLinecap="round" 
@@ -110,20 +119,29 @@ export default function BlogPostCard({ post, featured = false }: BlogPostCardPro
   );
 
   return (
-    <article className={`group cursor-pointer ${featured ? 'md:col-span-2 lg:col-span-1' : ''}`}>
+    <article 
+      className={`group cursor-pointer ${featured ? 'md:col-span-2 lg:col-span-1' : ''}`}
+      role="article"
+      aria-labelledby={`blog-title-${post.id}`}
+      aria-describedby={`blog-excerpt-${post.id}`}
+    >
       {/* Main card */}
-      <div className="relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl border border-gray-100 hover:border-[#0C6BAF]/20 transition-all duration-500 group-hover:-translate-y-2 flex flex-col h-full">
+      <div className="relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl border border-gray-100 hover:border-[#0C6BAF]/20 transition-all duration-500 group-hover:-translate-y-2 flex flex-col h-full focus-within:ring-2 focus-within:ring-[#0C6BAF] focus-within:ring-offset-2">
         {/* Main card content (clickable) */}
         <div 
           className="cursor-pointer flex flex-col flex-grow" 
           onClick={navigateToPost}
+          onKeyDown={handleKeyDown}
+          tabIndex={0}
+          role="button"
+          aria-label={`Read article: ${post.title}`}
         >
           {/* Image Container */}
           <div className="relative h-48 overflow-hidden rounded-t-2xl">
             {imageUrl ? (
               <Image
                 src={imageUrl}
-                alt={post.title}
+                alt={`Cover image for article: ${post.title}`}
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
@@ -131,7 +149,7 @@ export default function BlogPostCard({ post, featured = false }: BlogPostCardPro
               <div className="w-full h-full bg-gradient-to-br from-[#0C6BAF] to-[#71C8F3] flex items-center justify-center">
                 <div className="text-white text-center p-6">
                   <div className="w-16 h-16 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center">
-                    <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                       <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
                     </svg>
                   </div>
@@ -141,11 +159,14 @@ export default function BlogPostCard({ post, featured = false }: BlogPostCardPro
             )}
             
             {/* Gradient overlay for better text readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true" />
             
             {/* Featured badge */}
             {featured && (
-              <div className="absolute top-4 left-4 bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] text-white px-3 py-1 rounded-full text-xs font-montserrat font-semibold">
+              <div 
+                className="absolute top-4 left-4 bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] text-white px-3 py-1 rounded-full text-xs font-montserrat font-semibold"
+                aria-label="Featured article"
+              >
                 Featured
               </div>
             )}
@@ -156,27 +177,38 @@ export default function BlogPostCard({ post, featured = false }: BlogPostCardPro
             {/* Meta Information */}
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center text-[#0C6BAF] text-sm font-montserrat font-semibold">
-                <FaClock className="w-3 h-3 mr-2" />
-                <span>{readingTime} min read</span>
+                <FaClock className="w-3 h-3 mr-2" aria-hidden="true" />
+                <span aria-label={`Reading time: ${readingTime} minutes`}>{readingTime} min read</span>
               </div>
-              <span className="text-sm text-gray-500 font-open-sans">{formattedDate}</span>
+              <time 
+                className="text-sm text-gray-500 font-open-sans"
+                dateTime={post.publishedAt}
+                aria-label={`Published on ${formattedDate}`}
+              >
+                {formattedDate}
+              </time>
             </div>
             
             {/* Categories */}
             {post.categories && post.categories.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-4">
+              <div className="flex flex-wrap gap-2 mb-4" role="list" aria-label="Article categories">
                 {post.categories.slice(0, 2).map(category => (
                   <Link 
                     key={category.id}
                     href={`/blog/category/${category.slug}`}
-                    className="text-xs font-semibold bg-gradient-to-r from-[#0C6BAF]/10 to-[#187CC1]/10 text-[#0C6BAF] px-3 py-1.5 rounded-full hover:from-[#0C6BAF]/20 hover:to-[#187CC1]/20 transition-all duration-300 font-montserrat border border-[#0C6BAF]/20"
+                    className="text-xs font-semibold bg-gradient-to-r from-[#0C6BAF]/10 to-[#187CC1]/10 text-[#0C6BAF] px-3 py-1.5 rounded-full hover:from-[#0C6BAF]/20 hover:to-[#187CC1]/20 transition-all duration-300 font-montserrat border border-[#0C6BAF]/20 focus:outline-none focus:ring-2 focus:ring-[#0C6BAF] focus:ring-offset-1"
                     onClick={(e) => e.stopPropagation()} // Prevent triggering the parent onClick
+                    role="listitem"
+                    aria-label={`View articles in ${category.name} category`}
                   >
                     {category.name}
                   </Link>
                 ))}
                 {post.categories.length > 2 && (
-                  <span className="text-xs font-semibold text-gray-400 px-3 py-1.5 font-montserrat">
+                  <span 
+                    className="text-xs font-semibold text-gray-400 px-3 py-1.5 font-montserrat"
+                    aria-label={`${post.categories.length - 2} additional categories`}
+                  >
                     +{post.categories.length - 2} more
                   </span>
                 )}
@@ -184,12 +216,18 @@ export default function BlogPostCard({ post, featured = false }: BlogPostCardPro
             )}
             
             {/* Title */}
-            <h2 className={`${featured ? 'text-2xl lg:text-3xl' : 'text-xl lg:text-2xl'} font-black mb-4 text-[#002C5F] group-hover:text-[#0C6BAF] transition-colors duration-300 line-clamp-2 font-montserrat leading-tight`}>
+            <h3 
+              id={`blog-title-${post.id}`}
+              className={`${featured ? 'text-2xl lg:text-3xl' : 'text-xl lg:text-2xl'} font-black mb-4 text-[#002C5F] group-hover:text-[#0C6BAF] transition-colors duration-300 line-clamp-2 font-montserrat leading-tight`}
+            >
               {post.title}
-            </h2>
+            </h3>
             
             {/* Excerpt */}
-            <p className="text-black/70 line-clamp-3 mb-6 font-open-sans leading-relaxed flex-grow text-base">
+            <p 
+              id={`blog-excerpt-${post.id}`}
+              className="text-black/70 line-clamp-3 mb-6 font-open-sans leading-relaxed flex-grow text-base"
+            >
               {post.excerpt}
             </p>
             
@@ -197,14 +235,7 @@ export default function BlogPostCard({ post, featured = false }: BlogPostCardPro
             <div className="flex items-center justify-between pt-4 border-t border-gray-100">
               <div className="text-[#0C6BAF] font-semibold group-hover:text-[#187CC1] flex items-center transition-all duration-300 font-montserrat">
                 <span>Read Article</span>
-                <FaArrowRight className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
-              </div>
-              
-              {/* Author or additional meta could go here */}
-              <div className="w-8 h-8 bg-gradient-to-br from-[#0C6BAF] to-[#187CC1] rounded-full flex items-center justify-center">
-                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                </svg>
+                <FaArrowRight className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
               </div>
             </div>
           </div>

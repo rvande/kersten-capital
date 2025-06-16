@@ -113,13 +113,22 @@ export default async function RootLayout({
         <head>
           {/* Preload critical assets for faster loading */}
           <link rel="preload" href="/hero.mp4" as="video" type="video/mp4" />
-          <link rel="preload" href="/leadership.jpg" as="image" />
+          <link rel="preload" href="/kersten-logo.jpg" as="image" type="image/jpeg" />
           {/* DNS prefetch for external domains */}
           <link rel="dns-prefetch" href="//perpetual-motivation-production.up.railway.app" />
           <link rel="dns-prefetch" href="//fonts.googleapis.com" />
           <link rel="dns-prefetch" href="//fonts.gstatic.com" />
         </head>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
+          {/* Skip Navigation Link */}
+          <a 
+            href="#main-content" 
+            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-[#0C6BAF] focus:text-white focus:rounded-md focus:font-semibold focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#0C6BAF] transition-all duration-200"
+            aria-label="Skip to main content"
+          >
+            Skip to main content
+          </a>
+
           <Header global={globalData.data} />
           {/* UTM Tracker component to capture and store UTM parameters */}
           <UtmTracker />
@@ -137,7 +146,14 @@ export default async function RootLayout({
             dangerouslySetInnerHTML={{ __html: orgSchemaMarkup }}
           />
           
-          <main className="flex-1 flex flex-col">{children}</main>
+          <main 
+            id="main-content" 
+            className="flex-1 flex flex-col"
+            role="main"
+            aria-label="Main content"
+          >
+            {children}
+          </main>
           <FaqFooterWrapper />
           <Footer footer={globalData.data.footer} />
           <ScrollToTop />
@@ -161,13 +177,22 @@ export default async function RootLayout({
         <head>
           {/* Preload critical assets for faster loading */}
           <link rel="preload" href="/hero.mp4" as="video" type="video/mp4" />
-          <link rel="preload" href="/leadership.jpg" as="image" />
+          <link rel="preload" href="/kersten-logo.jpg" as="image" type="image/jpeg" />
           {/* DNS prefetch for external domains */}
           <link rel="dns-prefetch" href="//perpetual-motivation-production.up.railway.app" />
           <link rel="dns-prefetch" href="//fonts.googleapis.com" />
           <link rel="dns-prefetch" href="//fonts.gstatic.com" />
         </head>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
+          {/* Skip Navigation Link */}
+          <a 
+            href="#main-content" 
+            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-[#0C6BAF] focus:text-white focus:rounded-md focus:font-semibold focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#0C6BAF] transition-all duration-200"
+            aria-label="Skip to main content"
+          >
+            Skip to main content
+          </a>
+
           <header className="bg-gradient-to-b from-gray-100 to-gray-200 shadow-sm">
           </header>
           {/* UTM Tracker component to capture and store UTM parameters */}
@@ -186,7 +211,14 @@ export default async function RootLayout({
             dangerouslySetInnerHTML={{ __html: generateOrganizationSchema() }}
           />
           
-          <main className="flex-1 flex flex-col">{children}</main>
+          <main 
+            id="main-content" 
+            className="flex-1 flex flex-col"
+            role="main"
+            aria-label="Main content"
+          >
+            {children}
+          </main>
           <FaqFooterWrapper />
           <Footer footer={null} />
          <ScrollToTop />
@@ -199,8 +231,8 @@ export default async function RootLayout({
            async
            defer
          />
-       </body>
-     </html>
-   );
+        </body>
+      </html>
+    );
   }
 }

@@ -147,36 +147,50 @@ export default function Hero2() {
   ];
 
   return (
-    <div className="relative w-full overflow-hidden">
+    <section 
+      className="relative w-full overflow-hidden" 
+      style={{ minHeight: '100vh' }}
+      role="region"
+      aria-labelledby="hero-heading"
+      aria-describedby="hero-description"
+    >
       {/* Loading Animation - Shows while video is loading */}
       <div 
-        className={`absolute inset-0 w-full h-full z-0 transition-opacity duration-1000 ${
-          videoLoaded && !videoError ? 'opacity-0' : 'opacity-100'
-        } bg-[#002C5F] flex items-center justify-center`}
+        className={`absolute left-0 right-0 bottom-0 z-50 transition-opacity duration-1000 ${
+          videoLoaded && !videoError ? 'opacity-0 pointer-events-none' : 'opacity-100'
+        } bg-gradient-to-br from-[#F8F9FA] to-[#E9ECEF] flex items-center justify-center`}
+        style={{ top: '45px' }}
+        role="status"
+        aria-live="polite"
+        aria-label="Loading page content"
       >
-        <div className="flex flex-col items-center space-y-6">
-          {/* Spinning loader with brand gradient */}
-          <div className="relative">
-            <div className="w-16 h-16 border-4 border-white/20 rounded-full"></div>
-            <div className="absolute top-0 left-0 w-16 h-16 border-4 border-transparent border-t-[#0C6BAF] border-r-[#71C8F3] rounded-full animate-spin"></div>
+        <div className="text-center">
+          {/* LoadingSpinner component design */}
+          <div className="flex items-center justify-center mb-6" aria-hidden="true">
+            <div className="w-16 h-16 relative">
+              {/* Outer ring */}
+              <div className="absolute inset-0 rounded-full border-4 border-[#0C6BAF]/20"></div>
+              {/* Spinning ring */}
+              <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-[#0C6BAF] animate-spin"></div>
+              {/* Inner dot */}
+              <div className="absolute inset-2 rounded-full bg-gradient-to-br from-[#0C6BAF] to-[#71C8F3] opacity-60"></div>
+            </div>
           </div>
           
           {/* Loading text */}
-          <div className="text-center">
-            <p className="text-white font-montserrat font-semibold text-lg mb-2">Loading Experience</p>
-            <div className="flex space-x-1">
-              <div className="w-2 h-2 bg-[#0C6BAF] rounded-full animate-pulse"></div>
-              <div className="w-2 h-2 bg-[#71C8F3] rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-              <div className="w-2 h-2 bg-[#0C6BAF] rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
-            </div>
-          </div>
+          <h2 className="text-2xl font-black text-[#002C5F] mb-2 font-montserrat">
+            Loading...
+          </h2>
+          <p className="text-[#002C5F]/70 font-open-sans">
+            Preparing your experience
+          </p>
         </div>
       </div>
       
       {/* Video Background */}
       <video
         ref={videoRef}
-        className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-1000 ${
+        className={`absolute inset-0 w-full h-full object-cover z-10 transition-opacity duration-1000 ${
           videoLoaded && !videoError ? 'opacity-100' : 'opacity-0'
         }`}
         autoPlay
@@ -185,7 +199,7 @@ export default function Hero2() {
         playsInline
         preload="auto"
         style={{ 
-          minHeight: '100%', 
+          minHeight: '100vh', 
           minWidth: '100%',
           objectFit: 'cover'
         }}
@@ -196,15 +210,16 @@ export default function Hero2() {
       </video>
       
       {/* Dark overlay for better text readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/80 z-10" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/80 z-20" aria-hidden="true" />
 
       {/* Main Content */}
-      <div className="relative z-20 flex flex-col h-[100vh] sm:h-[80vh] md:h-screen w-full mobile-spacing-normal md:px-8 lg:px-16">
+      <div className="relative z-30 flex flex-col h-screen w-full mobile-spacing-normal md:px-8 lg:px-16">
         <div className="flex flex-col justify-center h-full md:items-start items-center md:text-left text-center max-w-4xl">
           
           {/* TRANSFORM headline */}
           <div className="w-full md:flex md:justify-start flex justify-center mb-2 md:mb-4">
-            <span
+            <h1
+              id="hero-heading"
               className="text-[3.4rem] md:text-[5rem] lg:text-[7rem] font-black font-montserrat text-white drop-shadow-lg tracking-tight text-heading"
               style={{
                 letterSpacing: '-0.04em',
@@ -212,12 +227,12 @@ export default function Hero2() {
               }}
             >
               TRANSFORM
-            </span>
+            </h1>
           </div>
           
           {/* Animated Headline */}
           <div className="w-full md:flex md:justify-start flex justify-center mb-6 md:mb-8">
-            <h1 className="relative font-montserrat text-[1.6rem] md:text-[4rem] lg:text-[5.5rem] font-black text-heading">
+            <h2 className="relative font-montserrat text-[1.6rem] md:text-[4rem] lg:text-[5.5rem] font-black text-heading">
               <span
                 className="inline-block whitespace-nowrap transition-transform duration-1500 ease-in-out bg-gradient-to-b from-[#0C6BAF] to-[#71C8F3] bg-clip-text text-transparent"
                 style={{
@@ -226,15 +241,17 @@ export default function Hero2() {
                   willChange: 'transform',
                 }}
                 key={headlineIndex}
+                aria-live="polite"
+                aria-atomic="true"
               >
                 {phrases[headlineIndex]}
               </span>
-            </h1>
+            </h2>
           </div>
           
           {/* Description */}
           <div className="w-full md:flex md:justify-start flex justify-center mb-8 md:mb-10">
-            <p className="max-w-3xl md:text-left text-center text-white font-open-sans font-normal text-base md:text-lg lg:text-xl text-body">
+            <p id="hero-description" className="max-w-3xl md:text-left text-center text-white font-open-sans font-normal text-base md:text-lg lg:text-xl text-body">
               Kersten Talent Capital strives to revolutionize organizational performance through strategic talent intelligence and executive placement solutions that catalyze growth, innovation, and sustainable competitive advantages for forward-thinking enterprises across global markets. Serving companies in Europe and North America.
             </p>
           </div>
@@ -249,6 +266,8 @@ export default function Hero2() {
                   fontWeight: 600,
                   letterSpacing: '0.01em',
                 }}
+                role="button"
+                aria-label="Contact us to start your next great hire"
               >
                 Your Next Great Hire Starts Here
               </div>
@@ -257,7 +276,7 @@ export default function Hero2() {
         </div>
         
         {/* Bottom decorative shape */}
-        <div className="absolute left-0 right-0 w-full pointer-events-none select-none overflow-hidden" style={{ zIndex: 30, bottom: '-2px', height: '132px' }}>
+        <div className="absolute left-0 right-0 w-full pointer-events-none select-none overflow-hidden" style={{ zIndex: 40, bottom: '-2px', height: '132px' }} aria-hidden="true">
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
             width="100%" 
@@ -304,6 +323,6 @@ export default function Hero2() {
           100% { opacity: 1; transform: translateX(0); }
         }
       `}</style>
-    </div>
+    </section>
   );
 } 

@@ -47,14 +47,26 @@ export default function Footer({ footer }: FooterProps) {
         : [...prev, linkId]
     );
   };
+
+  // Handle keyboard navigation for expandable sections
+  const handleKeyDown = (event: React.KeyboardEvent, action: () => void) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      action();
+    }
+  };
   
   // If footer data is missing, show a simplified version
   if (!footer) {
     return (
-      <footer className="bg-[#002C5F] py-12 shadow-[0_-20px_60px_rgba(0,0,0,0.3)]">
+      <footer 
+        className="bg-[#002C5F] py-12 shadow-[0_-20px_60px_rgba(0,0,0,0.3)]"
+        role="contentinfo"
+        aria-label="Site footer"
+      >
         <div className="container mx-auto px-6">
           <div className="text-center">
-            <p className="font-montserrat text-2xl font-black text-white">Kersten Talent Capital</p>
+            <h2 className="font-montserrat text-2xl font-black text-white">Kersten Talent Capital</h2>
             <p className="mt-4 text-white/80 font-open-sans">© {new Date().getFullYear()} Kersten Talent Capital. All rights reserved.</p>
           </div>
         </div>
@@ -66,13 +78,17 @@ export default function Footer({ footer }: FooterProps) {
   const logoUrl = footer.logo ? getStrapiMedia(footer.logo) : null;
   
   return (
-    <footer className="bg-[#002C5F] py-20 shadow-[0_-20px_60px_rgba(0,0,0,0.3)] relative">
+    <footer 
+      className="bg-[#002C5F] py-20 shadow-[0_-20px_60px_rgba(0,0,0,0.3)] relative"
+      role="contentinfo"
+      aria-label="Site footer"
+    >
       {/* Top shadow gradient overlay */}
-      <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-black/20 to-transparent pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-black/20 to-transparent pointer-events-none" aria-hidden="true" />
       
       <div className="container mx-auto px-6">
         {/* Logo - centered and larger */}
-        <motion.div 
+        <motion.header 
           className="mb-16 text-center"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -80,7 +96,11 @@ export default function Footer({ footer }: FooterProps) {
           transition={{ duration: 0.6 }}
         >
           {logoUrl ? (
-            <Link href="/" aria-label="Kersten Talent Capital Home" className="inline-block group">
+            <Link 
+              href="/" 
+              aria-label="Kersten Talent Capital Home" 
+              className="inline-block group focus:outline-none focus:ring-2 focus:ring-[#71C8F3] focus:ring-offset-2 focus:ring-offset-[#002C5F] rounded-lg"
+            >
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
@@ -95,33 +115,43 @@ export default function Footer({ footer }: FooterProps) {
               </motion.div>
             </Link>
           ) : (
-            <Link href="/" className="inline-block font-montserrat text-4xl font-black text-white hover:text-[#71C8F3] transition-colors duration-300">
+            <Link 
+              href="/" 
+              className="inline-block font-montserrat text-4xl font-black text-white hover:text-[#71C8F3] transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-[#71C8F3] focus:ring-offset-2 focus:ring-offset-[#002C5F] rounded-lg"
+              aria-label="Kersten Talent Capital Home"
+            >
               Kersten Talent Capital
             </Link>
           )}
           <p className="mt-6 text-white/80 text-xl max-w-3xl mx-auto font-open-sans leading-relaxed">
             Strategic talent investment and career acceleration for exceptional leaders.
           </p>
-        </motion.div>
+        </motion.header>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
           
           {/* Footer columns */}
           {footer.columns?.map((column, index) => (
-            <motion.div 
+            <motion.section 
               key={column.id} 
               className="md:col-span-2 py-2 md:py-0"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
+              aria-labelledby={`footer-column-heading-${column.id}`}
             >
               {/* Column header - clickable on mobile */}
-              <h4
-                className="w-full flex justify-between items-center text-left font-montserrat text-xl font-black text-white px-3 mb-1 md:px-0 md:py-0 md:mb-6 hover:bg-white/10 hover:text-[#71C8F3] rounded-md transition-all duration-300 cursor-pointer md:cursor-default md:hover:bg-transparent"
+              <h3
+                id={`footer-column-heading-${column.id}`}
+                className="w-full flex justify-between items-center text-left font-montserrat text-xl font-black text-white px-3 mb-1 md:px-0 md:py-0 md:mb-6 hover:bg-white/10 hover:text-[#71C8F3] rounded-md transition-all duration-300 cursor-pointer md:cursor-default md:hover:bg-transparent focus:outline-none focus:ring-2 focus:ring-[#71C8F3] focus:ring-offset-2 focus:ring-offset-[#002C5F]"
                 onClick={() => toggleColumn(column.id)}
+                onKeyDown={(e) => handleKeyDown(e, () => toggleColumn(column.id))}
                 aria-expanded={expandedColumns.includes(column.id)}
-                aria-controls={`footer-column-${column.id}`}
+                aria-controls={`footer-column-content-${column.id}`}
+                tabIndex={isMobile ? 0 : -1}
+                role={isMobile ? "button" : "heading"}
+                aria-level={3}
               >
                 <span>{column.title}</span>
                 <svg 
@@ -135,18 +165,24 @@ export default function Footer({ footer }: FooterProps) {
                 >
                   <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
-              </h4>
+              </h3>
               
               {/* Column links */}
               <div 
-                id={`footer-column-${column.id}`}
+                id={`footer-column-content-${column.id}`}
                 className={`overflow-hidden transition-all duration-300 ease-in-out ${
                   expandedColumns.includes(column.id) ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 md:max-h-screen md:opacity-100'
                 }`}
+                role="region"
+                aria-labelledby={`footer-column-heading-${column.id}`}
               >
-                <ul className={`space-y-0 md:space-y-3 ${expandedColumns.includes(column.id) ? 'mt-2 pl-4 border-l-2 border-[#71C8F3] ml-3 md:mt-0 md:pl-0 md:border-l-0 md:ml-0' : ''}`}>
+                <nav 
+                  className={`space-y-0 md:space-y-3 ${expandedColumns.includes(column.id) ? 'mt-2 pl-4 border-l-2 border-[#71C8F3] ml-3 md:mt-0 md:pl-0 md:border-l-0 md:ml-0' : ''}`}
+                  role="list"
+                  aria-label={`${column.title} navigation links`}
+                >
                   {column.links?.map((link) => (
-                    <li key={link.id}>
+                    <div key={link.id} role="listitem">
                       {/* Check if this link has subMenuItems */}
                       {link.subMenuItems && link.subMenuItems.length > 0 ? (
                         // Parent item with expandable sub-menu
@@ -156,16 +192,19 @@ export default function Footer({ footer }: FooterProps) {
                             <Link
                               href={link.url || '#'}
                               target={link.newTab ? '_blank' : '_self'}
-                              className="flex-1 font-open-sans text-lg hover:pl-5 md:hover:pl-2 hover:font-semibold transition-all duration-300"
+                              className="flex-1 font-open-sans text-lg hover:pl-5 md:hover:pl-2 hover:font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#71C8F3] focus:ring-offset-2 focus:ring-offset-[#002C5F] rounded"
                               rel={link.newTab ? "noopener noreferrer" : undefined}
+                              aria-describedby={link.subMenuItems.length > 0 ? `submenu-${link.id}` : undefined}
                             >
                               {link.text}
                             </Link>
                             {/* Expand button for submenu */}
                             <button
-                              className="p-2 hover:text-[#71C8F3] transition-all duration-300 ml-2"
+                              className="p-2 hover:text-[#71C8F3] transition-all duration-300 ml-2 focus:outline-none focus:ring-2 focus:ring-[#71C8F3] focus:ring-offset-2 focus:ring-offset-[#002C5F] rounded"
                               onClick={() => toggleSubMenu(link.id)}
+                              onKeyDown={(e) => handleKeyDown(e, () => toggleSubMenu(link.id))}
                               aria-expanded={expandedSubMenus.includes(link.id)}
+                              aria-controls={`submenu-${link.id}`}
                               aria-label={`Toggle ${link.text} submenu`}
                             >
                               <svg 
@@ -175,47 +214,57 @@ export default function Footer({ footer }: FooterProps) {
                                 }`}
                                 viewBox="0 0 20 20" 
                                 fill="currentColor"
+                                aria-hidden="true"
                               >
                                 <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
                               </svg>
                             </button>
                           </div>
                           {/* Expandable sub-menu */}
-                          <div className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                            expandedSubMenus.includes(link.id) ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
-                          }`}>
-                            <ul className="ml-4 md:ml-2 border-l-2 border-[#71C8F3]/30 pl-3 mt-2 space-y-1">
+                          <div 
+                            id={`submenu-${link.id}`}
+                            className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                              expandedSubMenus.includes(link.id) ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+                            }`}
+                            role="region"
+                            aria-labelledby={`submenu-button-${link.id}`}
+                          >
+                            <nav 
+                              className="ml-4 md:ml-2 border-l-2 border-[#71C8F3]/30 pl-3 mt-2 space-y-1"
+                              role="list"
+                              aria-label={`${link.text} submenu`}
+                            >
                               {link.subMenuItems.map((subItem) => (
-                                <li key={subItem.id}>
+                                <div key={subItem.id} role="listitem">
                                   <Link
                                     href={subItem.url || '#'}
                                     target={subItem.newTab ? '_blank' : '_self'}
-                                    className="block py-2 px-3 md:px-0 md:py-1 text-white/70 hover:text-[#71C8F3] transition-all duration-300 font-open-sans text-base hover:pl-5 md:hover:pl-2 hover:font-semibold"
+                                    className="block py-2 px-3 md:px-0 md:py-1 text-white/70 hover:text-[#71C8F3] transition-all duration-300 font-open-sans text-base hover:pl-5 md:hover:pl-2 hover:font-semibold focus:outline-none focus:ring-2 focus:ring-[#71C8F3] focus:ring-offset-2 focus:ring-offset-[#002C5F] rounded"
                                     rel={subItem.newTab ? "noopener noreferrer" : undefined}
                                   >
                                     {subItem.text}
                                   </Link>
-                                </li>
+                                </div>
                               ))}
-                            </ul>
+                            </nav>
                           </div>
                         </div>
                       ) : (
-                        // Regular link without sub-menu
+                        // Regular link without submenu
                         <Link
                           href={link.url || '#'}
                           target={link.newTab ? '_blank' : '_self'}
-                          className="block py-3 px-3 md:px-0 md:py-2 text-white/80 hover:text-[#71C8F3] transition-all duration-300 font-open-sans text-lg hover:pl-5 md:hover:pl-2 hover:font-semibold"
+                          className="block py-3 px-3 md:px-0 md:py-2 text-white/80 hover:text-[#71C8F3] transition-all duration-300 font-open-sans text-lg hover:pl-5 md:hover:pl-2 hover:font-semibold focus:outline-none focus:ring-2 focus:ring-[#71C8F3] focus:ring-offset-2 focus:ring-offset-[#002C5F] rounded"
                           rel={link.newTab ? "noopener noreferrer" : undefined}
                         >
                           {link.text}
                         </Link>
                       )}
-                    </li>
+                    </div>
                   ))}
-                </ul>
+                </nav>
               </div>
-            </motion.div>
+            </motion.section>
           ))}
           
           {/* Contact information section */}

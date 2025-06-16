@@ -219,6 +219,11 @@ export default function SearchBar({
   return (
     <div ref={searchRef} className={`relative ${className}`}>
       <div className="relative">
+        {/* Hidden instructions for screen readers */}
+        <div id="search-instructions" className="sr-only">
+          Use arrow keys to navigate suggestions, Enter to select, Escape to close
+        </div>
+        
         <input
           ref={inputRef}
           type="text"
@@ -232,18 +237,26 @@ export default function SearchBar({
           }}
           placeholder={placeholder}
           className="w-full pl-12 pr-12 py-3 border-2 border-[#187CC1] rounded-lg bg-white text-gray-900 placeholder-[#005A9C] focus:outline-none focus:ring-2 focus:ring-[#0C6BAF] focus:border-[#0C6BAF] transition-all duration-200 text-base shadow-md"
+          aria-label="Search our website"
+          aria-describedby="search-instructions"
+          aria-expanded={isOpen}
+          aria-haspopup="listbox"
+          aria-autocomplete="list"
+          role="combobox"
+          aria-activedescendant={selectedIndex >= 0 ? `search-option-${selectedIndex}` : undefined}
         />
         
         {/* Search Icon */}
         <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
           {isLoading ? (
-            <div className="animate-spin rounded-full h-5 w-5 border-2 border-[#0C6BAF] border-t-transparent"></div>
+            <div className="animate-spin rounded-full h-5 w-5 border-2 border-[#0C6BAF] border-t-transparent" aria-hidden="true"></div>
           ) : (
             <svg 
               className="h-5 w-5 text-[#187CC1]" 
               fill="none" 
               stroke="currentColor" 
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
@@ -255,8 +268,9 @@ export default function SearchBar({
           onClick={handleSearch}
           className="absolute inset-y-0 right-0 pr-4 flex items-center text-[#187CC1] hover:text-[#0C6BAF] transition-colors duration-200"
           aria-label="Search"
+          type="button"
         >
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
         </button>
@@ -271,22 +285,27 @@ export default function SearchBar({
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
             className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-xl z-50 max-h-[500px] overflow-y-auto min-w-[400px] max-w-[600px]"
+            role="listbox"
+            aria-label="Search suggestions"
           >
             <div className="py-3">
               {suggestions.map((result, index) => (
                 <button
                   key={result.id}
+                  id={`search-option-${index}`}
                   onClick={() => handleSuggestionClick(result)}
                   className={`w-full px-6 py-4 text-left hover:bg-gray-50 transition-colors duration-150 border-b border-gray-100 last:border-b-0 ${
                     index === selectedIndex ? 'bg-[#0C6BAF]/10' : ''
                   }`}
+                  role="option"
+                  aria-selected={index === selectedIndex}
                 >
                   <div className="flex items-start space-x-4">
                     <div className={`flex-shrink-0 mt-1.5 ${
                       result.type === 'blog' ? 'text-blue-500' :
                       result.type === 'page' ? 'text-green-500' :
                       'text-orange-500'
-                    }`}>
+                    }`} aria-hidden="true">
                       {getTypeIcon(result.type)}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -341,9 +360,10 @@ export default function SearchBar({
                       onResultSelect();
                     }
                   }}
+                  aria-label={`View all search results for ${query}`}
                 >
                   <span>View all results for "{query}"</span>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
                 </Link>

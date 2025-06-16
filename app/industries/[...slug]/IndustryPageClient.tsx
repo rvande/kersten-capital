@@ -46,17 +46,50 @@ const cardVariants = {
 };
 
 // Icon mapping for focus areas
-const getFocusAreaIcon = (title: string) => {
+const getFocusAreaIcon = (title: string, iconName?: string) => {
+  // If CMS provides an icon name, try to map it first
+  if (iconName) {
+    const iconLower = iconName.toLowerCase();
+    if (iconLower.includes('robot') || iconLower === 'farobot') {
+      return <FaRobot className="w-8 h-8 text-[#187CC1]" />;
+    } else if (iconLower.includes('shield') || iconLower === 'fashieldalt') {
+      return <FaShieldAlt className="w-8 h-8 text-[#187CC1]" />;
+    } else if (iconLower.includes('laptop') || iconLower === 'falaptopcode') {
+      return <FaLaptopCode className="w-8 h-8 text-[#187CC1]" />;
+    } else if (iconLower.includes('university') || iconLower === 'fauniversity') {
+      return <FaUniversity className="w-8 h-8 text-[#187CC1]" />;
+    } else if (iconLower.includes('bolt') || iconLower === 'fabolt') {
+      return <FaBolt className="w-8 h-8 text-[#187CC1]" />;
+    } else if (iconLower.includes('shopping') || iconLower.includes('cart') || iconLower === 'fashoppingcart') {
+      return <FaShoppingCart className="w-8 h-8 text-[#187CC1]" />;
+    } else if (iconLower.includes('industry') || iconLower === 'faindustry') {
+      return <FaIndustry className="w-8 h-8 text-[#187CC1]" />;
+    } else if (iconLower.includes('chart') || iconLower === 'fachartline') {
+      return <FaChartLine className="w-8 h-8 text-[#187CC1]" />;
+    } else if (iconLower.includes('cog') || iconLower === 'facogs') {
+      return <FaCogs className="w-8 h-8 text-[#187CC1]" />;
+    }
+  }
+
+  // Fall back to title-based mapping with improved keywords
   const titleLower = title.toLowerCase();
-  if (titleLower.includes('ai') || titleLower.includes('data') || titleLower.includes('robot')) {
+  if (titleLower.includes('ai') || titleLower.includes('data') || titleLower.includes('robot') || titleLower.includes('analytics') || titleLower.includes('personalization')) {
     return <FaRobot className="w-8 h-8 text-[#187CC1]" />;
   } else if (titleLower.includes('security') || titleLower.includes('cyber')) {
     return <FaShieldAlt className="w-8 h-8 text-[#187CC1]" />;
-  } else if (titleLower.includes('software') || titleLower.includes('technology') || titleLower.includes('tech')) {
+  } else if (titleLower.includes('software') || titleLower.includes('technology') || titleLower.includes('tech') || titleLower.includes('digital')) {
     return <FaLaptopCode className="w-8 h-8 text-[#187CC1]" />;
   } else if (titleLower.includes('banking') || titleLower.includes('financial') || titleLower.includes('finance')) {
     return <FaUniversity className="w-8 h-8 text-[#187CC1]" />;
-  } else if (titleLower.includes('enterprise') || titleLower.includes('platform') || titleLower.includes('system')) {
+  } else if (titleLower.includes('energy') || titleLower.includes('power') || titleLower.includes('electric') || titleLower.includes('renewable') || titleLower.includes('solar') || titleLower.includes('utilities')) {
+    return <FaBolt className="w-8 h-8 text-[#187CC1]" />;
+  } else if (titleLower.includes('retail') || titleLower.includes('commerce') || titleLower.includes('ecommerce') || titleLower.includes('shopping') || titleLower.includes('merchandising') || titleLower.includes('omnichannel')) {
+    return <FaShoppingCart className="w-8 h-8 text-[#187CC1]" />;
+  } else if (titleLower.includes('manufacturing') || titleLower.includes('industrial') || titleLower.includes('factory')) {
+    return <FaIndustry className="w-8 h-8 text-[#187CC1]" />;
+  } else if (titleLower.includes('strategy') || titleLower.includes('innovation') || titleLower.includes('gtm') || titleLower.includes('growth') || titleLower.includes('performance')) {
+    return <FaChartLine className="w-8 h-8 text-[#187CC1]" />;
+  } else if (titleLower.includes('enterprise') || titleLower.includes('platform') || titleLower.includes('system') || titleLower.includes('integration') || titleLower.includes('experience')) {
     return <FaCogs className="w-8 h-8 text-[#187CC1]" />;
   }
   return <FaCogs className="w-8 h-8 text-[#187CC1]" />; // Default icon
@@ -214,7 +247,7 @@ export default function IndustryPageClient({ industry }: IndustryPageClientProps
                     <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden h-full border border-gray-100 hover:border-[#0C6BAF]/20 p-8">
                       {/* Icon */}
                       <div className="mb-6">
-                        {getFocusAreaIcon(area.title)}
+                        {getFocusAreaIcon(area.title, area.icon)}
                       </div>
                       
                       {/* Title */}
