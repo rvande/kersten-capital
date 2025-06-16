@@ -111,9 +111,52 @@ export default async function RootLayout({
     return (
       <html lang="en" className={`${inter.variable} ${cormorant.variable} ${montserrat.variable} ${openSans.variable} h-full`}>
         <head>
+          {/* Critical CSS for LCP optimization */}
+          <style dangerouslySetInnerHTML={{
+            __html: `
+              /* Critical hero text styles for LCP optimization */
+              #hero-heading, #hero-description {
+                font-display: swap;
+                text-rendering: optimizeSpeed;
+              }
+              
+              /* Preload critical font weights */
+              @font-face {
+                font-family: 'Montserrat';
+                font-style: normal;
+                font-weight: 900;
+                font-display: swap;
+                src: local('Montserrat Black'), local('Montserrat-Black');
+              }
+              
+              @font-face {
+                font-family: 'Open Sans';
+                font-style: normal;
+                font-weight: 400;
+                font-display: swap;
+                src: local('Open Sans Regular'), local('OpenSans-Regular');
+              }
+              
+              /* Prevent layout shifts */
+              .mobile-spacing-normal {
+                padding-left: 1rem;
+                padding-right: 1rem;
+              }
+              
+              @media (min-width: 768px) {
+                .mobile-spacing-normal {
+                  padding-left: 2rem;
+                  padding-right: 2rem;
+                }
+              }
+            `
+          }} />
+          
           {/* Preload critical assets for faster loading */}
-          <link rel="preload" href="/hero.mp4" as="video" type="video/mp4" />
+          <link rel="preload" href="/leadership.jpg" as="image" type="image/jpeg" />
           <link rel="preload" href="/kersten-logo.jpg" as="image" type="image/jpeg" />
+          {/* Preload video only on desktop for better mobile performance */}
+          <link rel="preload" href="/hero.mp4" as="video" type="video/mp4" media="(min-width: 768px)" />
           {/* DNS prefetch for external domains */}
           <link rel="dns-prefetch" href="//perpetual-motivation-production.up.railway.app" />
           <link rel="dns-prefetch" href="//fonts.googleapis.com" />
@@ -175,9 +218,52 @@ export default async function RootLayout({
    return (
       <html lang="en" className={`${inter.variable} ${cormorant.variable} ${montserrat.variable} ${openSans.variable} h-full`}>
         <head>
+          {/* Critical CSS for LCP optimization */}
+          <style dangerouslySetInnerHTML={{
+            __html: `
+              /* Critical hero text styles for LCP optimization */
+              #hero-heading, #hero-description {
+                font-display: swap;
+                text-rendering: optimizeSpeed;
+              }
+              
+              /* Preload critical font weights */
+              @font-face {
+                font-family: 'Montserrat';
+                font-style: normal;
+                font-weight: 900;
+                font-display: swap;
+                src: local('Montserrat Black'), local('Montserrat-Black');
+              }
+              
+              @font-face {
+                font-family: 'Open Sans';
+                font-style: normal;
+                font-weight: 400;
+                font-display: swap;
+                src: local('Open Sans Regular'), local('OpenSans-Regular');
+              }
+              
+              /* Prevent layout shifts */
+              .mobile-spacing-normal {
+                padding-left: 1rem;
+                padding-right: 1rem;
+              }
+              
+              @media (min-width: 768px) {
+                .mobile-spacing-normal {
+                  padding-left: 2rem;
+                  padding-right: 2rem;
+                }
+              }
+            `
+          }} />
+          
           {/* Preload critical assets for faster loading */}
-          <link rel="preload" href="/hero.mp4" as="video" type="video/mp4" />
+          <link rel="preload" href="/leadership.jpg" as="image" type="image/jpeg" />
           <link rel="preload" href="/kersten-logo.jpg" as="image" type="image/jpeg" />
+          {/* Preload video only on desktop for better mobile performance */}
+          <link rel="preload" href="/hero.mp4" as="video" type="video/mp4" media="(min-width: 768px)" />
           {/* DNS prefetch for external domains */}
           <link rel="dns-prefetch" href="//perpetual-motivation-production.up.railway.app" />
           <link rel="dns-prefetch" href="//fonts.googleapis.com" />

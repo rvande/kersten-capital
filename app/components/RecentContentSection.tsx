@@ -23,7 +23,7 @@ function BlogPostCard({ post, index, delay }: { post: BlogPost; index: number; d
       initial={{ opacity: 0, y: 60 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
       transition={{ duration: 0.6, delay, ease: "easeOut" }}
-      className="relative group cursor-pointer"
+      className="relative group"
     >
       {/* Blue background - positioned behind card */}
       <div className="absolute inset-0 bg-[#0C6BAF] rounded-xl transform translate-x-2 translate-y-2 transition-transform duration-300 group-hover:translate-x-3 group-hover:translate-y-3" />
@@ -60,7 +60,7 @@ function BlogPostCard({ post, index, delay }: { post: BlogPost; index: number; d
             <p className="text-black/70 line-clamp-2 mb-4 font-open-sans leading-relaxed">{post.excerpt}</p>
             <span className="text-[#0C6BAF] text-lg font-semibold inline-flex items-center hover:text-[#002C5F] font-montserrat">
               Read more
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" role="presentation">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </span>
@@ -93,7 +93,7 @@ function WhitepaperCard({ whitepaper, index, delay }: { whitepaper: Whitepaper; 
       initial={{ opacity: 0, y: 60 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
       transition={{ duration: 0.6, delay, ease: "easeOut" }}
-      className="relative group cursor-pointer"
+      className="relative group"
     >
       {/* Blue background - positioned behind card */}
       <div className="absolute inset-0 bg-[#0C6BAF] rounded-xl transform translate-x-2 translate-y-2 transition-transform duration-300 group-hover:translate-x-3 group-hover:translate-y-3" />
@@ -133,9 +133,10 @@ function WhitepaperCard({ whitepaper, index, delay }: { whitepaper: Whitepaper; 
             className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] text-white rounded-full hover:shadow-lg hover:shadow-[#0C6BAF]/30 transition-all duration-300 font-montserrat font-semibold"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`Download ${title} PDF (opens in new tab)`}
           >
             Download PDF
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" role="presentation">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
             </svg>
           </Link>
@@ -274,6 +275,7 @@ export default function RecentContentSection({ blogPosts, whitepapers = [] }: Re
                     fill="none" 
                     stroke="currentColor" 
                     viewBox="0 0 24 24"
+                    role="presentation"
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
@@ -282,6 +284,7 @@ export default function RecentContentSection({ blogPosts, whitepapers = [] }: Re
                     placeholder="Search content..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
+                    aria-label="Search articles and whitepapers"
                     className="w-full pl-12 pr-6 py-4 rounded-full bg-[#002C5F] border border-[#002C5F] focus:ring-2 focus:ring-[#0C6BAF] focus:border-[#0C6BAF] outline-none font-open-sans text-white placeholder:text-white/70"
                   />
                 </div>
@@ -291,13 +294,14 @@ export default function RecentContentSection({ blogPosts, whitepapers = [] }: Re
                   <select
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
+                    aria-label="Filter content by category"
                     className="appearance-none bg-[#002C5F] border border-[#002C5F] rounded-full px-6 py-4 pr-12 md:pr-10 focus:ring-2 focus:ring-[#0C6BAF] focus:border-[#0C6BAF] outline-none font-montserrat font-semibold text-white cursor-pointer"
                   >
                     <option value="all">All Content</option>
                     <option value="blog">Articles</option>
                     <option value="whitepaper">Whitepapers</option>
                   </select>
-                  <svg className="absolute right-3 md:right-3 top-1/2 transform -translate-y-1/2 text-white h-6 w-6 md:h-5 md:w-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="absolute right-3 md:right-3 top-1/2 transform -translate-y-1/2 text-white h-6 w-6 md:h-5 md:w-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" role="presentation">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
@@ -326,7 +330,7 @@ export default function RecentContentSection({ blogPosts, whitepapers = [] }: Re
                   className="text-white text-lg font-semibold hover:text-[#71C8F3] flex items-center transition-colors duration-300 font-montserrat"
                 >
                   View all
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1 transition-transform hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1 transition-transform hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" role="presentation">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </Link>
@@ -360,7 +364,7 @@ export default function RecentContentSection({ blogPosts, whitepapers = [] }: Re
                   className="text-white text-lg font-semibold hover:text-[#71C8F3] flex items-center transition-colors duration-300 font-montserrat"
                 >
                   View all
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1 transition-transform hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1 transition-transform hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" role="presentation">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </Link>

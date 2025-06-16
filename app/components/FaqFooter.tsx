@@ -92,6 +92,17 @@ export default function FaqFooter({ faqs = [] }: FaqFooterProps) {
         <motion.div 
           className="flex items-center justify-center p-6 cursor-pointer group" 
           onClick={() => setIsExpanded(!isExpanded)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              setIsExpanded(!isExpanded);
+            }
+          }}
+          role="button"
+          tabIndex={0}
+          aria-expanded={isExpanded}
+          aria-controls="faq-content"
+          aria-label={`${isExpanded ? 'Collapse' : 'Expand'} frequently asked questions section`}
           whileHover={{ scale: 1.02 }}
           transition={{ duration: 0.2 }}
         >
@@ -145,6 +156,7 @@ export default function FaqFooter({ faqs = [] }: FaqFooterProps) {
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.4, ease: "easeInOut" }}
               className="overflow-hidden"
+              id="faq-content"
             >
               <div className="pb-10 px-4">
                 {displayFaqs.length > 0 ? (

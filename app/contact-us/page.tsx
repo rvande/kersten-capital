@@ -160,6 +160,7 @@ export default function ContactPage() {
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="text-gray-700 hover:text-[#0C6BAF] transition-colors duration-300 font-open-sans"
+                      aria-label="Visit our LinkedIn page (opens in new tab)"
                     >
                       /kerstentalentcapital
                     </a>

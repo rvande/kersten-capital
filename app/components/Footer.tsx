@@ -142,30 +142,36 @@ export default function Footer({ footer }: FooterProps) {
               aria-labelledby={`footer-column-heading-${column.id}`}
             >
               {/* Column header - clickable on mobile */}
-              <h3
-                id={`footer-column-heading-${column.id}`}
-                className="w-full flex justify-between items-center text-left font-montserrat text-xl font-black text-white px-3 mb-1 md:px-0 md:py-0 md:mb-6 hover:bg-white/10 hover:text-[#71C8F3] rounded-md transition-all duration-300 cursor-pointer md:cursor-default md:hover:bg-transparent focus:outline-none focus:ring-2 focus:ring-[#71C8F3] focus:ring-offset-2 focus:ring-offset-[#002C5F]"
-                onClick={() => toggleColumn(column.id)}
-                onKeyDown={(e) => handleKeyDown(e, () => toggleColumn(column.id))}
-                aria-expanded={expandedColumns.includes(column.id)}
-                aria-controls={`footer-column-content-${column.id}`}
-                tabIndex={isMobile ? 0 : -1}
-                role={isMobile ? "button" : "heading"}
-                aria-level={3}
-              >
-                <span>{column.title}</span>
-                <svg 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  className={`h-6 w-6 transition-transform duration-300 md:hidden text-white ${
-                    expandedColumns.includes(column.id) ? 'transform rotate-180 text-[#71C8F3]' : ''
-                  }`}
-                  viewBox="0 0 20 20" 
-                  fill="currentColor"
-                  aria-hidden="true"
+              {isMobile ? (
+                <button
+                  id={`footer-column-heading-${column.id}`}
+                  className="w-full flex justify-between items-center text-left font-montserrat text-xl font-black text-white px-3 mb-1 md:px-0 md:py-0 md:mb-6 hover:bg-white/10 hover:text-[#71C8F3] rounded-md transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#71C8F3] focus:ring-offset-2 focus:ring-offset-[#002C5F]"
+                  onClick={() => toggleColumn(column.id)}
+                  onKeyDown={(e) => handleKeyDown(e, () => toggleColumn(column.id))}
+                  aria-expanded={expandedColumns.includes(column.id)}
+                  aria-controls={`footer-column-content-${column.id}`}
                 >
-                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
-              </h3>
+                  <span>{column.title}</span>
+                  <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    className={`h-6 w-6 transition-transform duration-300 text-white ${
+                      expandedColumns.includes(column.id) ? 'transform rotate-180 text-[#71C8F3]' : ''
+                    }`}
+                    viewBox="0 0 20 20" 
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              ) : (
+                <h3
+                  id={`footer-column-heading-${column.id}`}
+                  className="w-full flex justify-between items-center text-left font-montserrat text-xl font-black text-white px-3 mb-1 md:px-0 md:py-0 md:mb-6"
+                >
+                  <span>{column.title}</span>
+                </h3>
+              )}
               
               {/* Column links */}
               <div 
@@ -173,16 +179,14 @@ export default function Footer({ footer }: FooterProps) {
                 className={`overflow-hidden transition-all duration-300 ease-in-out ${
                   expandedColumns.includes(column.id) ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 md:max-h-screen md:opacity-100'
                 }`}
-                role="region"
                 aria-labelledby={`footer-column-heading-${column.id}`}
               >
                 <nav 
                   className={`space-y-0 md:space-y-3 ${expandedColumns.includes(column.id) ? 'mt-2 pl-4 border-l-2 border-[#71C8F3] ml-3 md:mt-0 md:pl-0 md:border-l-0 md:ml-0' : ''}`}
-                  role="list"
                   aria-label={`${column.title} navigation links`}
                 >
                   {column.links?.map((link) => (
-                    <div key={link.id} role="listitem">
+                    <div key={link.id}>
                       {/* Check if this link has subMenuItems */}
                       {link.subMenuItems && link.subMenuItems.length > 0 ? (
                         // Parent item with expandable sub-menu
@@ -200,6 +204,7 @@ export default function Footer({ footer }: FooterProps) {
                             </Link>
                             {/* Expand button for submenu */}
                             <button
+                              id={`submenu-button-${link.id}`}
                               className="p-2 hover:text-[#71C8F3] transition-all duration-300 ml-2 focus:outline-none focus:ring-2 focus:ring-[#71C8F3] focus:ring-offset-2 focus:ring-offset-[#002C5F] rounded"
                               onClick={() => toggleSubMenu(link.id)}
                               onKeyDown={(e) => handleKeyDown(e, () => toggleSubMenu(link.id))}
@@ -221,21 +226,16 @@ export default function Footer({ footer }: FooterProps) {
                             </button>
                           </div>
                           {/* Expandable sub-menu */}
-                          <div 
+                          <div
                             id={`submenu-${link.id}`}
                             className={`overflow-hidden transition-all duration-300 ease-in-out ${
                               expandedSubMenus.includes(link.id) ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
                             }`}
-                            role="region"
                             aria-labelledby={`submenu-button-${link.id}`}
                           >
-                            <nav 
-                              className="ml-4 md:ml-2 border-l-2 border-[#71C8F3]/30 pl-3 mt-2 space-y-1"
-                              role="list"
-                              aria-label={`${link.text} submenu`}
-                            >
+                            <div className="ml-4 md:ml-2 border-l-2 border-[#71C8F3]/30 pl-3 mt-2 space-y-1">
                               {link.subMenuItems.map((subItem) => (
-                                <div key={subItem.id} role="listitem">
+                                <div key={subItem.id}>
                                   <Link
                                     href={subItem.url || '#'}
                                     target={subItem.newTab ? '_blank' : '_self'}
@@ -246,7 +246,7 @@ export default function Footer({ footer }: FooterProps) {
                                   </Link>
                                 </div>
                               ))}
-                            </nav>
+                            </div>
                           </div>
                         </div>
                       ) : (
@@ -309,7 +309,13 @@ export default function Footer({ footer }: FooterProps) {
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-[#71C8F3] mt-0.5 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                 </svg>
-                <a href="https://www.linkedin.com/company/kersten-talent-capital/" target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-[#71C8F3] transition-colors duration-300 font-open-sans text-lg">
+                <a 
+                  href="https://www.linkedin.com/company/kersten-talent-capital/" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-white/80 hover:text-[#71C8F3] transition-colors duration-300 font-open-sans text-lg"
+                  aria-label="Visit our LinkedIn page (opens in new tab)"
+                >
                   /kerstentalentcapital
                 </a>
               </li>

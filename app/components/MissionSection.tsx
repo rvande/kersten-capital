@@ -312,7 +312,6 @@ export default function MissionSection() {
             {/* Features Grid */}
             <div 
               className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12"
-              role="list"
               aria-label="Key differentiating features"
             >
               {differenceFeatures.map((feature, index) => (
@@ -323,7 +322,6 @@ export default function MissionSection() {
                   whileHover={prefersReducedMotion ? {} : "hover"}
                   whileTap={prefersReducedMotion ? {} : "tap"}
                   className="group relative"
-                  role="listitem"
                 >
                   <motion.div 
                     variants={prefersReducedMotion ? {} : cardHoverVariants}
