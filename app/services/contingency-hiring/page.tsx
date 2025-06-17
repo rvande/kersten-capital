@@ -387,7 +387,7 @@ export default function ContingencyHiringPage() {
                     <p className="text-black/70 font-open-sans leading-relaxed mb-4">
                       Premium, dedicated approach for top-tier leadership positions with guaranteed results.
                     </p>
-                    <div className="flex items-center text-white group-hover:text-[#71C8F3] transition-colors font-montserrat font-semibold">
+                    <div className="flex items-center text-[#002C5F] font-montserrat font-semibold">
                       <span>Learn More</span>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" role="presentation">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -407,7 +407,7 @@ export default function ContingencyHiringPage() {
                     <p className="text-black/70 font-open-sans leading-relaxed mb-4">
                       Flexible executive solutions for specialized expertise without full-time commitment.
                     </p>
-                    <div className="flex items-center text-white group-hover:text-[#71C8F3] transition-colors font-montserrat font-semibold">
+                    <div className="flex items-center text-[#002C5F] font-montserrat font-semibold">
                       <span>Learn More</span>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" role="presentation">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />

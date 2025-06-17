@@ -3,10 +3,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin, FaPaperPlane, FaCheck, FaExclamationTriangle } from 'react-icons/fa';
-import dynamic from 'next/dynamic';
-
-// Dynamically import the HubSpotForm component with no SSR
-const HubSpotForm = dynamic(() => import('../components/HubSpotForm'), { ssr: false });
+import HubSpotFormDiv from '../components/HubSpotFormDiv';
 
 // Animation variants
 const containerVariants = {
@@ -201,12 +198,11 @@ export default function ContactPage() {
                 </p>
               </motion.div>
               
-              {/* HubSpot Form using our new component */}
-              <HubSpotForm
+              {/* HubSpot Form - Client-only to prevent hydration issues */}
+              <HubSpotFormDiv
                 region="na2"
                 portalId="242773408"
                 formId="4a6d0a43-61f6-4cac-ba87-3f56ee2ea79d"
-                className="hubspot-form-container"
               />
             </motion.div>
           </div>

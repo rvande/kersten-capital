@@ -239,11 +239,18 @@ export default async function RootLayout({
           <Header global={globalData.data} />
           {/* UTM Tracker component to capture and store UTM parameters */}
           <UtmTracker />
-          {/* HubSpot embed script - using exactly the provided script */}
+          
+          {/* HubSpot Forms Script - exact format as user provided */}
           <Script
-            id="hubspot-script"
             src="https://js-na2.hsforms.net/forms/embed/developer/242773408.js"
-            strategy="afterInteractive"
+            defer
+          />
+          
+          {/* HubSpot Tracking Script */}
+          <Script
+            id="hubspot-tracking-script"  
+            src="//js-na2.hs-scripts.com/242773408.js"
+            strategy="lazyOnload"
           />
           
           {/* Organization Schema */}
@@ -264,15 +271,6 @@ export default async function RootLayout({
           <FaqFooterWrapper />
           <Footer footer={globalData.data.footer} />
           <ScrollToTop />
-          
-          {/* HubSpot Tracking Code - added just before closing body tag */}
-          <Script
-            id="hs-script-loader"
-            src="//js-na2.hs-scripts.com/242773408.js"
-            strategy="afterInteractive"
-            async
-            defer
-          />
         </body>
       </html>
     );
@@ -411,11 +409,18 @@ export default async function RootLayout({
           </header>
           {/* UTM Tracker component to capture and store UTM parameters */}
           <UtmTracker />
-          {/* HubSpot embed script - using exactly the provided script */}
+          
+          {/* HubSpot Forms Script - exact format as user provided */}
           <Script
-            id="hubspot-script"
             src="https://js-na2.hsforms.net/forms/embed/developer/242773408.js"
-            strategy="afterInteractive"
+            defer
+          />
+          
+          {/* HubSpot Tracking Script */}
+          <Script
+            id="hubspot-tracking-script"  
+            src="//js-na2.hs-scripts.com/242773408.js"
+            strategy="lazyOnload"
           />
           
           {/* Organization Schema */}
@@ -436,15 +441,6 @@ export default async function RootLayout({
           <FaqFooterWrapper />
           <Footer footer={null} />
          <ScrollToTop />
-         
-         {/* HubSpot Tracking Code - added just before closing body tag */}
-         <Script
-           id="hs-script-loader"
-           src="//js-na2.hs-scripts.com/242773408.js"
-           strategy="afterInteractive"
-           async
-           defer
-         />
         </body>
       </html>
     );
