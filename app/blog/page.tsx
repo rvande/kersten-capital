@@ -216,7 +216,7 @@ export default async function BlogPage(props: { searchParams?: SearchParams }) {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a 
-                  href="/contact" 
+                  href="/contact-us" 
                   className="inline-block px-8 py-4 bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] text-white rounded-full hover:shadow-lg hover:shadow-[#0C6BAF]/30 transition-all duration-300 font-montserrat font-semibold focus:outline-none focus:ring-2 focus:ring-[#0C6BAF] focus:ring-offset-2"
                   aria-label="Schedule a consultation with Kersten Talent Capital"
                 >

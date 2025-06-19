@@ -154,6 +154,8 @@ export default function Navbar({ navbar }: NavbarProps) {
                 height={569}
                 className={`w-auto transition-all duration-300 ${isClient && scrolled ? 'h-12 md:h-12' : 'h-20 md:h-20 lg:h-24'}`}
                 priority
+                fetchPriority="high"
+                sizes="(max-width: 768px) 200px, (max-width: 1024px) 250px, 300px"
               />
             ) : (
               <span className="font-montserrat text-2xl md:text-3xl lg:text-4xl font-black text-[#002C5F]">

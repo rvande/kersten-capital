@@ -104,11 +104,15 @@ export default function ExecutiveSearchPage() {
         {/* Image Background */}
         <div className="absolute inset-0 w-full h-full z-0">
           <Image
-            src="/search.jpg"
+            src="/executive.jpg"
             alt="Executive Search Services"
             fill
             className="object-cover"
             priority
+            fetchPriority="high"
+            sizes="100vw"
+            placeholder="blur"
+            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
           />
         </div>
         {/* Gradient Background */}
@@ -135,7 +139,7 @@ export default function ExecutiveSearchPage() {
                 }}
               >
                 Retain Executive
-                <span className="text-[#002c5f] block">Search</span>
+                <span className="gradient-text block">Search</span>
               </h1>
             </div>
             {/* Subheadline */}
@@ -377,7 +381,7 @@ export default function ExecutiveSearchPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link 
-                href="/contact"
+                href="/contact-us"
                 className="inline-block px-8 py-4 bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] text-white rounded-full hover:shadow-lg hover:shadow-[#0C6BAF]/30 transition-all duration-300 font-montserrat font-semibold"
               >
                 Start Your Search

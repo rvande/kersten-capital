@@ -424,7 +424,7 @@ export default function RecentContentSection({ blogPosts, whitepapers = [] }: Re
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <Link 
-                    href="/contact" 
+                    href="/contact-us" 
                     className="inline-block px-8 py-4 bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] text-white rounded-full hover:shadow-lg hover:shadow-[#0C6BAF]/30 transition-all duration-300 font-montserrat font-semibold"
                   >
                     Schedule a Consultation

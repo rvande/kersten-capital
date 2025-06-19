@@ -99,7 +99,7 @@ export default function Footer({ footer }: FooterProps) {
             <Link 
               href="/" 
               aria-label="Kersten Talent Capital Home" 
-              className="inline-block group focus:outline-none focus:ring-2 focus:ring-[#71C8F3] focus:ring-offset-2 focus:ring-offset-[#002C5F] rounded-lg"
+              className="inline-block group focus:outline-none focus:underline focus:decoration-[#71C8F3] focus:decoration-2 focus:underline-offset-4 rounded-lg"
             >
               <motion.div
                 whileHover={{ scale: 1.05 }}
@@ -117,7 +117,7 @@ export default function Footer({ footer }: FooterProps) {
           ) : (
             <Link 
               href="/" 
-              className="inline-block font-montserrat text-4xl font-black text-white hover:text-[#71C8F3] transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-[#71C8F3] focus:ring-offset-2 focus:ring-offset-[#002C5F] rounded-lg"
+              className="inline-block font-montserrat text-4xl font-black text-white hover:text-[#71C8F3] transition-colors duration-300 focus:outline-none focus:underline focus:decoration-[#71C8F3] focus:decoration-2 focus:underline-offset-4 rounded-lg"
               aria-label="Kersten Talent Capital Home"
             >
               Kersten Talent Capital
@@ -145,7 +145,7 @@ export default function Footer({ footer }: FooterProps) {
               {isMobile ? (
                 <button
                   id={`footer-column-heading-${column.id}`}
-                  className="w-full flex justify-between items-center text-left font-montserrat text-xl font-black text-white px-3 mb-1 md:px-0 md:py-0 md:mb-6 hover:bg-white/10 hover:text-[#71C8F3] rounded-md transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#71C8F3] focus:ring-offset-2 focus:ring-offset-[#002C5F]"
+                  className="w-full flex justify-between items-center text-left font-montserrat text-xl font-black text-white px-3 mb-1 md:px-0 md:py-0 md:mb-6 hover:bg-white/10 hover:text-[#71C8F3] rounded-md transition-all duration-300 cursor-pointer focus:outline-none focus:underline focus:decoration-[#71C8F3] focus:decoration-2 focus:underline-offset-4"
                   onClick={() => toggleColumn(column.id)}
                   onKeyDown={(e) => handleKeyDown(e, () => toggleColumn(column.id))}
                   aria-expanded={expandedColumns.includes(column.id)}
@@ -196,7 +196,7 @@ export default function Footer({ footer }: FooterProps) {
                             <Link
                               href={link.url || '#'}
                               target={link.newTab ? '_blank' : '_self'}
-                              className="flex-1 font-open-sans text-lg hover:pl-5 md:hover:pl-2 hover:font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#71C8F3] focus:ring-offset-2 focus:ring-offset-[#002C5F] rounded"
+                              className="flex-1 font-open-sans text-lg hover:pl-5 md:hover:pl-2 hover:font-semibold transition-all duration-300 focus:outline-none focus:underline focus:decoration-[#71C8F3] focus:decoration-2 focus:underline-offset-4"
                               rel={link.newTab ? "noopener noreferrer" : undefined}
                               aria-describedby={link.subMenuItems.length > 0 ? `submenu-${link.id}` : undefined}
                             >
@@ -205,7 +205,7 @@ export default function Footer({ footer }: FooterProps) {
                             {/* Expand button for submenu */}
                             <button
                               id={`submenu-button-${link.id}`}
-                              className="p-2 hover:text-[#71C8F3] transition-all duration-300 ml-2 focus:outline-none focus:ring-2 focus:ring-[#71C8F3] focus:ring-offset-2 focus:ring-offset-[#002C5F] rounded"
+                              className="p-2 hover:text-[#71C8F3] transition-all duration-300 ml-2 focus:outline-none focus:underline focus:decoration-[#71C8F3] focus:decoration-2 focus:underline-offset-4"
                               onClick={() => toggleSubMenu(link.id)}
                               onKeyDown={(e) => handleKeyDown(e, () => toggleSubMenu(link.id))}
                               aria-expanded={expandedSubMenus.includes(link.id)}
@@ -233,13 +233,13 @@ export default function Footer({ footer }: FooterProps) {
                             }`}
                             aria-labelledby={`submenu-button-${link.id}`}
                           >
-                            <div className="ml-4 md:ml-2 border-l-4 border-[#71C8F3]/30 pl-2 mt-2 space-y-1 space-x-2">
+                            <div className="ml-4 md:ml-2 border-l-2 border-[#71C8F3]/30 pl-2 mt-2 space-y-1 space-x-2">
                               {link.subMenuItems.map((subItem) => (
                                 <div key={subItem.id}>
                                   <Link
                                     href={subItem.url || '#'}
                                     target={subItem.newTab ? '_blank' : '_self'}
-                                    className="block py-2 px-3 md:px-0 md:py-1 text-white/70 hover:text-[#71C8F3] transition-all duration-300 font-open-sans text-base hover:pl-5 md:hover:pl-2 hover:font-semibold focus:outline-none focus:ring-2 focus:ring-[#71C8F3] focus:ring-offset-2 focus:ring-offset-[#002C5F] rounded"
+                                    className="block py-2 px-3 md:px-0 md:py-1 text-white/70 hover:text-[#71C8F3] transition-all duration-300 font-open-sans text-base hover:pl-5 md:hover:pl-2 hover:font-semibold focus:outline-none focus:underline focus:decoration-[#71C8F3] focus:decoration-2 focus:underline-offset-4"
                                     rel={subItem.newTab ? "noopener noreferrer" : undefined}
                                   >
                                     {subItem.text}
@@ -254,7 +254,7 @@ export default function Footer({ footer }: FooterProps) {
                         <Link
                           href={link.url || '#'}
                           target={link.newTab ? '_blank' : '_self'}
-                          className="block py-3 px-3 md:px-0 md:py-2 text-white/80 hover:text-[#71C8F3] transition-all duration-300 font-open-sans text-lg hover:pl-5 md:hover:pl-2 hover:font-semibold focus:outline-none focus:ring-2 focus:ring-[#71C8F3] focus:ring-offset-2 focus:ring-offset-[#002C5F] rounded"
+                          className="block py-3 px-3 md:px-0 md:py-2 text-white/80 hover:text-[#71C8F3] transition-all duration-300 font-open-sans text-lg hover:pl-5 md:hover:pl-2 hover:font-semibold focus:outline-none focus:underline focus:decoration-[#71C8F3] focus:decoration-2 focus:underline-offset-4"
                           rel={link.newTab ? "noopener noreferrer" : undefined}
                         >
                           {link.text}
@@ -335,7 +335,7 @@ export default function Footer({ footer }: FooterProps) {
             <p className="text-white/80 mb-6 font-open-sans text-lg">
               © {new Date().getFullYear()} Kersten Talent Capital. All rights reserved.
             </p>
-            <div className="flex justify-center space-x-8">
+            <div className="flex justify-center space-x-8 mb-6">
               <a href="/our-approach" className="text-white/80 hover:text-[#71C8F3] transition-colors duration-300 font-open-sans text-lg hover:font-semibold">
                 Our Approach
               </a>
@@ -344,6 +344,17 @@ export default function Footer({ footer }: FooterProps) {
               </a>
               <a href="/terms-conditions" className="text-white/80 hover:text-[#71C8F3] transition-colors duration-300 font-open-sans text-lg hover:font-semibold">
                 Terms of Service
+              </a>
+            </div>
+            <div className="text-center">
+              <a 
+                href="https://www.linkedin.com/in/ryan-vandehey" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-white/60 hover:text-[#71C8F3] transition-colors duration-300 font-open-sans text-sm hover:underline focus:outline-none focus:underline focus:decoration-[#71C8F3] focus:decoration-2 focus:underline-offset-4"
+                aria-label="Website by Ryan Vandehey (opens in new tab)"
+              >
+                Website by Ryan Vandehey
               </a>
             </div>
           </div>

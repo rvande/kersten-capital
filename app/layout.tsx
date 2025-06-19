@@ -210,10 +210,14 @@ export default async function RootLayout({
             `
           }} />
           
-          {/* Preload critical assets for faster loading */}
-          <link rel="preload" href="/_next/image?url=%2Fleadership.jpg&w=828&q=60" as="image" type="image/webp" fetchPriority="high" media="(max-width: 767px)" />
-          <link rel="preload" href="/leadership.jpg" as="image" type="image/jpeg" fetchPriority="high" media="(min-width: 768px)" />
-          <link rel="preload" href="/kersten-logo.jpg" as="image" type="image/jpeg" />
+          {/* Enhanced preload critical assets for faster LCP */}
+          <link rel="preload" href="/_next/image?url=%2Fleadership.jpg&w=828&q=75" as="image" type="image/avif" fetchPriority="high" media="(max-width: 767px)" />
+          <link rel="preload" href="/_next/image?url=%2Fleadership.jpg&w=1920&q=85" as="image" type="image/avif" fetchPriority="high" media="(min-width: 768px)" />
+          <link rel="preload" href="/kersten-logo.jpg" as="image" type="image/jpeg" fetchPriority="high" />
+          {/* Additional hero images preload for key pages */}
+          <link rel="preload" href="/about-us.jpg" as="image" type="image/jpeg" fetchPriority="high" />
+          <link rel="preload" href="/resources.jpg" as="image" type="image/jpeg" fetchPriority="high" />
+          <link rel="preload" href="/flexible.jpg" as="image" type="image/jpeg" fetchPriority="high" />
           {/* Preload video only on desktop for better mobile performance */}
           <link rel="preload" href="/hero.mp4" as="video" type="video/mp4" media="(min-width: 768px)" />
           {/* DNS prefetch for external domains */}
@@ -225,6 +229,7 @@ export default async function RootLayout({
           {/* Preconnect to critical domains */}
           <link rel="preconnect" href="//perpetual-motivation-production.up.railway.app" crossOrigin="anonymous" />
           <link rel="preconnect" href="//fonts.googleapis.com" crossOrigin="anonymous" />
+          <link rel="preconnect" href="//kerstencapital.s3.us-east-1.amazonaws.com" crossOrigin="anonymous" />
         </head>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
           {/* Skip Navigation Link */}
@@ -379,10 +384,14 @@ export default async function RootLayout({
             `
           }} />
           
-          {/* Preload critical assets for faster loading */}
-          <link rel="preload" href="/_next/image?url=%2Fleadership.jpg&w=828&q=60" as="image" type="image/webp" fetchPriority="high" media="(max-width: 767px)" />
-          <link rel="preload" href="/leadership.jpg" as="image" type="image/jpeg" fetchPriority="high" media="(min-width: 768px)" />
-          <link rel="preload" href="/kersten-logo.jpg" as="image" type="image/jpeg" />
+          {/* Enhanced preload critical assets for faster LCP */}
+          <link rel="preload" href="/_next/image?url=%2Fleadership.jpg&w=828&q=75" as="image" type="image/avif" fetchPriority="high" media="(max-width: 767px)" />
+          <link rel="preload" href="/_next/image?url=%2Fleadership.jpg&w=1920&q=85" as="image" type="image/avif" fetchPriority="high" media="(min-width: 768px)" />
+          <link rel="preload" href="/kersten-logo.jpg" as="image" type="image/jpeg" fetchPriority="high" />
+          {/* Additional hero images preload for key pages */}
+          <link rel="preload" href="/about-us.jpg" as="image" type="image/jpeg" fetchPriority="high" />
+          <link rel="preload" href="/resources.jpg" as="image" type="image/jpeg" fetchPriority="high" />
+          <link rel="preload" href="/flexible.jpg" as="image" type="image/jpeg" fetchPriority="high" />
           {/* Preload video only on desktop for better mobile performance */}
           <link rel="preload" href="/hero.mp4" as="video" type="video/mp4" media="(min-width: 768px)" />
           {/* DNS prefetch for external domains */}
@@ -394,6 +403,7 @@ export default async function RootLayout({
           {/* Preconnect to critical domains */}
           <link rel="preconnect" href="//perpetual-motivation-production.up.railway.app" crossOrigin="anonymous" />
           <link rel="preconnect" href="//fonts.googleapis.com" crossOrigin="anonymous" />
+          <link rel="preconnect" href="//kerstencapital.s3.us-east-1.amazonaws.com" crossOrigin="anonymous" />
         </head>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
           {/* Skip Navigation Link */}

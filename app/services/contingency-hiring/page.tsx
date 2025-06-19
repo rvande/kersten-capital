@@ -104,11 +104,15 @@ export default function ContingencyHiringPage() {
         {/* Image Background */}
         <div className="absolute inset-0 w-full h-full z-0">
           <Image
-            src="/metrics.jpg"
+            src="/contingency.jpg"
             alt="Contingency Hiring Services"
             fill
             className="object-cover"
             priority
+            fetchPriority="high"
+            sizes="100vw"
+            placeholder="blur"
+            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
           />
           {/* Dark overlay for better text readability */}
           <div className="absolute inset-0 bg-black/40"></div>
@@ -137,7 +141,7 @@ export default function ContingencyHiringPage() {
                 }}
               >
                 Contingency
-                <span className="text-[#002c5f] block">Search</span>
+                <span className="text-[#469fd1] block">Search</span>
               </h1>
             </div>
             {/* Subheadline */}
@@ -439,7 +443,7 @@ export default function ContingencyHiringPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link 
-                href="/contact"
+                href="/contact-us"
                 className="inline-block px-8 py-4 bg-white text-[#187CC1] rounded-full hover:bg-gray-100 transition-all duration-300 font-montserrat font-semibold shadow-lg hover:shadow-xl"
               >
                 Get Started Today

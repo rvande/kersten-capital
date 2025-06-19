@@ -219,7 +219,7 @@ export default function FAQPageContent({ faqs }: FAQPageContentProps) {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a 
-                  href="/contact" 
+                  href="/contact-us" 
                   className="inline-block px-8 py-4 bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] text-white rounded-full hover:shadow-lg hover:shadow-[#0C6BAF]/30 transition-all duration-300 font-montserrat font-semibold"
                 >
                   Contact Our Team

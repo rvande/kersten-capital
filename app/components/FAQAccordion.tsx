@@ -110,15 +110,6 @@ export function FAQGroup({ categoryName, faqs }: FAQGroupProps) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <motion.h2 
-          id={`faq-category-${categoryName.toLowerCase().replace(/\s+/g, '-')}`}
-          className="text-4xl md:text-5xl font-black mb-8 text-[#002C5F] border-l-4 border-[#0C6BAF] pl-6 font-montserrat"
-          initial={{ x: -50 }}
-          animate={{ x: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          {categoryName}
-        </motion.h2>
         <div 
           className="space-y-4"
           role="list"

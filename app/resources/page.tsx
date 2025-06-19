@@ -114,6 +114,10 @@ export default function ResourcesPage() {
             fill
             className="object-cover"
             priority
+            fetchPriority="high"
+            sizes="100vw"
+            placeholder="blur"
+            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
           />
         </div>
         {/* Blue Overlay */}
@@ -327,7 +331,7 @@ export default function ResourcesPage() {
                 Leverage our expertise and insights to identify, attract, and retain the transformational leaders your organization needs to thrive in today's competitive landscape.
               </p>
               
-              <Link href="/contact">
+              <Link href="/contact-us">
                 <div className="inline-block bg-gradient-to-r from-[#71C8F3] to-[#0C6BAF] hover:from-[#71C8F3] hover:to-[#187CC1] text-white font-semibold font-montserrat px-10 py-4 rounded-md text-lg md:text-xl shadow-lg transition-all duration-300">
                   Start Your Search Today
                 </div>

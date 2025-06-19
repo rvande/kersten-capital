@@ -109,6 +109,10 @@ export default function FractionalHiringPage() {
             fill
             className="object-cover opacity-90"
             priority
+            fetchPriority="high"
+            sizes="100vw"
+            placeholder="blur"
+            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
           />
         </div>
         {/* Gradient Background */}
@@ -385,7 +389,7 @@ export default function FractionalHiringPage() {
                     <p className="text-black/70 font-open-sans leading-relaxed mb-4">
                       Premium, dedicated approach for top-tier leadership positions with guaranteed results.
                     </p>
-                    <div className="flex items-center text-white group-hover:text-[#71C8F3] transition-colors font-montserrat font-semibold">
+                    <div className="flex items-center text-[#002C5F] group-hover:text-[#71C8F3] transition-colors font-montserrat font-semibold">
                       <span>Learn More</span>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" role="presentation">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -405,7 +409,7 @@ export default function FractionalHiringPage() {
                     <p className="text-black/70 font-open-sans leading-relaxed mb-4">
                       Results-driven approach with performance-based model for mid-level and specialized roles.
                     </p>
-                    <div className="flex items-center text-white group-hover:text-[#71C8F3] transition-colors font-montserrat font-semibold">
+                    <div className="flex items-center text-[#002C5F] group-hover:text-[#71C8F3] transition-colors font-montserrat font-semibold">
                       <span>Learn More</span>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" role="presentation">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -437,7 +441,7 @@ export default function FractionalHiringPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link 
-                href="/contact"
+                href="/contact-us"
                 className="inline-block px-8 py-4 bg-white text-[#005A9C] rounded-full hover:bg-gray-100 transition-all duration-300 font-montserrat font-semibold shadow-lg hover:shadow-xl"
               >
                 Get Started Today

@@ -105,7 +105,7 @@ export async function GET(request: NextRequest) {
             'Authorization': `Bearer ${process.env.STRAPI_API_TOKEN || ''}`,
           },
           next: {
-            revalidate: debug ? 0 : 60, // No cache in debug mode
+            revalidate: debug ? 0 : 600, // No cache in debug mode, 10 minutes for pages
           },
         });
         

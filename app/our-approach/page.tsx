@@ -73,7 +73,7 @@ const searchMethodCardVariants = {
     scale: 1,
     transition: { 
       duration: 1.0,
-      delay: index * 2.0,
+      delay: typeof window !== 'undefined' && window.innerWidth < 768 ? index * 0.3 : index * 2.0,
       ease: [0.04, 0.62, 0.23, 0.98] 
     }
   })
@@ -954,7 +954,7 @@ export default function OurApproachPage() {
               variants={slideInVariants}
               className="group"
             >
-              <Link href="/contact">
+              <Link href="/contact-us">
                 <motion.div 
                   className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 text-center hover:bg-white/20 transition-all duration-300 cursor-pointer"
                   whileHover={{ scale: 1.05, y: -5 }}

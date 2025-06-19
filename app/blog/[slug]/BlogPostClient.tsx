@@ -148,6 +148,10 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
                 fill
                 className="object-cover"
                 priority
+                fetchPriority="high"
+                sizes="100vw"
+                placeholder="blur"
+                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
               />
               {/* Blue gradient overlay for brand consistency */}
               <div className="absolute inset-0 bg-gradient-to-br from-[#0C6BAF]/70 via-[#187CC1]/60 to-[#71C8F3]/70"></div>
@@ -166,8 +170,8 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
         </div>
 
         {/* Main Content */}
-        <div className="relative z-20 flex flex-col h-[90vh] sm:h-[80vh] md:h-[85vh] w-full px-4 md:px-8 lg:px-16">
-          <div className="flex flex-col mb-20 justify-start md:justify-center h-full md:items-start items-center md:text-left text-center max-w-5xl pt-20 md:pt-16 lg:pt-20 md:-mt-5">
+        <div className="relative z-20 flex flex-col h-[90vh] sm:h-[80vh] md:h-[70vh] lg:h-[75vh] xl:h-[70vh] w-full px-4 md:px-8 lg:px-16">
+          <div className="flex flex-col mb-20 justify-start md:justify-center h-full md:items-start items-center md:text-left text-center max-w-5xl pt-20 md:pt-12 lg:pt-16 xl:pt-12 md:-mt-5">
             
             {/* Categories */}
             {post.categories && Array.isArray(post.categories) && post.categories.length > 0 && (
@@ -175,7 +179,7 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="flex flex-wrap gap-2 mb-6 md:mb-8"
+                className="flex flex-wrap gap-2 mb-6 md:mb-6 lg:mb-8 lg:mt-10"
               >
                 {post.categories.map(category => (
                   <Link 
@@ -190,9 +194,9 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
             )}
 
             {/* Main headline */}
-            <div className="w-full md:flex md:justify-start flex justify-center mb-6 md:mb-8">
+            <div className="w-full md:flex md:justify-start flex justify-center mb-6 md:mb-6 lg:mb-8">
               <h1
-                className="relative font-montserrat text-[2rem] sm:text-[2.5rem] md:text-[3.5rem] lg:text-[4.5rem] leading-tight font-black text-white drop-shadow-lg"
+                className="relative font-montserrat text-[2rem] sm:text-[2rem] md:text-[2rem] lg:text-[2rem] xl:text-[2rem] leading-tight font-black text-white drop-shadow-lg"
                 style={{
                   letterSpacing: '-0.04em',
                   textShadow: '0 2px 8px rgba(0,0,0,0.3)',
@@ -208,7 +212,7 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex items-center text-white/90 mb-6 md:mb-8 lg:mb-10 font-open-sans"
+              className="flex items-center text-white/90 mb-6 md:mb-6 lg:mb-8 font-open-sans"
             >
               <span className="mr-4 text-base md:text-lg">{formattedDate}</span>
               <span className="mr-4">•</span>
@@ -222,9 +226,9 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.6 }}
-                className="w-full md:flex md:justify-start flex justify-center mb-8 md:mb-10 lg:mb-12"
+                className="w-full md:flex md:justify-start flex justify-center mb-8 md:mb-8 lg:mb-10"
               >
-                <p className="max-w-4xl md:text-left text-center text-white font-open-sans text-xl sm:text-xl md:text-xl lg:text-2xl" style={{lineHeight: '1.7'}}>
+                <p className="max-w-4xl md:text-left text-center text-white font-open-sans text-xl sm:text-xl md:text-lg lg:text-xl xl:text-xl" style={{lineHeight: '1.6'}}>
                   {post.excerpt}
                 </p>
               </motion.div>
