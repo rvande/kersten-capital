@@ -111,7 +111,19 @@ export default async function RootLayout({
     return (
       <html lang="en" className={`${inter.variable} ${cormorant.variable} ${montserrat.variable} ${openSans.variable} h-full`}>
         <head>
-          
+          {/* Google Analytics (gtag.js) - Global for all pages */}
+          <Script
+            src="https://www.googletagmanager.com/gtag/js?id=G-FQHCGHJMMW"
+            strategy="afterInteractive"
+          />
+          <Script id="google-analytics" strategy="afterInteractive">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-FQHCGHJMMW');
+            `}
+          </Script>
           
           {/* Critical CSS for LCP optimization */}
           <style dangerouslySetInnerHTML={{
@@ -231,20 +243,6 @@ export default async function RootLayout({
           <link rel="preconnect" href="//fonts.googleapis.com" crossOrigin="anonymous" />
           <link rel="preconnect" href="//kerstencapital.s3.us-east-1.amazonaws.com" crossOrigin="anonymous" />
           <meta name="google-site-verification" content="H194w9QjUq3uSBGdJOSJBO6ZOy98z-Yoym96MSuOrVc" />
-          
-          {/* Google Analytics (gtag.js) */}
-          <Script
-            src="https://www.googletagmanager.com/gtag/js?id=G-FQHCGHJMMW"
-            strategy="afterInteractive"
-          />
-          <Script id="google-analytics" strategy="afterInteractive">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-FQHCGHJMMW');
-            `}
-          </Script>
         </head>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
           {/* Skip Navigation Link */}
@@ -300,6 +298,20 @@ export default async function RootLayout({
    return (
       <html lang="en" className={`${inter.variable} ${cormorant.variable} ${montserrat.variable} ${openSans.variable} h-full`}>
         <head>
+          {/* Google Analytics (gtag.js) - Global for all pages */}
+          <Script
+            src="https://www.googletagmanager.com/gtag/js?id=G-FQHCGHJMMW"
+            strategy="afterInteractive"
+          />
+          <Script id="google-analytics" strategy="afterInteractive">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-FQHCGHJMMW');
+            `}
+          </Script>
+          
           {/* Critical CSS for LCP optimization */}
           <style dangerouslySetInnerHTML={{
             __html: `
@@ -418,20 +430,6 @@ export default async function RootLayout({
           <link rel="preconnect" href="//fonts.googleapis.com" crossOrigin="anonymous" />
           <link rel="preconnect" href="//kerstencapital.s3.us-east-1.amazonaws.com" crossOrigin="anonymous" />
           <meta name="google-site-verification" content="H194w9QjUq3uSBGdJOSJBO6ZOy98z-Yoym96MSuOrVc" />
-          
-          {/* Google Analytics (gtag.js) */}
-          <Script
-            src="https://www.googletagmanager.com/gtag/js?id=G-FQHCGHJMMW"
-            strategy="afterInteractive"
-          />
-          <Script id="google-analytics" strategy="afterInteractive">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-FQHCGHJMMW');
-            `}
-          </Script>
         </head>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
           {/* Skip Navigation Link */}
