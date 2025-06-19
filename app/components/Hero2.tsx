@@ -14,71 +14,20 @@ interface ServiceItem {
 }
 
 export default function Hero2() {
-  const [isLoaded, setIsLoaded] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [videoError, setVideoError] = useState(false);
-  const [headlineIndex, setHeadlineIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-  const [showFallbackImage, setShowFallbackImage] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const phrases = [
-    'Your Leadership Team',
-    'Your Leadership Strategy',
-    'Your Executive Hiring',
-  ];
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-
-  // Detect mobile device
-  useEffect(() => {
-    const checkDevice = () => {
-      const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
-        || window.innerWidth < 768;
-      setIsMobile(isMobileDevice);
-      
-      // On mobile, show content immediately for better LCP
-      if (isMobileDevice) {
-        setShowFallbackImage(true);
-        setVideoLoaded(true); // Show content immediately
-        setIsLoaded(true); // Enable animations immediately
-      }
-    };
-    
-    checkDevice();
-    window.addEventListener('resize', checkDevice);
-    return () => window.removeEventListener('resize', checkDevice);
-  }, []);
-
-  // Initialize mobile state immediately for SSR
-  useEffect(() => {
-    // Set initial mobile state based on window size
-    const initialIsMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-    if (initialIsMobile) {
-      setIsMobile(true);
-      setShowFallbackImage(true);
-      setVideoLoaded(true);
-      setIsLoaded(true);
-    }
-  }, []);
 
   // Memoized video event handlers
   const handleVideoLoad = useCallback(() => {
     console.log('Video loaded successfully');
     setVideoLoaded(true);
-    // On mobile, wait a bit longer before switching from image to video
-    if (isMobile) {
-      setTimeout(() => {
-        setShowFallbackImage(false);
-      }, 1500); // Give user time to see the content before switching to video
-    } else {
-      setShowFallbackImage(false);
-    }
     setVideoError(false);
-  }, [isMobile]);
+  }, []);
 
   const handleVideoError = useCallback((e: Event) => {
     console.error('Video loading error:', e);
     setVideoError(true);
-    setShowFallbackImage(true);
     setVideoLoaded(true); // Show content even if video fails
   }, []);
 
@@ -87,30 +36,11 @@ export default function Hero2() {
     if (video) {
       video.play().catch(e => {
         console.log('Autoplay prevented, user interaction required:', e);
-        if (!isMobile) {
-          setShowFallbackImage(true);
-        }
       });
     }
-  }, [isMobile]);
+  }, []);
 
-  // Initialize component
-  useEffect(() => {
-    setIsLoaded(true);
-    
-    // Start headline rotation
-    intervalRef.current = setInterval(() => {
-      setHeadlineIndex((prev) => (prev + 1) % phrases.length);
-    }, 3200);
-
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, [phrases.length]);
-
-  // Video setup and loading - now includes mobile with delayed loading
+  // Video setup and loading
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -120,19 +50,9 @@ export default function Hero2() {
     video.addEventListener('error', handleVideoError);
     video.addEventListener('canplay', handleVideoCanPlay);
 
-    // On mobile, delay video loading to prioritize image display
-    const loadVideo = () => {
-      video.preload = 'metadata';
-      video.load();
-    };
-
-    if (isMobile) {
-      // Delay video loading on mobile by 2 seconds to let image load first
-      setTimeout(loadVideo, 2000);
-    } else {
-      // Load video immediately on desktop
-      loadVideo();
-    }
+    // Load video
+    video.preload = 'metadata';
+    video.load();
 
     // Cleanup
     return () => {
@@ -140,7 +60,7 @@ export default function Hero2() {
       video.removeEventListener('error', handleVideoError);
       video.removeEventListener('canplay', handleVideoCanPlay);
     };
-  }, [handleVideoLoad, handleVideoError, handleVideoCanPlay, isMobile]);
+  }, [handleVideoLoad, handleVideoError, handleVideoCanPlay]);
 
   const services: ServiceItem[] = [
     {
@@ -210,82 +130,40 @@ export default function Hero2() {
       aria-labelledby="hero-heading"
       aria-describedby="hero-description"
     >
-      {/* Critical Content - Render immediately without dependencies */}
-      <div className="relative z-30 flex flex-col h-screen w-full mobile-spacing-normal md:px-8 lg:px-16">
-        <div className="flex flex-col justify-start md:justify-center h-full md:items-start items-center md:text-left text-center max-w-4xl pt-24 md:pt-0">
+      {/* Critical Content - Static for fastest LCP */}
+      <div className="relative z-30 flex flex-col h-screen w-full px-4 md:px-8 lg:px-16">
+        <div className="flex flex-col justify-center h-full md:items-start items-center md:text-left text-center max-w-4xl">
           
-          {/* TRANSFORM headline - Critical LCP element */}
-          <div className="w-full md:flex md:justify-start flex justify-center mb-2 md:mb-4">
-            <h1
-              id="hero-heading"
-              className="text-[3.4rem] md:text-[5rem] lg:text-[7rem] font-black text-white tracking-tight"
-              style={{
-                fontFamily: 'var(--font-montserrat), system-ui, -apple-system, sans-serif',
-                letterSpacing: '-0.04em',
-                textShadow: '0 2px 8px rgba(0,0,0,0.3)',
-                lineHeight: '1.1'
-              }}
-            >
-              TRANSFORM
-            </h1>
-          </div>
+          {/* TRANSFORM headline - Simplified for LCP */}
+          <h1
+            id="hero-heading"
+            className="text-[3.4rem] md:text-[5rem] lg:text-[7rem] font-black text-white mb-2 md:mb-4 tracking-tight"
+            style={{ letterSpacing: '-0.04em', lineHeight: '1.1' }}
+          >
+            TRANSFORM
+          </h1>
           
-          {/* Animated Headline */}
-          <div className="w-full md:flex md:justify-start flex justify-center mb-6 md:mb-8">
-            <h2 
-              className="relative font-black text-[1.6rem] md:text-[4rem] lg:text-[5.5rem]"
-              style={{
-                fontFamily: 'var(--font-montserrat), system-ui, -apple-system, sans-serif',
-                lineHeight: '1.1'
-              }}
-            >
-              <span
-                className="inline-block whitespace-nowrap bg-gradient-to-b from-[#0C6BAF] to-[#71C8F3] bg-clip-text text-transparent"
-                style={{
-                  transform: 'translateX(0)',
-                  transition: 'transform 1.5s ease-in-out',
-                  willChange: 'transform',
-                }}
-                key={headlineIndex}
-                aria-live="polite"
-                aria-atomic="true"
-              >
-                {phrases[headlineIndex]}
-              </span>
-            </h2>
-          </div>
+          {/* Static Headline - No animations */}
+          <h2 
+            className="text-[1.6rem] md:text-[4rem] lg:text-[5.5rem] font-black text-transparent bg-gradient-to-b from-[#0C6BAF] to-[#71C8F3] bg-clip-text mb-6 md:mb-8"
+            style={{ lineHeight: '1.1' }}
+          >
+            Your Leadership Team
+          </h2>
           
-          {/* Description - Critical LCP element optimized */}
-          <div className="w-full md:flex md:justify-start flex justify-center mb-8 md:mb-10">
-            <p 
-              id="hero-description" 
-              className="max-w-3xl md:text-left text-center text-white"
-              style={{
-                fontFamily: 'var(--font-open-sans), system-ui, -apple-system, sans-serif',
-                fontSize: 'clamp(1rem, 2.5vw, 1.25rem)',
-                lineHeight: '1.6',
-                fontWeight: '600',
-                margin: '0',
-                textRendering: 'optimizeSpeed'
-              }}
-            >
-              Kersten Talent Capital strives to revolutionize organizational performance through strategic talent intelligence and executive placement solutions that catalyze growth, innovation, and sustainable competitive advantages for forward-thinking enterprises across global markets. Serving companies in Europe and North America.
-            </p>
-          </div>
+          {/* Description - Ultra-simplified for mobile LCP */}
+          <p 
+            id="hero-description" 
+            className="max-w-3xl md:text-left text-center text-white text-lg md:text-xl font-semibold mb-8 md:mb-10"
+          >
+            Kersten Talent Capital revolutionizes organizational performance through strategic talent intelligence and executive placement solutions.
+          </p>
           
-          {/* CTA Button */}
-          <div className="md:flex md:justify-start flex justify-center pb-8">
+          {/* CTA Button - Simplified */}
+          <div className="md:flex md:justify-start flex justify-center">
             <Link 
               href="/contact-us"
-              className="relative bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] hover:from-[#187CC1] hover:to-[#71C8F3] text-white font-semibold px-8 py-4 rounded-md text-lg md:text-xl transition-all duration-300 inline-block"
-              style={{
-                fontFamily: 'var(--font-open-sans), system-ui, -apple-system, sans-serif',
-                boxShadow: '0 4px 24px 0 rgba(12,107,175,0.20)',
-                fontWeight: '600',
-                letterSpacing: '0.01em',
-                textDecoration: 'none'
-              }}
-              aria-label="Contact us to start your next great hire"
+              className="bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] hover:from-[#187CC1] hover:to-[#71C8F3] text-white font-semibold px-8 py-4 rounded-md text-lg md:text-xl transition-all duration-300"
             >
               Your Next Great Hire Starts Here
             </Link>
@@ -298,13 +176,11 @@ export default function Hero2() {
             xmlns="http://www.w3.org/2000/svg" 
             width="100%" 
             height="132px" 
-            viewBox="0 0 1280 140" 
+            viewBox="0 0 1280 142" 
             preserveAspectRatio="none"
             className="w-full h-full"
             aria-hidden="true"
-            style={{ 
-              transform: 'translateY(-1px)'
-            }}
+           
           >
             <defs>
               <linearGradient id="shapeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -324,20 +200,19 @@ export default function Hero2() {
                 fill="url(#shapeGradient)"
               />
               <path 
-                d="M1280 0l-262.1 116.26a73.29 73.29 0 0 1-39.09 6L0 0v142h1280z" 
-                fill="#ffffff"
+                d="M1280 0l-262.1 116.26a73.29 73.29 0 0 1-39.09 6L0 0v400h1280z" 
+                fill="url(#shapeGradientWhite)"
               />
             </g>
           </svg>
         </div>
       </div>
 
-      {/* Loading Animation - Only shows on desktop while video loads */}
+      {/* Loading Animation - Shows when video isn't ready */}
       <div 
-        className={`absolute left-0 right-0 bottom-0 z-50 transition-opacity duration-1000 ${
-          (videoLoaded && !videoError) || isMobile ? 'opacity-0 pointer-events-none' : 'opacity-100'
-        } bg-gradient-to-br from-[#F8F9FA] to-[#E9ECEF] flex items-center justify-center`}
-        style={{ top: isMobile ? '40px' : '60px' }}
+        className={`absolute inset-0 z-20 transition-opacity duration-1000 ${
+          (videoLoaded && !videoError) ? 'opacity-0 pointer-events-none' : 'opacity-100'
+        } bg-gradient-to-br from-[#002C5F] to-[#0C6BAF] flex items-center justify-center`}
         role="status"
         aria-live="polite"
         aria-label="Loading page content"
@@ -347,62 +222,35 @@ export default function Hero2() {
           <div className="flex items-center justify-center mb-6" aria-hidden="true">
             <div className="w-16 h-16 relative">
               {/* Outer ring */}
-              <div className="absolute inset-0 rounded-full border-4 border-[#0C6BAF]/20"></div>
+              <div className="absolute inset-0 rounded-full border-4 border-white/20"></div>
               {/* Spinning ring */}
-              <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-[#0C6BAF] animate-spin"></div>
+              <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-white animate-spin"></div>
               {/* Inner dot */}
-              <div className="absolute inset-2 rounded-full bg-gradient-to-br from-[#0C6BAF] to-[#71C8F3] opacity-60"></div>
+              <div className="absolute inset-2 rounded-full bg-gradient-to-br from-white to-[#71C8F3] opacity-60"></div>
             </div>
           </div>
           
           {/* Loading text */}
-          <h2 className="text-2xl font-black text-[#002C5F] mb-2" style={{ fontFamily: 'var(--font-montserrat), system-ui, sans-serif' }}>
+          <h2 className="text-2xl font-black text-white mb-2" style={{ fontFamily: 'var(--font-montserrat), system-ui, sans-serif' }}>
             Loading...
           </h2>
-          <p className="text-[#002C5F]/70" style={{ fontFamily: 'var(--font-open-sans), system-ui, sans-serif' }}>
+          <p className="text-white/80" style={{ fontFamily: 'var(--font-open-sans), system-ui, sans-serif' }}>
             Preparing your experience
           </p>
         </div>
       </div>
       
-      {/* Mobile Fallback Image - High priority for fast LCP */}
-      {(isMobile || showFallbackImage) && (
-        <div className="absolute inset-0 w-full h-full z-10">
-          <Image
-            src="/leadership.jpg"
-            alt="Leadership team in professional setting"
-            fill
-            priority
-            fetchPriority="high"
-            quality={isMobile ? 60 : 85}
-            sizes={isMobile ? "(max-width: 768px) 100vw" : "100vw"}
-            style={{
-              objectFit: 'cover',
-            }}
-            // Mobile-specific optimization - more aggressive
-            {...(isMobile && {
-              unoptimized: false,
-              placeholder: undefined,
-              blurDataURL: undefined,
-              loading: 'eager',
-            })}
-          />
-          {/* Dark overlay for better text readability - Stronger on mobile */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/60 to-black/90" aria-hidden="true" />
-        </div>
-      )}
-      
-      {/* Video Background - Now loads on both desktop and mobile */}
+      {/* Video Background - Primary content */}
       <video
         ref={videoRef}
         className={`absolute inset-0 w-full h-full object-cover z-10 transition-opacity duration-1000 ${
-          videoLoaded && !videoError && !showFallbackImage ? 'opacity-100' : 'opacity-0'
+          videoLoaded && !videoError ? 'opacity-100' : 'opacity-0'
         }`}
         autoPlay
         loop
         muted
         playsInline
-        preload="none"
+        preload="metadata"
         style={{ 
           minHeight: '100vh', 
           minWidth: '100%',
@@ -414,10 +262,8 @@ export default function Hero2() {
         <p>Your browser does not support the video tag.</p>
       </video>
       
-      {/* Dark overlay for better text readability - For video */}
-      {!showFallbackImage && (
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/80 z-20" aria-hidden="true" />
-      )}
+      {/* Dark overlay for better text readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/80 z-20" aria-hidden="true" />
     </section>
   );
 } 

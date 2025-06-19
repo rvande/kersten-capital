@@ -262,7 +262,7 @@ export default function MissionSection() {
               </motion.div>
 
               <motion.p
-                className="font-open-sans text-base md:text-lg lg:text-xl text-black leading-relaxed mb-8 md:mb-10"
+                className="font-open-sans text-lg md:text-lg lg:text-xl text-black/80 leading-relaxed mb-8 md:mb-10"
                 variants={itemVariants}
                 style={{ lineHeight: '1.7' }}
               >
