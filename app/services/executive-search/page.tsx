@@ -104,7 +104,7 @@ export default function ExecutiveSearchPage() {
         {/* Image Background */}
         <div className="absolute inset-0 w-full h-full z-0">
           <Image
-            src="/executive.jpg"
+            src="/search.jpg"
             alt="Executive Search Services"
             fill
             className="object-cover"

@@ -104,7 +104,7 @@ export default function ContingencyHiringPage() {
         {/* Image Background */}
         <div className="absolute inset-0 w-full h-full z-0">
           <Image
-            src="/contingency.jpg"
+            src="/stocks.jpg"
             alt="Contingency Hiring Services"
             fill
             className="object-cover"
