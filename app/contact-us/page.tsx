@@ -123,10 +123,10 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-montserrat font-bold text-[#002C5F] text-lg mb-1">Phone</h3>
                     <a 
-                      href="tel:+13035241199" 
-                      className="text-gray-700 hover:text-[#0C6BAF] transition-colors duration-300 font-open-sans"
+                      href="tel:+13034142057"
+                      className="font-open-sans text-[#002C5F] text-lg hover:text-[#0C6BAF] transition-colors"
                     >
-                      +1 (303) 524-1199
+                      (303) 414-2057
                     </a>
                   </div>
                 </div>

@@ -42,7 +42,7 @@ export function generateOrganizationSchema(): string {
     },
     "contactPoint": {
       "@type": "ContactPoint",
-      "telephone": "+1-303-524-1199",
+      "telephone": "+1-303-414-2057",
       "contactType": "customer service",
       "email": "michael@kerstentalentcapital.com"
     },
@@ -88,7 +88,7 @@ export function generateLocalBusinessSchema(): string {
     "name": "Kersten Talent Capital",
     "image": `${SITE_URL}/logo.png`,
     "url": SITE_URL,
-    "telephone": "+1-303-524-1199",
+    "telephone": "+1-303-414-2057",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "8310 South Valley Highway, Suite 300",
