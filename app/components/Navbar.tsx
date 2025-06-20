@@ -339,8 +339,8 @@ export default function Navbar({ navbar }: NavbarProps) {
         {/* Mobile Navigation */}
         <div 
           id="mobile-menu"
-          className={`lg:hidden mobile-menu-container transition-all duration-300 ease-in-out overflow-hidden ${
-            mobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+          className={`lg:hidden mobile-menu-container transition-all duration-300 ease-in-out ${
+            mobileMenuOpen ? 'max-h-[80vh] opacity-100 overflow-y-auto' : 'max-h-0 opacity-0 overflow-hidden'
           }`}
         >
           <nav className="flex flex-col space-y-1 py-4 border-t border-gray-200 mt-4">
@@ -375,7 +375,7 @@ export default function Navbar({ navbar }: NavbarProps) {
                 <div 
                   id={`mobile-dropdown-${menuItem.id}`}
                   className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                    activeMenu === menuItem.id ? 'max-h-screen opacity-100 bg-gray-50' : 'max-h-0 opacity-0'
+                    activeMenu === menuItem.id ? 'max-h-96 opacity-100 bg-gray-50' : 'max-h-0 opacity-0'
                   }`}
                 >
                   <div className="ml-6 border-l-3 border-[#0C6BAF] pl-6">
