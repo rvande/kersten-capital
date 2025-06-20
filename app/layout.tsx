@@ -112,20 +112,6 @@ export default async function RootLayout({
     return (
       <html lang="en" className={`${inter.variable} ${cormorant.variable} ${montserrat.variable} ${openSans.variable} h-full`}>
         <head>
-          {/* Google Analytics (gtag.js) - Global for all pages */}
-          <Script
-            src="https://www.googletagmanager.com/gtag/js?id=G-FQHCGHJMMW"
-            strategy="afterInteractive"
-          />
-          <Script id="google-analytics" strategy="afterInteractive">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-FQHCGHJMMW');
-            `}
-          </Script>
-          
           {/* Critical CSS for LCP optimization */}
           <style dangerouslySetInnerHTML={{
             __html: `
@@ -302,20 +288,6 @@ export default async function RootLayout({
    return (
       <html lang="en" className={`${inter.variable} ${cormorant.variable} ${montserrat.variable} ${openSans.variable} h-full`}>
         <head>
-          {/* Google Analytics (gtag.js) - Global for all pages */}
-          <Script
-            src="https://www.googletagmanager.com/gtag/js?id=G-FQHCGHJMMW"
-            strategy="afterInteractive"
-          />
-          <Script id="google-analytics" strategy="afterInteractive">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-FQHCGHJMMW');
-            `}
-          </Script>
-          
           {/* Critical CSS for LCP optimization */}
           <style dangerouslySetInnerHTML={{
             __html: `

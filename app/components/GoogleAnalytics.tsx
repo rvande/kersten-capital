@@ -19,7 +19,8 @@ function GoogleAnalyticsTracker() {
     if (typeof window.gtag === 'function') {
       const url = pathname + (searchParams.toString() ? `?${searchParams.toString()}` : '');
       
-      window.gtag('config', 'G-FQHCGHJMMW', {
+      // Send page view event for route changes
+      window.gtag('event', 'page_view', {
         page_location: window.location.origin + url,
         page_title: document.title,
       });
@@ -41,6 +42,8 @@ export default function GoogleAnalytics() {
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
+          
+          // Initial configuration - this handles the first page view
           gtag('config', 'G-FQHCGHJMMW', {
             page_location: window.location.href,
             page_title: document.title,
