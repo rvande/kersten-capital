@@ -11,6 +11,7 @@ import { generateIconMetadata, generateOgImages } from "./utils/favicon";
 import Script from 'next/script';
 import UtmTracker from "./components/UtmTracker";
 import { generateOrganizationSchema } from "./utils/seo";
+import GoogleAnalytics from "./components/GoogleAnalytics";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -245,6 +246,9 @@ export default async function RootLayout({
           <meta name="google-site-verification" content="H194w9QjUq3uSBGdJOSJBO6ZOy98z-Yoym96MSuOrVc" />
         </head>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
+          {/* Google Analytics - Global for all pages */}
+          <GoogleAnalytics />
+          
           {/* Skip Navigation Link */}
           <a 
             href="#main-content" 
@@ -432,6 +436,9 @@ export default async function RootLayout({
           <meta name="google-site-verification" content="H194w9QjUq3uSBGdJOSJBO6ZOy98z-Yoym96MSuOrVc" />
         </head>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
+          {/* Google Analytics - Global for all pages */}
+          <GoogleAnalytics />
+          
           {/* Skip Navigation Link */}
           <a 
             href="#main-content" 
