@@ -127,7 +127,7 @@ export default function Hero2() {
       {/* Hero Poster Background - MOBILE ONLY */}
       <img
         src="/hero-poster.avif"
-        alt=""
+        alt="leadership team loading image"
         className="block md:hidden absolute inset-0 w-full h-full object-cover"
         loading="eager"
         fetchPriority="high"

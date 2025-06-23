@@ -344,7 +344,7 @@ export default function PrivacyPolicyPage() {
                 View Terms & Conditions
               </Link>
               <Link 
-                href="/contact"
+                href="/contact-us"
                 className="inline-block px-8 py-4 bg-transparent border-2 border-[#187CC1] text-[#187CC1] rounded-full hover:bg-[#187CC1] hover:text-white transition-all duration-300 font-montserrat font-semibold"
               >
                 Contact Us
