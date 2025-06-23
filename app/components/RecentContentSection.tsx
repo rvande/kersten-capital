@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -148,14 +148,25 @@ function WhitepaperCard({ whitepaper, index, delay }: { whitepaper: Whitepaper; 
 
 export default function RecentContentSection({ blogPosts, whitepapers = [] }: RecentContentSectionProps) {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedCategory, setSelectedCategory] = useState<'all' | 'blog' | 'whitepaper'>('all');
   const [isLoaded, setIsLoaded] = useState(false);
+  const [mountainImageLoaded, setMountainImageLoaded] = useState(false);
   
   // Refs for scroll animations
   const headingRef = useRef(null);
   const searchRef = useRef(null);
-  const isHeadingInView = useInView(headingRef, { once: true });
-  const isSearchInView = useInView(searchRef, { once: true, margin: "-50px" });
+  const mountainRef = useRef(null);
+
+  const isHeadingInView = useInView(headingRef, { once: true, margin: "-10%" });
+  const isSearchInView = useInView(searchRef, { once: true, margin: "-10%" });
+  const isMountainInView = useInView(mountainRef, { once: true, margin: "100px" });
+
+  // Load mountain image when section comes into view
+  useEffect(() => {
+    if (isMountainInView && !mountainImageLoaded) {
+      setMountainImageLoaded(true);
+    }
+  }, [isMountainInView, mountainImageLoaded]);
 
   React.useEffect(() => {
     setIsLoaded(true);
@@ -192,13 +203,22 @@ export default function RecentContentSection({ blogPosts, whitepapers = [] }: Re
       <div className="absolute inset-0 bg-[#002C5F]"></div>
 
       {/* Hero Section with Image Background */}
-      <section className="relative w-full overflow-hidden pt-15 md:py-32 lg:pb-10">
-        {/* Hero Background Image with Overlay */}
+      <section ref={mountainRef} className="relative w-full overflow-hidden pt-15 md:py-32 lg:pb-10">
+        {/* Hero Background Image with Overlay - Lazy Loaded */}
         <div className="absolute inset-0">
           <div 
-            className="absolute inset-0 bg-cover bg-top bg-no-repeat"
+            className="absolute inset-0 bg-cover bg-top bg-no-repeat transition-opacity duration-500"
             style={{
-              backgroundImage: 'url(/mountain.jpg)',
+              backgroundImage: mountainImageLoaded ? 'url(/mountain.avif)' : 'none',
+              opacity: mountainImageLoaded ? 1 : 0,
+            }}
+          />
+          {/* Fallback gradient background */}
+          <div 
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(-45deg, #002C5F, #0C6BAF, #005A9C, #187CC1)',
+              opacity: mountainImageLoaded ? 0 : 1,
             }}
           />
           {/* Dark overlay for text readability */}
@@ -299,7 +319,7 @@ export default function RecentContentSection({ blogPosts, whitepapers = [] }: Re
                 <div className="relative">
                   <select
                     value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    onChange={(e) => setSelectedCategory(e.target.value as 'all' | 'blog' | 'whitepaper')}
                     aria-label="Filter content by category"
                     className="appearance-none bg-[#002C5F] border border-[#002C5F] rounded-full px-6 py-4 pr-12 md:pr-10 focus:ring-2 focus:ring-[#0C6BAF] focus:border-[#0C6BAF] outline-none font-montserrat font-semibold text-white cursor-pointer"
                   >

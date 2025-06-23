@@ -1,97 +1,72 @@
 import { NextRequest, NextResponse } from 'next/server';
 import qs from 'qs';
 
-// Correct paths for Strapi v5
-const PAGES_ENDPOINT = '/api/pages';
+/**
+ * Pages API route that proxies requests to Strapi
+ * Handles static pages and dynamic content
+ */
 
-// Try all these endpoint variations for better compatibility
+// Define the different endpoint variations that Strapi might use for pages
 const PAGES_VARIATIONS = [
   '/api/pages',
-  '/api/page'
+  '/api/page',
+  '/api/static-pages',
+  '/api/static-page'
 ];
 
 /**
- * API route for dynamic pages
- * This helps with:
- * 1. CORS issues
- * 2. Keeping the API token secure (not exposed to the client)
- * 3. Consistent error handling
+ * GET handler for pages API requests
  */
 export async function GET(request: NextRequest) {
   try {
-    // Get path and query parameters from the request
+    // Get parameters from the request
     const searchParams = request.nextUrl.searchParams;
-    const slug = searchParams.get('slug') || null; // Optional slug for single page
-    const locale = searchParams.get('locale') || null; // Optional locale for i18n
-    const page = searchParams.get('page') || '1'; 
-    const pageSize = searchParams.get('pageSize') || '10';
-    const debug = searchParams.get('debug') === 'true'; // Debug mode
-    
-    console.log(`Pages API route handling request: slug=${slug}, locale=${locale}, page=${page}, debug=${debug}`);
-    
+    const slug = searchParams.get('slug');
+    const locale = searchParams.get('locale') || 'en';
+    const page = parseInt(searchParams.get('page') || '1', 10);
+    const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+
+    console.log(`Pages API route handling request: slug=${slug}, locale=${locale}, page=${page}`);
+
     // Build query parameters
     let queryParams: any = {
       pagination: {
-        page: parseInt(page as string, 10),
-        pageSize: parseInt(pageSize as string, 10),
+        page,
+        pageSize,
       },
+      locale,
     };
-    
+
     // Add filters for single page if slug is provided
     if (slug) {
-      // Try different slug variations to handle various formats stored in Strapi
-      const slugVariations = [
-        slug,                    // exact match: "about-us"
-        `/${slug}`,             // with leading slash: "/about-us"
-        `${slug}/`,             // with trailing slash: "about-us/"
-        `/${slug}/`,            // with both slashes: "/about-us/"
-      ];
-      
       queryParams.filters = {
-        $or: slugVariations.map(variation => ({
-          slug: {
-            $eq: variation,
-          },
-        })),
+        slug: {
+          $eq: slug,
+        },
       };
     }
-    
-    // Add locale filter if provided
-    if (locale) {
-      queryParams.locale = locale;
-    }
-    
-    // Add comprehensive populate options for all content sections
-    queryParams.populate = '*';
-    
-    queryParams.sort = ['createdAt:desc'];
-    
-    // Parse additional query parameters if provided
-    const additionalParams = searchParams.get('params');
-    if (additionalParams) {
-      try {
-        const parsedParams = JSON.parse(additionalParams);
-        queryParams = { ...queryParams, ...parsedParams };
-      } catch (error) {
-        return NextResponse.json(
-          { error: 'Invalid params parameter format. Must be valid JSON.' },
-          { status: 400 }
-        );
-      }
-    }
-    
+
+    // Add populate options for pages
+    queryParams.populate = {
+      seo: true,
+      content: true,
+      featuredImage: true,
+    };
+
+    queryParams.sort = ['updatedAt:desc'];
+
     // Build the Strapi URL
     const apiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'https://perpetual-motivation-production.up.railway.app/';
     const baseUrl = apiUrl.replace(/\/$/, '');
-    
+
     // Convert query parameters to string using qs
     const queryString = qs.stringify(queryParams, {
       encodeValuesOnly: true,
     });
-    
-    let response = null;
-    let responseData = null;
-    let errorDetails = [];
+
+    let response: Response | null = null;
+    let responseData: any = null;
+    const errorDetails: any[] = [];
     
     // Try each endpoint until we get a successful response
     for (const endpoint of PAGES_VARIATIONS) {
@@ -105,7 +80,7 @@ export async function GET(request: NextRequest) {
             'Authorization': `Bearer ${process.env.STRAPI_API_TOKEN || ''}`,
           },
           next: {
-            revalidate: debug ? 0 : 600, // No cache in debug mode, 10 minutes for pages
+            revalidate: 600, // 10 minutes cache for pages
           },
         });
         
@@ -141,60 +116,12 @@ export async function GET(request: NextRequest) {
       
       return NextResponse.json({
         error: 'All API endpoints failed',
-        debug: debug ? {
-          attemptedEndpoints: PAGES_VARIATIONS,
-          errors: errorDetails,
-          queryParams
-        } : undefined
+        attemptedEndpoints: PAGES_VARIATIONS,
+        errors: errorDetails,
       }, { status: 500 });
     }
-    
-    // Try to transform response data if needed (fallback mechanism)
-    if (!responseData.data && !responseData.meta) {
-      console.log('Transforming non-standard API response format');
-      
-      // For backwards compatibility, try to convert to expected format
-      if (Array.isArray(responseData)) {
-        responseData = {
-          data: responseData,
-          meta: { pagination: { page: 1, pageSize: responseData.length, total: responseData.length } }
-        };
-      } else if (typeof responseData === 'object') {
-        responseData = {
-          data: [responseData],
-          meta: { pagination: { page: 1, pageSize: 1, total: 1 } }
-        };
-      }
-    }
-    
-    // Log response details
-    console.log('Pages API response received, data structure:', {
-      hasData: !!responseData.data,
-      dataType: responseData.data ? (Array.isArray(responseData.data) ? 'array' : 'object') : 'none',
-      itemCount: responseData.data && Array.isArray(responseData.data) ? responseData.data.length : 0,
-      hasMeta: !!responseData.meta
-    });
-    
-    // Add debug info if requested
-    if (debug) {
-      return NextResponse.json({
-        ...responseData,
-        _debug: {
-          apiUrl: baseUrl,
-          attemptedEndpoints: PAGES_VARIATIONS,
-          finalEndpoint: response.url,
-          queryParams,
-          errors: errorDetails,
-          responseStructure: {
-            hasData: !!responseData.data,
-            dataType: responseData.data ? (Array.isArray(responseData.data) ? 'array' : 'object') : 'none',
-            itemCount: responseData.data && Array.isArray(responseData.data) ? responseData.data.length : 0,
-            hasMeta: !!responseData.meta
-          }
-        }
-      });
-    }
-    
+
+    // Return the successful response data
     return NextResponse.json(responseData);
   } catch (error) {
     console.error('Pages API proxy error:', error);

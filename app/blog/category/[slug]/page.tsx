@@ -16,7 +16,6 @@ type SearchParams = Promise<{
 
 // Mark this page as dynamically rendered
 export const dynamic = 'force-dynamic';
-export const fetchCache = 'default-no-store';
 
 /**
  * Generate metadata for the page
@@ -116,7 +115,7 @@ async function fetchCategoryDirectly(slug) {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${process.env.STRAPI_API_TOKEN || ''}`,
           },
-          cache: 'no-store',
+          next: { revalidate: 300 },
         });
         
         if (!response.ok) {

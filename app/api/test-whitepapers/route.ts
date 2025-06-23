@@ -1,94 +1,64 @@
-import { NextResponse } from 'next/server';
-import { fetchWhitepapers } from '@/app/utils/blog-helpers';
-import { stringify } from 'qs';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET() {
+/**
+ * Test endpoint for whitepaper functionality
+ */
+export async function GET(request: NextRequest) {
   try {
-    // Check environment variables
-    const apiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL || '';
+    console.log('Test whitepapers endpoint called');
     
-    // Log debug info
-    console.log(`Strapi API URL: ${apiUrl}`);
+    // Get Strapi base URL
+    const apiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'https://perpetual-motivation-production.up.railway.app/';
+    const baseUrl = apiUrl.replace(/\/$/, '');
     
-    // Create query params for direct testing
-    const queryParams = {
-      populate: ['Document', 'CoverImage', 'document', 'coverImage', '*'],
-      sort: ['PublicationDate:desc', 'publicationDate:desc', 'createdAt:desc'],
-    };
+    // Make direct fetch request
+    const url = `${baseUrl}/api/whitepapers?populate=*`;
     
-    const queryString = stringify(queryParams, { encodeValuesOnly: true });
-    const fullUrl = `${apiUrl}/api/whitepapers?${queryString}`;
+    const response = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.STRAPI_API_TOKEN || ''}`,
+      },
+      next: {
+        revalidate: 300, // Cache for 5 minutes
+      },
+    });
     
-    console.log(`Full request URL: ${fullUrl}`);
-    
-    // Make direct fetch request for debugging
-    let directData = null;
-    let strapiError = null;
-    
-    try {
-      // Try multiple endpoints to find the correct one
-      const endpoints = ['/api/whitepapers', '/api/whitepaper'];
-      let directRes = null;
-      let successfulEndpoint = null;
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Strapi API error:', response.status, response.statusText);
+      console.error('Error details:', errorText);
       
-      for (const endpoint of endpoints) {
-        try {
-          const endpointUrl = `${apiUrl}${endpoint}?${queryString}`;
-          console.log(`Trying endpoint: ${endpointUrl}`);
-          
-          const res = await fetch(endpointUrl, { next: { revalidate: 0 } });
-          if (res.ok) {
-            directRes = res;
-            successfulEndpoint = endpoint;
-            break;
-          } else {
-            console.log(`Endpoint ${endpoint} returned ${res.status}: ${res.statusText}`);
-          }
-        } catch (e) {
-          console.error(`Error with endpoint ${endpoint}:`, e);
-        }
-      }
-      
-      if (directRes) {
-        directData = await directRes.json();
-        console.log(`Successful endpoint: ${successfulEndpoint}`);
-        console.log('Direct API response structure:', 
-          directData.data && directData.data.length > 0 
-            ? Object.keys(directData.data[0]) 
-            : 'No data items found'
-        );
-      }
-    } catch (directError) {
-      console.error('Direct fetch error:', directError);
-      strapiError = directError instanceof Error ? directError.message : String(directError);
+      return NextResponse.json({
+        error: `Strapi API error: ${response.status} ${response.statusText}`,
+        details: errorText,
+        url: url,
+      }, { status: response.status });
     }
     
-    // Use our utility function
-    const whitepapers = await fetchWhitepapers(5);
+    const data = await response.json();
     
+    // Check if we got valid data
+    if (!data || typeof data !== 'object') {
+      return NextResponse.json({
+        error: 'Invalid response format from Strapi',
+        receivedData: data,
+      }, { status: 500 });
+    }
+    
+    // Return the data with some additional context
     return NextResponse.json({
       success: true,
-      data: whitepapers,
-      debug: {
-        apiUrl,
-        fullUrl,
-        directDataFound: directData ? true : false,
-        directItemCount: directData?.data?.length || 0,
-        strapiError,
-        strapiUrl: process.env.NEXT_PUBLIC_STRAPI_API_URL
-      }
+      message: 'Successfully fetched whitepapers',
+      data: data.data || data,
+      meta: data.meta || null,
+      requestUrl: url,
     });
   } catch (error) {
-    console.error('Error in test-whitepapers API route:', error);
-    return NextResponse.json(
-      { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error',
-        debug: {
-          apiUrl: process.env.NEXT_PUBLIC_STRAPI_API_URL
-        }
-      },
-      { status: 500 }
-    );
+    console.error('Test whitepapers API error:', error);
+    return NextResponse.json({
+      error: 'Internal server error',
+      message: error instanceof Error ? error.message : String(error),
+    }, { status: 500 });
   }
 } 

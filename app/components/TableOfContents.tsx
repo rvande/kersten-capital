@@ -79,7 +79,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ content, className = 
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll(); // Initial check
 
     return () => window.removeEventListener('scroll', handleScroll);

@@ -102,140 +102,26 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Fetch global data for header with error handling
   try {
     const globalData = await getGlobalData();
-    
-    // Generate organization schema
     const orgSchemaMarkup = generateOrganizationSchema();
     
     return (
       <html lang="en" className={`${inter.variable} ${cormorant.variable} ${montserrat.variable} ${openSans.variable} h-full`}>
         <head>
-          {/* Critical CSS for LCP optimization */}
-          <style dangerouslySetInnerHTML={{
-            __html: `
-              /* Critical hero text styles for LCP optimization */
-              #hero-heading, #hero-description {
-                font-display: swap;
-                text-rendering: optimizeSpeed;
-                contain: layout style paint;
-              }
-              
-              /* Ensure hero section renders immediately */
-              section[role="region"][aria-labelledby="hero-heading"] {
-                min-height: 100vh;
-                contain: layout;
-              }
-              
-              /* Preload critical font weights */
-              @font-face {
-                font-family: 'Montserrat';
-                font-style: normal;
-                font-weight: 900;
-                font-display: swap;
-                src: local('Montserrat Black'), local('Montserrat-Black');
-              }
-              
-              @font-face {
-                font-family: 'Open Sans';
-                font-style: normal;
-                font-weight: 600;
-                font-display: swap;
-                src: local('Open Sans SemiBold'), local('OpenSans-SemiBold');
-              }
-              
-              /* Prevent layout shifts */
-              .mobile-spacing-normal {
-                padding-left: 1rem;
-                padding-right: 1rem;
-              }
-              
-              @media (min-width: 768px) {
-                .mobile-spacing-normal {
-                  padding-left: 2rem;
-                  padding-right: 2rem;
-                }
-              }
-              
-              /* Optimize image loading */
-              img[src*="leadership.jpg"] {
-                content-visibility: auto;
-                contain-intrinsic-size: 100vw 100vh;
-              }
-              
-              /* Mobile-specific LCP optimizations */
-              @media (max-width: 767px) {
-                img[src*="leadership.jpg"] {
-                  content-visibility: visible !important;
-                  contain: none !important;
-                  will-change: auto !important;
-                  transform: none !important;
-                }
-                
-                /* Ensure mobile hero renders immediately */
-                section[role="region"][aria-labelledby="hero-heading"] {
-                  contain: none !important;
-                }
-                
-                /* Mobile image container optimization */
-                div[style*="position: absolute"][style*="inset: 0"] img {
-                  image-rendering: optimizeSpeed;
-                  image-rendering: -webkit-optimize-contrast;
-                }
-              }
-              
-              /* Prevent HubSpot layout shifts */
-              #hubspot-messages-iframe-container {
-                position: fixed !important;
-                bottom: 20px !important;
-                right: 20px !important;
-                z-index: 1000 !important;
-                contain: layout !important;
-              }
-              
-              /* Reserve space for HubSpot widget to prevent CLS */
-              #hubspot-conversations-iframe {
-                width: 400px !important;
-                height: 400px !important;
-                max-width: calc(100vw - 40px) !important;
-                max-height: calc(100vh - 40px) !important;
-              }
-              
-              @media (max-width: 768px) {
-                #hubspot-conversations-iframe {
-                  width: 320px !important;
-                  height: 320px !important;
-                }
-              }
-            `
-          }} />
+          {/* Preload critical LCP resources */}
+          <link rel="preload" href="/hero-poster.avif" as="image" type="image/avif" fetchPriority="high" />
           
-          {/* Enhanced preload critical assets for faster LCP */}
-          <link rel="preload" href="/kersten-logo.jpg" as="image" type="image/jpeg" fetchPriority="high" />
-          {/* Additional hero images preload for key pages */}
-          <link rel="preload" href="/about-us.jpg" as="image" type="image/jpeg" fetchPriority="high" />
-          <link rel="preload" href="/resources.jpg" as="image" type="image/jpeg" fetchPriority="high" />
-          <link rel="preload" href="/flexible.jpg" as="image" type="image/jpeg" fetchPriority="high" />
-          {/* Preload video for hero */}
-          <link rel="preload" href="/hero.mp4" as="video" type="video/mp4" media="(min-width: 768px)" />
-          {/* DNS prefetch for external domains */}
-          <link rel="dns-prefetch" href="//perpetual-motivation-production.up.railway.app" />
+          {/* DNS prefetch and preconnect for better font loading performance */}
           <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-          <link rel="dns-prefetch" href="//fonts.gstatic.com" />
-          <link rel="dns-prefetch" href="//js-na2.hsforms.net" />
-          <link rel="dns-prefetch" href="//static.hsappstatic.net" />
-          {/* Preconnect to critical domains */}
-          <link rel="preconnect" href="//perpetual-motivation-production.up.railway.app" crossOrigin="anonymous" />
           <link rel="preconnect" href="//fonts.googleapis.com" crossOrigin="anonymous" />
-          <link rel="preconnect" href="//kerstencapital.s3.us-east-1.amazonaws.com" crossOrigin="anonymous" />
+          <link rel="preconnect" href="//fonts.gstatic.com" crossOrigin="anonymous" />
+          
           <meta name="google-site-verification" content="H194w9QjUq3uSBGdJOSJBO6ZOy98z-Yoym96MSuOrVc" />
         </head>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
-          {/* Google Analytics - Global for all pages */}
           <GoogleAnalytics />
           
-          {/* Skip Navigation Link */}
           <a 
             href="#main-content" 
             className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-[#0C6BAF] focus:text-white focus:rounded-md focus:font-semibold focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#0C6BAF] transition-all duration-200"
@@ -245,23 +131,19 @@ export default async function RootLayout({
           </a>
 
           <Header global={globalData.data} />
-          {/* UTM Tracker component to capture and store UTM parameters */}
           <UtmTracker />
           
-          {/* HubSpot Forms Script - exact format as user provided */}
           <Script
             src="https://js-na2.hsforms.net/forms/embed/developer/242773408.js"
             defer
           />
           
-          {/* HubSpot Tracking Script */}
           <Script
             id="hubspot-tracking-script"  
             src="//js-na2.hs-scripts.com/242773408.js"
             strategy="lazyOnload"
           />
           
-          {/* Organization Schema */}
           <Script
             id="organization-schema"
             type="application/ld+json"
@@ -287,175 +169,14 @@ export default async function RootLayout({
     // Fallback rendering without header that requires global data
    return (
       <html lang="en" className={`${inter.variable} ${cormorant.variable} ${montserrat.variable} ${openSans.variable} h-full`}>
-        <head>
-          {/* Critical CSS for LCP optimization */}
-          <style dangerouslySetInnerHTML={{
-            __html: `
-              /* Critical hero text styles for LCP optimization */
-              #hero-heading, #hero-description {
-                font-display: swap;
-                text-rendering: optimizeSpeed;
-                contain: layout style paint;
-              }
-              
-              /* Ensure hero section renders immediately */
-              section[role="region"][aria-labelledby="hero-heading"] {
-                min-height: 100vh;
-                contain: layout;
-              }
-              
-              /* Preload critical font weights */
-              @font-face {
-                font-family: 'Montserrat';
-                font-style: normal;
-                font-weight: 900;
-                font-display: swap;
-                src: local('Montserrat Black'), local('Montserrat-Black');
-              }
-              
-              @font-face {
-                font-family: 'Open Sans';
-                font-style: normal;
-                font-weight: 600;
-                font-display: swap;
-                src: local('Open Sans SemiBold'), local('OpenSans-SemiBold');
-              }
-              
-              /* Prevent layout shifts */
-              .mobile-spacing-normal {
-                padding-left: 1rem;
-                padding-right: 1rem;
-              }
-              
-              @media (min-width: 768px) {
-                .mobile-spacing-normal {
-                  padding-left: 2rem;
-                  padding-right: 2rem;
-                }
-              }
-              
-              /* Optimize image loading */
-              img[src*="leadership.jpg"] {
-                content-visibility: auto;
-                contain-intrinsic-size: 100vw 100vh;
-              }
-              
-              /* Mobile-specific LCP optimizations */
-              @media (max-width: 767px) {
-                img[src*="leadership.jpg"] {
-                  content-visibility: visible !important;
-                  contain: none !important;
-                  will-change: auto !important;
-                  transform: none !important;
-                }
-                
-                /* Ensure mobile hero renders immediately */
-                section[role="region"][aria-labelledby="hero-heading"] {
-                  contain: none !important;
-                }
-                
-                /* Mobile image container optimization */
-                div[style*="position: absolute"][style*="inset: 0"] img {
-                  image-rendering: optimizeSpeed;
-                  image-rendering: -webkit-optimize-contrast;
-                }
-              }
-              
-              /* Prevent HubSpot layout shifts */
-              #hubspot-messages-iframe-container {
-                position: fixed !important;
-                bottom: 20px !important;
-                right: 20px !important;
-                z-index: 1000 !important;
-                contain: layout !important;
-              }
-              
-              /* Reserve space for HubSpot widget to prevent CLS */
-              #hubspot-conversations-iframe {
-                width: 400px !important;
-                height: 400px !important;
-                max-width: calc(100vw - 40px) !important;
-                max-height: calc(100vh - 40px) !important;
-              }
-              
-              @media (max-width: 768px) {
-                #hubspot-conversations-iframe {
-                  width: 320px !important;
-                  height: 320px !important;
-                }
-              }
-            `
-          }} />
-          
-          {/* Enhanced preload critical assets for faster LCP */}
-          <link rel="preload" href="/kersten-logo.jpg" as="image" type="image/jpeg" fetchPriority="high" />
-          {/* Additional hero images preload for key pages */}
-          <link rel="preload" href="/about-us.jpg" as="image" type="image/jpeg" fetchPriority="high" />
-          <link rel="preload" href="/resources.jpg" as="image" type="image/jpeg" fetchPriority="high" />
-          <link rel="preload" href="/flexible.jpg" as="image" type="image/jpeg" fetchPriority="high" />
-          {/* Preload video for hero */}
-          <link rel="preload" href="/hero.mp4" as="video" type="video/mp4" media="(min-width: 768px)" />
-          {/* DNS prefetch for external domains */}
-          <link rel="dns-prefetch" href="//perpetual-motivation-production.up.railway.app" />
-          <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-          <link rel="dns-prefetch" href="//fonts.gstatic.com" />
-          <link rel="dns-prefetch" href="//js-na2.hsforms.net" />
-          <link rel="dns-prefetch" href="//static.hsappstatic.net" />
-          {/* Preconnect to critical domains */}
-          <link rel="preconnect" href="//perpetual-motivation-production.up.railway.app" crossOrigin="anonymous" />
-          <link rel="preconnect" href="//fonts.googleapis.com" crossOrigin="anonymous" />
-          <link rel="preconnect" href="//kerstencapital.s3.us-east-1.amazonaws.com" crossOrigin="anonymous" />
-          <meta name="google-site-verification" content="H194w9QjUq3uSBGdJOSJBO6ZOy98z-Yoym96MSuOrVc" />
-        </head>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
-          {/* Google Analytics - Global for all pages */}
           <GoogleAnalytics />
           
-          {/* Skip Navigation Link */}
-          <a 
-            href="#main-content" 
-            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-[#0C6BAF] focus:text-white focus:rounded-md focus:font-semibold focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#0C6BAF] transition-all duration-200"
-            aria-label="Skip to main content"
-          >
-            Skip to main content
-          </a>
-
-          <header className="bg-gradient-to-b from-gray-100 to-gray-200 shadow-sm">
-          </header>
-          {/* UTM Tracker component to capture and store UTM parameters */}
-          <UtmTracker />
-          
-          {/* HubSpot Forms Script - exact format as user provided */}
-          <Script
-            src="https://js-na2.hsforms.net/forms/embed/developer/242773408.js"
-            defer
-          />
-          
-          {/* HubSpot Tracking Script */}
-          <Script
-            id="hubspot-tracking-script"  
-            src="//js-na2.hs-scripts.com/242773408.js"
-            strategy="lazyOnload"
-          />
-          
-          {/* Organization Schema */}
-          <Script
-            id="organization-schema"
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: generateOrganizationSchema() }}
-          />
-          
-          <main 
-            id="main-content" 
-            className="flex-1 flex flex-col"
-            role="main"
-            aria-label="Main content"
-          >
+          <main id="main-content" className="flex-1 flex flex-col">
             {children}
           </main>
-          <FaqFooterWrapper />
-          <Footer footer={null} />
-         <ScrollToTop />
+          
+          <ScrollToTop />
         </body>
       </html>
     );

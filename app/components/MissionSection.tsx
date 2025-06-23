@@ -217,6 +217,7 @@ export default function MissionSection() {
                   alt="Strategic chess pieces on board representing strategic talent acquisition and business planning" 
                   width={600} 
                   height={400}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
                   className="w-full h-auto object-cover"
                   priority
                 />

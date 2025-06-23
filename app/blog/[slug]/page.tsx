@@ -163,8 +163,7 @@ async function fetchPostDirectly(slug: string) {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${process.env.STRAPI_API_TOKEN || ''}`,
           },
-          cache: 'no-store',
-          next: { revalidate: 0 }
+          next: { revalidate: 300 }, // Cache for 5 minutes instead of no-store
         });
         
         if (!response.ok) {
@@ -201,12 +200,11 @@ async function fetchPostDirectly(slug: string) {
     // If all API endpoints failed, try one more approach with the proxy API
     if (!post) {
       try {
-        const proxyUrl = `/api/blog?type=posts&slug=${slug}&debug=true`;
+        const proxyUrl = `/api/blog?type=posts&slug=${slug}`;
         console.log(`Trying proxy API: ${proxyUrl}`);
         
         const response = await fetch(proxyUrl, {
-          cache: 'no-store',
-          next: { revalidate: 0 }
+          next: { revalidate: 300 }, // Cache for 5 minutes instead of no-store
         });
         
         if (response.ok) {

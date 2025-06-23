@@ -51,7 +51,7 @@ export default function Hero2() {
     video.addEventListener('canplay', handleVideoCanPlay);
 
     // Load video
-    video.preload = 'metadata';
+    video.preload = 'auto';
     video.load();
 
     // Cleanup
@@ -212,45 +212,64 @@ export default function Hero2() {
       <div 
         className={`absolute inset-0 z-20 transition-opacity duration-1000 ${
           (videoLoaded && !videoError) ? 'opacity-0 pointer-events-none' : 'opacity-100'
-        } bg-gradient-to-br from-[#002C5F] to-[#0C6BAF] flex items-center justify-center`}
+        }`}
         role="status"
         aria-live="polite"
         aria-label="Loading page content"
       >
-        <div className="text-center">
-          {/* LoadingSpinner component design */}
-          <div className="flex items-center justify-center mb-6" aria-hidden="true">
-            <div className="w-16 h-16 relative">
-              {/* Outer ring */}
-              <div className="absolute inset-0 rounded-full border-4 border-white/20"></div>
-              {/* Spinning ring */}
-              <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-white animate-spin"></div>
-              {/* Inner dot */}
-              <div className="absolute inset-2 rounded-full bg-gradient-to-br from-white to-[#71C8F3] opacity-60"></div>
+        {/* Hero poster background - mobile only */}
+        <div 
+          className="absolute inset-0 md:hidden"
+          style={{
+            backgroundImage: 'url(/hero-poster.avif)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+        
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#002C5F]/80 to-[#0C6BAF]/80"></div>
+        
+        {!videoLoaded && (
+          <div className="relative z-10 flex items-center justify-center h-full">
+            <div className="text-center">
+              {/* LoadingSpinner component design */}
+              <div className="flex items-center justify-center mb-6" aria-hidden="true">
+                <div className="w-16 h-16 relative">
+                  {/* Outer ring */}
+                  <div className="absolute inset-0 rounded-full border-4 border-white/20"></div>
+                  {/* Spinning ring */}
+                  <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-white animate-spin"></div>
+                  {/* Inner dot */}
+                  <div className="absolute inset-2 rounded-full bg-gradient-to-br from-white to-[#71C8F3] opacity-60"></div>
+                </div>
+              </div>
+              
+              {/* Loading text */}
+              <h2 className="text-2xl font-black text-white mb-2" style={{ fontFamily: 'var(--font-montserrat), system-ui, sans-serif' }}>
+                Loading...
+              </h2>
+              <p className="text-white/80" style={{ fontFamily: 'var(--font-open-sans), system-ui, sans-serif' }}>
+                Preparing your experience
+              </p>
             </div>
           </div>
-          
-          {/* Loading text */}
-          <h2 className="text-2xl font-black text-white mb-2" style={{ fontFamily: 'var(--font-montserrat), system-ui, sans-serif' }}>
-            Loading...
-          </h2>
-          <p className="text-white/80" style={{ fontFamily: 'var(--font-open-sans), system-ui, sans-serif' }}>
-            Preparing your experience
-          </p>
-        </div>
+        )}
       </div>
       
       {/* Video Background - Primary content */}
       <video
         ref={videoRef}
         className={`absolute inset-0 w-full h-full object-cover z-10 transition-opacity duration-1000 ${
-          videoLoaded && !videoError ? 'opacity-100' : 'opacity-0'
+          (videoLoaded && !videoError) ? 'opacity-100' : 'opacity-0'
         }`}
         autoPlay
         loop
         muted
         playsInline
-        preload="metadata"
+        preload="auto"
+        poster="/hero-poster.avif"
         style={{ 
           minHeight: '100vh', 
           minWidth: '100%',

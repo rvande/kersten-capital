@@ -72,17 +72,11 @@ export default function Navbar({ navbar }: NavbarProps) {
     if (!isClient) return;
     
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      const scrolledNow = window.scrollY > 50;
+      setScrolled(scrolledNow);
     };
     
-    // Set initial scroll state
-    handleScroll();
-    
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isClient]);
   
@@ -491,7 +485,7 @@ export default function Navbar({ navbar }: NavbarProps) {
             {/* Mobile Contact CTA */}
             <div className="mt-6 px-4 pb-4">
               <Link 
-                href="/contact" 
+                href="/contact-us" 
                 className="bg-gradient-to-r from-[#0C6BAF] to-[#71C8F3] hover:from-[#187CC1] hover:to-[#71C8F3] text-white text-lg font-semibold font-montserrat py-3 px-6 rounded-md shadow-md transition-all duration-200 flex items-center justify-center w-full"
                 onClick={() => setMobileMenuOpen(false)}
               >
