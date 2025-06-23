@@ -146,10 +146,15 @@ export default function Navbar({ navbar }: NavbarProps) {
                 alt="Kersten Talent Capital"
                 width={645}
                 height={569}
-                className={`w-auto transition-all duration-300 ${isClient && scrolled ? 'h-12 md:h-12' : 'h-20 md:h-20 lg:h-24'}`}
+                className={`transition-all duration-300 ${isClient && scrolled ? 'h-12' : 'h-16 md:h-20'}`}
+                style={{ 
+                  aspectRatio: '645/569',
+                  width: 'auto',
+                  objectFit: 'contain'
+                }}
                 priority
                 fetchPriority="high"
-                sizes="(max-width: 768px) 200px, (max-width: 1024px) 250px, 300px"
+                sizes="(max-width: 768px) 150px, (max-width: 1024px) 200px, 250px"
               />
             ) : (
               <span className="font-montserrat text-2xl md:text-3xl lg:text-4xl font-black text-[#002C5F]">

@@ -17,13 +17,15 @@ const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
+  preload: false,
 });
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-cormorant",
-  display: "swap",
+  display: "optional",
+  preload: false,
 });
 
 const montserrat = Montserrat({
@@ -31,6 +33,7 @@ const montserrat = Montserrat({
   weight: ["300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-montserrat",
   display: "swap",
+  preload: true,
 });
 
 const openSans = Open_Sans({
@@ -38,6 +41,7 @@ const openSans = Open_Sans({
   weight: ["300", "400", "500", "600", "700", "800"],
   variable: "--font-open-sans",
   display: "swap",
+  preload: true,
 });
 
 // This function generates the metadata for the page
@@ -133,9 +137,10 @@ export default async function RootLayout({
           <Header global={globalData.data} />
           <UtmTracker />
           
+          {/* Load HubSpot scripts with better performance */}
           <Script
             src="https://js-na2.hsforms.net/forms/embed/developer/242773408.js"
-            defer
+            strategy="lazyOnload"
           />
           
           <Script

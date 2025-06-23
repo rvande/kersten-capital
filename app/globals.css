@@ -419,12 +419,31 @@ strong {
   bottom: 20px !important;
   right: 20px !important;
   z-index: 1000 !important;
+  /* Prevent layout shift by ensuring it doesn't affect document flow */
+  will-change: transform !important;
+  contain: layout style paint !important;
 }
 
+/* Prevent HubSpot chat widget from causing layout shifts */
+#hubspot-messages-iframe-container iframe {
+  /* Ensure iframe doesn't cause shifts */
+  position: absolute !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Reserve space for mobile chat widget to prevent CLS */
 @media (max-width: 768px) {
   #hubspot-messages-iframe-container {
     bottom: 15px !important;
     right: 15px !important;
+    /* Ensure it stays within viewport */
+    max-width: calc(100vw - 30px) !important;
+  }
+  
+  /* Add padding to body on mobile to account for chat widget */
+  body {
+    padding-bottom: env(safe-area-inset-bottom, 0px) !important;
   }
 }
 

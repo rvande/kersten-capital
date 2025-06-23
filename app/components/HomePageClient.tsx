@@ -3,14 +3,30 @@
 import React from 'react';
 import dynamic from "next/dynamic";
 
-// Import Hero2 dynamically to prevent SSR issues with video/state management
+// Import Hero2 with SSR enabled for better LCP
 const Hero2 = dynamic(() => import("./Hero2"), { 
-  ssr: false,
+  ssr: true, // Enable SSR for critical above-the-fold content
   loading: () => (
     <section 
-      className="relative w-full overflow-hidden bg-gradient-to-br from-[#002C5F] to-[#0C6BAF]" 
+      className="relative w-full overflow-hidden" 
       style={{ minHeight: '100vh' }}
     >
+      {/* Immediate poster image for LCP */}
+      <img
+        src="/hero-poster.avif"
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover"
+        loading="eager"
+        fetchPriority="high"
+        decoding="sync"
+        style={{
+          minHeight: '100vh',
+          minWidth: '100%',
+          objectFit: 'cover'
+        }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/80 z-20" aria-hidden="true" />
+      
       {/* Critical text content for immediate display */}
       <div className="relative z-30 flex flex-col h-screen w-full px-4 md:px-8 lg:px-16">
         <div className="flex flex-col justify-center h-full md:items-start items-center md:text-left text-center max-w-4xl">
@@ -22,7 +38,7 @@ const Hero2 = dynamic(() => import("./Hero2"), {
           </h1>
           
           <h2 
-            className="text-[1.6rem] md:text-[4rem] lg:text-[5.5rem] font-black text-transparent bg-gradient-to-b from-[#71C8F3] to-white bg-clip-text mb-6 md:mb-8"
+            className="text-[1.6rem] md:text-[4rem] lg:text-[5.5rem] font-black text-transparent bg-gradient-to-b from-[#0C6BAF] to-[#71C8F3] bg-clip-text mb-6 md:mb-8"
             style={{ lineHeight: '1.1' }}
           >
             Your Leadership Team

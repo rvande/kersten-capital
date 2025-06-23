@@ -28,7 +28,7 @@ export default function Hero2() {
   const handleVideoError = useCallback((e: Event) => {
     console.error('Video loading error:', e);
     setVideoError(true);
-    setVideoLoaded(true); // Show content even if video fails
+    setVideoLoaded(false);
   }, []);
 
   const handleVideoCanPlay = useCallback(() => {
@@ -130,11 +130,50 @@ export default function Hero2() {
       aria-labelledby="hero-heading"
       aria-describedby="hero-description"
     >
-      {/* Critical Content - Static for fastest LCP */}
+      {/* Hero Poster Background - ALWAYS VISIBLE for immediate LCP */}
+      <img
+        src="/hero-poster.avif"
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover"
+        loading="eager"
+        fetchPriority="high"
+        decoding="sync"
+        style={{
+          minHeight: '100vh',
+          minWidth: '100%',
+          objectFit: 'cover'
+        }}
+      />
+      
+      {/* Video Background - Loads in background, shows when ready */}
+      <video
+        ref={videoRef}
+        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+          videoLoaded ? 'opacity-100' : 'opacity-0'
+        }`}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        style={{ 
+          minHeight: '100vh', 
+          minWidth: '100%',
+          objectFit: 'cover'
+        }}
+        aria-label="Background video showing leadership and business scenes"
+      >
+        <source src="/hero.mp4" type="video/mp4" />
+      </video>
+      
+      {/* Dark overlay for text readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/80 z-20" aria-hidden="true" />
+
+      {/* Critical Content - Always visible immediately */}
       <div className="relative z-30 flex flex-col h-screen w-full px-4 md:px-8 lg:px-16">
         <div className="flex flex-col justify-center h-full md:items-start items-center md:text-left text-center max-w-4xl">
           
-          {/* TRANSFORM headline - Simplified for LCP */}
+          {/* TRANSFORM headline */}
           <h1
             id="hero-heading"
             className="text-[3.4rem] md:text-[5rem] lg:text-[7rem] font-black text-white mb-2 md:mb-4 tracking-tight"
@@ -143,7 +182,7 @@ export default function Hero2() {
             TRANSFORM
           </h1>
           
-          {/* Static Headline - No animations */}
+          {/* Static Headline */}
           <h2 
             className="text-[1.6rem] md:text-[4rem] lg:text-[5.5rem] font-black text-transparent bg-gradient-to-b from-[#0C6BAF] to-[#71C8F3] bg-clip-text mb-6 md:mb-8"
             style={{ lineHeight: '1.1' }}
@@ -151,7 +190,7 @@ export default function Hero2() {
             Your Leadership Team
           </h2>
           
-          {/* Description - Ultra-simplified for mobile LCP */}
+          {/* Description */}
           <p 
             id="hero-description" 
             className="max-w-3xl md:text-left text-center text-white text-lg md:text-xl font-semibold mb-8 md:mb-10"
@@ -159,7 +198,7 @@ export default function Hero2() {
             Kersten Talent Capital revolutionizes organizational performance through strategic talent intelligence and executive placement solutions.
           </p>
           
-          {/* CTA Button - Simplified */}
+          {/* CTA Button */}
           <div className="md:flex md:justify-start flex justify-center">
             <Link 
               href="/contact-us"
@@ -207,82 +246,6 @@ export default function Hero2() {
           </svg>
         </div>
       </div>
-
-      {/* Loading Animation - Shows when video isn't ready */}
-      <div 
-        className={`absolute inset-0 z-20 transition-opacity duration-1000 ${
-          (videoLoaded && !videoError) ? 'opacity-0 pointer-events-none' : 'opacity-100'
-        }`}
-        role="status"
-        aria-live="polite"
-        aria-label="Loading page content"
-      >
-        {/* Hero poster background - mobile only */}
-        <div 
-          className="absolute inset-0 md:hidden"
-          style={{
-            backgroundImage: 'url(/hero-poster.avif)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-          }}
-        />
-        
-        {/* Dark overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#002C5F]/80 to-[#0C6BAF]/80"></div>
-        
-        {!videoLoaded && (
-          <div className="relative z-10 flex items-center justify-center h-full">
-            <div className="text-center">
-              {/* LoadingSpinner component design */}
-              <div className="flex items-center justify-center mb-6" aria-hidden="true">
-                <div className="w-16 h-16 relative">
-                  {/* Outer ring */}
-                  <div className="absolute inset-0 rounded-full border-4 border-white/20"></div>
-                  {/* Spinning ring */}
-                  <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-white animate-spin"></div>
-                  {/* Inner dot */}
-                  <div className="absolute inset-2 rounded-full bg-gradient-to-br from-white to-[#71C8F3] opacity-60"></div>
-                </div>
-              </div>
-              
-              {/* Loading text */}
-              <h2 className="text-2xl font-black text-white mb-2" style={{ fontFamily: 'var(--font-montserrat), system-ui, sans-serif' }}>
-                Loading...
-              </h2>
-              <p className="text-white/80" style={{ fontFamily: 'var(--font-open-sans), system-ui, sans-serif' }}>
-                Preparing your experience
-              </p>
-            </div>
-          </div>
-        )}
-      </div>
-      
-      {/* Video Background - Primary content */}
-      <video
-        ref={videoRef}
-        className={`absolute inset-0 w-full h-full object-cover z-10 transition-opacity duration-1000 ${
-          (videoLoaded && !videoError) ? 'opacity-100' : 'opacity-0'
-        }`}
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        poster="/hero-poster.avif"
-        style={{ 
-          minHeight: '100vh', 
-          minWidth: '100%',
-          objectFit: 'cover'
-        }}
-        aria-label="Background video showing leadership and business scenes"
-      >
-        <source src="/hero.mp4" type="video/mp4" />
-        <p>Your browser does not support the video tag.</p>
-      </video>
-      
-      {/* Dark overlay for better text readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/80 z-20" aria-hidden="true" />
     </section>
   );
 } 
