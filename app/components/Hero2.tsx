@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -15,52 +15,46 @@ interface ServiceItem {
 
 export default function Hero2() {
   const [videoLoaded, setVideoLoaded] = useState(false);
-  const [videoError, setVideoError] = useState(false);
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Memoized video event handlers
-  const handleVideoLoad = useCallback(() => {
-    console.log('Video loaded successfully');
-    setVideoLoaded(true);
-    setVideoError(false);
-  }, []);
+  const rotatingTexts = [
+    "Leadership Strategy",
+    "Leadership Team", 
+    "Executive Hiring"
+  ];
 
-  const handleVideoError = useCallback((e: Event) => {
-    console.error('Video loading error:', e);
-    setVideoError(true);
-    setVideoLoaded(false);
-  }, []);
-
-  const handleVideoCanPlay = useCallback(() => {
-    const video = videoRef.current;
-    if (video) {
-      video.play().catch(e => {
-        console.log('Autoplay prevented, user interaction required:', e);
-      });
-    }
-  }, []);
-
-  // Video setup and loading
+  // Video setup
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    // Add event listeners
-    video.addEventListener('loadeddata', handleVideoLoad);
-    video.addEventListener('error', handleVideoError);
-    video.addEventListener('canplay', handleVideoCanPlay);
+    const handleCanPlay = () => {
+      setVideoLoaded(true);
+      video.play().catch(e => {
+        console.log('Autoplay prevented:', e);
+      });
+    };
 
-    // Load video
+    video.addEventListener('canplay', handleCanPlay);
     video.preload = 'auto';
     video.load();
 
-    // Cleanup
     return () => {
-      video.removeEventListener('loadeddata', handleVideoLoad);
-      video.removeEventListener('error', handleVideoError);
-      video.removeEventListener('canplay', handleVideoCanPlay);
+      video.removeEventListener('canplay', handleCanPlay);
     };
-  }, [handleVideoLoad, handleVideoError, handleVideoCanPlay]);
+  }, []);
+
+  // Text rotation effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTextIndex((prevIndex) => 
+        (prevIndex + 1) % rotatingTexts.length
+      );
+    }, 3000); // Change text every 3 seconds
+
+    return () => clearInterval(interval);
+  }, [rotatingTexts.length]);
 
   const services: ServiceItem[] = [
     {
@@ -130,11 +124,11 @@ export default function Hero2() {
       aria-labelledby="hero-heading"
       aria-describedby="hero-description"
     >
-      {/* Hero Poster Background - ALWAYS VISIBLE for immediate LCP */}
+      {/* Hero Poster Background - MOBILE ONLY */}
       <img
         src="/hero-poster.avif"
         alt=""
-        className="absolute inset-0 w-full h-full object-cover"
+        className="block md:hidden absolute inset-0 w-full h-full object-cover"
         loading="eager"
         fetchPriority="high"
         decoding="sync"
@@ -145,10 +139,10 @@ export default function Hero2() {
         }}
       />
       
-      {/* Video Background - Loads in background, shows when ready */}
+      {/* Video Background - Shows when loaded */}
       <video
         ref={videoRef}
-        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
           videoLoaded ? 'opacity-100' : 'opacity-0'
         }`}
         autoPlay
@@ -166,6 +160,16 @@ export default function Hero2() {
         <source src="/hero.mp4" type="video/mp4" />
       </video>
       
+      {/* Loading Spinner - Desktop only, white with blue circle */}
+      {!videoLoaded && (
+        <div className="hidden md:flex absolute inset-0 bg-white items-center justify-center z-10">
+          <div className="flex flex-col items-center">
+            <div className="w-16 h-16 border-4 border-gray-200 border-t-[#0C6BAF] rounded-full animate-spin mb-4"></div>
+            <p className="text-[#002C5F] text-lg font-semibold">Loading...</p>
+          </div>
+        </div>
+      )}
+      
       {/* Dark overlay for text readability */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/80 z-20" aria-hidden="true" />
 
@@ -182,12 +186,12 @@ export default function Hero2() {
             TRANSFORM
           </h1>
           
-          {/* Static Headline */}
+          {/* Rotating Subtitle */}
           <h2 
-            className="text-[1.6rem] md:text-[4rem] lg:text-[5.5rem] font-black text-transparent bg-gradient-to-b from-[#0C6BAF] to-[#71C8F3] bg-clip-text mb-6 md:mb-8"
+            className="text-[1.6rem] md:text-[4rem] lg:text-[5.5rem] font-black text-transparent bg-gradient-to-b from-[#0C6BAF] to-[#71C8F3] bg-clip-text mb-6 md:mb-8 transition-all duration-500 ease-in-out md:whitespace-nowrap"
             style={{ lineHeight: '1.1' }}
           >
-            Your Leadership Team
+            Your {rotatingTexts[currentTextIndex]}
           </h2>
           
           {/* Description */}
@@ -195,7 +199,7 @@ export default function Hero2() {
             id="hero-description" 
             className="max-w-3xl md:text-left text-center text-white text-lg md:text-xl font-semibold mb-8 md:mb-10"
           >
-            Kersten Talent Capital revolutionizes organizational performance through strategic talent intelligence and executive placement solutions.
+            Kersten Talent Capital strives to revolutionize organizational performance through strategic talent intelligence and executive placement solutions that catalyze growth, innovation, and sustainable competitive advantages for forward-thinking enterprises across global markets. Serving companies in Europe and North America.
           </p>
           
           {/* CTA Button */}
