@@ -23,7 +23,8 @@ export interface HeadingItem {
 }
 
 export function extractHeadings(content: string): HeadingItem[] {
-  const headingRegex = /^(#{1,3})\s+(.+)$/gm;
+  // Updated regex to support all 6 heading levels and handle whitespace/trailing # characters
+  const headingRegex = /^\s*(#{1,6})\s+(.+?)(?:\s*#*\s*)?$/gm;
   const items: HeadingItem[] = [];
   let match;
 

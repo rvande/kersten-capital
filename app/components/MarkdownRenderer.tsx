@@ -17,17 +17,41 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, className 
     let html = markdown;
 
     // Convert headings first and add IDs for navigation
-    html = html.replace(/^### (.*$)/gim, (match, title) => {
+    // Process in order from most specific to least specific (more # first)
+    // Make regex more flexible to handle whitespace and various formatting
+    
+    // H6 headings
+    html = html.replace(/^\s*#{6}\s+(.+?)(?:\s*#*\s*)?$/gim, (match, title) => {
+      const id = generateHeadingId(title);
+      return `<h6 id="${id}" class="text-lg md:text-xl font-black mt-6 mb-3 text-[#002C5F] font-montserrat leading-tight">${title}</h6>`;
+    });
+    
+    // H5 headings
+    html = html.replace(/^\s*#{5}\s+(.+?)(?:\s*#*\s*)?$/gim, (match, title) => {
+      const id = generateHeadingId(title);
+      return `<h5 id="${id}" class="text-xl md:text-2xl font-black mt-7 mb-4 text-[#002C5F] font-montserrat leading-tight">${title}</h5>`;
+    });
+    
+    // H4 headings  
+    html = html.replace(/^\s*#{4}\s+(.+?)(?:\s*#*\s*)?$/gim, (match, title) => {
+      const id = generateHeadingId(title);
+      return `<h4 id="${id}" class="text-xl md:text-2xl font-black mt-7 mb-4 text-[#002C5F] font-montserrat leading-tight">${title}</h4>`;
+    });
+    
+    // H3 headings
+    html = html.replace(/^\s*#{3}\s+(.+?)(?:\s*#*\s*)?$/gim, (match, title) => {
       const id = generateHeadingId(title);
       return `<h3 id="${id}" class="text-2xl md:text-3xl font-black mt-8 mb-5 text-[#002C5F] font-montserrat leading-tight">${title}</h3>`;
     });
     
-    html = html.replace(/^## (.*$)/gim, (match, title) => {
+    // H2 headings
+    html = html.replace(/^\s*#{2}\s+(.+?)(?:\s*#*\s*)?$/gim, (match, title) => {
       const id = generateHeadingId(title);
       return `<h2 id="${id}" class="text-3xl md:text-4xl font-black mt-10 mb-6 text-[#002C5F] font-montserrat leading-tight">${title}</h2>`;
     });
     
-    html = html.replace(/^# (.*$)/gim, (match, title) => {
+    // H1 headings
+    html = html.replace(/^\s*#{1}\s+(.+?)(?:\s*#*\s*)?$/gim, (match, title) => {
       const id = generateHeadingId(title);
       return `<h1 id="${id}" class="text-4xl md:text-5xl font-black mt-12 mb-8 text-[#002C5F] font-montserrat leading-tight">${title}</h1>`;
     });
@@ -72,7 +96,10 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, className 
 
     // Convert bold and italic text AFTER handling paragraphs and line breaks
     html = html.replace(/\*\*(.*?)\*\*/g, '<strong class="font-black text-[#002C5F]">$1</strong>');
+    // Support both asterisk and underscore for italics
     html = html.replace(/\*(.*?)\*/g, '<em class="italic">$1</em>');
+    // Simple underscore italic that avoids URLs by not matching underscores with hyphens nearby
+    html = html.replace(/(^|[\s>])_([^_\-<]+)_([\s<]|$)/g, '$1<em class="italic">$2</em>$3');
 
     // Clean up any double-wrapped elements
     html = html.replace(/<p[^>]*>(<h[1-6][^>]*>.*?<\/h[1-6]>)<\/p>/g, '$1');
