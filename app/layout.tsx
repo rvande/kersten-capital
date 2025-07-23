@@ -12,6 +12,8 @@ import Script from 'next/script';
 import UtmTracker from "./components/UtmTracker";
 import { generateOrganizationSchema } from "./utils/seo";
 import GoogleAnalytics from "./components/GoogleAnalytics";
+import { MotionConfig } from "framer-motion";
+import PerformanceConfig from './components/PerformanceConfig';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -175,13 +177,19 @@ export default async function RootLayout({
    return (
       <html lang="en" className={`${inter.variable} ${cormorant.variable} ${montserrat.variable} ${openSans.variable} h-full`}>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
-          <GoogleAnalytics />
-          
-          <main id="main-content" className="flex-1 flex flex-col">
-            {children}
-          </main>
-          
-          <ScrollToTop />
+          <MotionConfig
+            // Configure framer-motion for better performance
+            transition={{ layout: { duration: 0.3 } }}
+          >
+            <GoogleAnalytics />
+            <PerformanceConfig />
+            
+            <main id="main-content" className="flex-1 flex flex-col">
+              {children}
+            </main>
+            
+            <ScrollToTop />
+          </MotionConfig>
         </body>
       </html>
     );
