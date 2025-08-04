@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { getBlogPosts } from '../api/blog/api';
 import { getCategories } from '../api/blog/api';
+import { generateHreflangTags } from '../utils/seo';
 import BlogPostCard from '../components/BlogPostCard';
 import CategoryFilter from '../components/CategoryFilter';
 import SortSelector from '../components/SortSelector';
@@ -13,14 +14,21 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapita
 export const metadata: Metadata = {
   title: 'Blog | Kersten Talent Capital',
   description: 'Read the latest insights, trends, and news from Kersten Talent Capital.',
+  alternates: {
+    canonical: `${baseUrl}/blog`,
+    languages: {
+      'en-US': `${baseUrl}/blog`,
+      'en-CA': `${baseUrl}/blog`,
+      'en-GB': `${baseUrl}/blog`,
+      'en-AU': `${baseUrl}/blog`,
+      'x-default': `${baseUrl}/blog`,
+    },
+  },
   openGraph: {
     title: 'Blog | Kersten Talent Capital',
     description: 'Read the latest insights, trends, and news from Kersten Talent Capital.',
     url: `${baseUrl}/blog`,
     type: 'website',
-  },
-  alternates: {
-    canonical: `${baseUrl}/blog`,
   },
 };
 

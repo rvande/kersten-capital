@@ -4,16 +4,33 @@ import { StrapiResponse } from '../types/global';
 import { FAQ } from '../types/faq';
 import FAQHeader from '../components/FAQHeader';
 import FAQPageContent from '../components/FAQPageContent';
-import { generatePageMetadata } from '../utils/metadata';
 import { Metadata } from 'next';
+
+// Base URL from environment or default
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com';
 
 // Generate metadata for this page
 export async function generateMetadata(): Promise<Metadata> {
-  return generatePageMetadata(
-    '/faq',
-    'Frequently Asked Questions',
-    'Find answers to common questions about our executive talent acquisition services, process, and how we can help transform your leadership team.'
-  );
+  return {
+    title: 'Frequently Asked Questions | Kersten Talent Capital',
+    description: 'Find answers to common questions about our executive talent acquisition services, process, and how we can help transform your leadership team.',
+    alternates: {
+      canonical: `${baseUrl}/faq`,
+      languages: {
+        'en-US': `${baseUrl}/faq`,
+        'en-CA': `${baseUrl}/faq`,
+        'en-GB': `${baseUrl}/faq`,
+        'en-AU': `${baseUrl}/faq`,
+        'x-default': `${baseUrl}/faq`,
+      },
+    },
+    openGraph: {
+      title: 'Frequently Asked Questions | Kersten Talent Capital',
+      description: 'Find answers to common questions about our executive talent acquisition services, process, and how we can help transform your leadership team.',
+      url: `${baseUrl}/faq`,
+      type: 'website',
+    },
+  };
 }
 
 // This is a server component that fetches FAQ data

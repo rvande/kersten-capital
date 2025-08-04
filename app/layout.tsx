@@ -15,6 +15,7 @@ import GoogleAnalytics from "./components/GoogleAnalytics";
 import { MotionConfig } from "framer-motion";
 import PerformanceConfig from './components/PerformanceConfig';
 import HeadSchema from './components/HeadSchema';
+import { generateHreflangTags, generateOptimalMetaTitle, generateOptimalMetaDescription } from './utils/seo';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -67,25 +68,45 @@ export async function generateMetadata(): Promise<Metadata> {
     // Get site URL from environment variable or default
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com';
 
+    // Generate hreflang tags for homepage
+    const hreflangTags = generateHreflangTags('', siteUrl);
+
+    // Generate optimal meta title and description
+    const optimalTitle = generateOptimalMetaTitle(metaTitle, global.metaTitleSuffix);
+    const optimalDescription = generateOptimalMetaDescription(metaDescription);
+
     return {
       metadataBase: new URL(siteUrl),
       title: {
-        default: metadataTitle,
+        default: optimalTitle,
         template: `%s | ${global.metaTitleSuffix}`,
       },
-      description: metaDescription,
+      description: optimalDescription,
+      alternates: {
+        canonical: siteUrl,
+        languages: {
+          'en-US': siteUrl,
+          'en-CA': siteUrl,
+          'en-GB': siteUrl,
+          'en-AU': siteUrl,
+          'x-default': siteUrl,
+        },
+      },
       openGraph: {
-        title: metaTitle,
-        description: metaDescription,
+        title: optimalTitle,
+        description: optimalDescription,
+        url: siteUrl,
+        siteName: global.metaTitleSuffix,
         images: ogImages,
         type: 'website',
-        siteName: global.metaTitleSuffix,
+        locale: 'en_US',
+        countryName: 'United States',
       },
       twitter: {
         card: twitterCardType || "summary_large_image",
         creator: twitterUsername || "",
-        title: metaTitle,
-        description: metaDescription,
+        title: optimalTitle,
+        description: optimalDescription,
         images: ogImages.length > 0 ? ogImages.map(img => img.url) : [],
       },
       icons: iconMetadata,

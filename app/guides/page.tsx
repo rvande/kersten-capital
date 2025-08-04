@@ -1,5 +1,6 @@
 import React from 'react';
 import { fetchWhitepapers } from '@/app/utils/blog-helpers';
+import { generateHreflangTags } from '@/app/utils/seo';
 import GuidesPageContent from '../components/GuidesPageContent';
 import { Metadata } from 'next';
 
@@ -9,14 +10,21 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapita
 export const metadata: Metadata = {
   title: 'Guides & Whitepapers | Kersten Talent Capital',
   description: 'Access our latest guides, whitepapers, and research on executive talent acquisition, leadership trends, and strategic hiring practices.',
+  alternates: {
+    canonical: `${baseUrl}/guides`,
+    languages: {
+      'en-US': `${baseUrl}/guides`,
+      'en-CA': `${baseUrl}/guides`,
+      'en-GB': `${baseUrl}/guides`,
+      'en-AU': `${baseUrl}/guides`,
+      'x-default': `${baseUrl}/guides`,
+    },
+  },
   openGraph: {
     title: 'Guides & Whitepapers | Kersten Talent Capital',
     description: 'Access our latest guides, whitepapers, and research on executive talent acquisition, leadership trends, and strategic hiring practices.',
     url: `${baseUrl}/guides`,
     type: 'website',
-  },
-  alternates: {
-    canonical: `${baseUrl}/guides`,
   },
 };
 

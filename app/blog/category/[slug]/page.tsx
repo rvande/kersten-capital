@@ -1,6 +1,7 @@
 import { Metadata, ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getCategoryBySlug, getBlogPostsByCategory, getCategories } from '@/app/api/blog/api';
+import { generateHreflangTags } from '@/app/utils/seo';
 import BlogPostCard from '@/app/components/BlogPostCard';
 import CategoryFilter from '@/app/components/CategoryFilter';
 import SortSelector from '@/app/components/SortSelector';
@@ -43,17 +44,27 @@ export async function generateMetadata(
     // Canonical URL for this category
     const canonicalUrl = `${baseUrl}/blog/category/${slug}`;
     
+    // Generate hreflang tags for this page
+    const hreflangTags = generateHreflangTags(`/blog/category/${slug}`, baseUrl);
+    
     return {
       title: `${name} | Blog Categories | Kersten Talent Capital`,
       description: `Browse all blog posts in the ${name} category at Kersten Talent Capital.`,
+      alternates: {
+        canonical: canonicalUrl,
+        languages: {
+          'en-US': canonicalUrl,
+          'en-CA': canonicalUrl,
+          'en-GB': canonicalUrl,
+          'en-AU': canonicalUrl,
+          'x-default': canonicalUrl,
+        },
+      },
       openGraph: {
         title: `${name} | Blog Categories | Kersten Talent Capital`,
         description: `Browse all blog posts in the ${name} category at Kersten Talent Capital.`,
         url: canonicalUrl,
         type: 'website',
-      },
-      alternates: {
-        canonical: canonicalUrl,
       },
     };
   } catch (error) {

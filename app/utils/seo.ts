@@ -305,3 +305,89 @@ export function generateWebPageSchema(page: {
     });
   }
 } 
+
+/**
+ * Generates hreflang tags for international SEO
+ * @param currentUrl The current page URL
+ * @param siteUrl The base site URL
+ * @returns Array of hreflang objects for Next.js metadata
+ */
+export function generateHreflangTags(currentUrl: string, siteUrl: string = 'https://kerstentalentcapital.com') {
+  // Remove trailing slash for consistency
+  const cleanCurrentUrl = currentUrl.replace(/\/$/, '');
+  const cleanSiteUrl = siteUrl.replace(/\/$/, '');
+  
+  // Define the languages/regions you want to target
+  const hreflangConfig = [
+    { lang: 'en', region: 'US', url: `${cleanSiteUrl}${cleanCurrentUrl}` },
+    { lang: 'en', region: 'CA', url: `${cleanSiteUrl}${cleanCurrentUrl}` },
+    { lang: 'en', region: 'GB', url: `${cleanSiteUrl}${cleanCurrentUrl}` },
+    { lang: 'en', region: 'AU', url: `${cleanSiteUrl}${cleanCurrentUrl}` },
+    { lang: 'x-default', url: `${cleanSiteUrl}${cleanCurrentUrl}` },
+  ];
+
+  return hreflangConfig.map(({ lang, region, url }) => ({
+    hreflang: region ? `${lang}-${region}` : lang,
+    href: url,
+  }));
+} 
+
+/**
+ * Truncates meta title to optimal SEO length (50-60 characters)
+ * @param title The title to truncate
+ * @param maxLength Maximum length (default 60)
+ * @returns Truncated title
+ */
+export function truncateMetaTitle(title: string, maxLength: number = 60): string {
+  if (title.length <= maxLength) return title;
+  
+  // Try to truncate at a word boundary
+  const truncated = title.substring(0, maxLength);
+  const lastSpace = truncated.lastIndexOf(' ');
+  
+  if (lastSpace > maxLength * 0.8) { // If we can find a good break point
+    return truncated.substring(0, lastSpace).trim();
+  }
+  
+  return truncated.trim();
+}
+
+/**
+ * Truncates meta description to optimal SEO length (150-160 characters)
+ * @param description The description to truncate
+ * @param maxLength Maximum length (default 160)
+ * @returns Truncated description
+ */
+export function truncateMetaDescription(description: string, maxLength: number = 160): string {
+  if (description.length <= maxLength) return description;
+  
+  // Try to truncate at a word boundary
+  const truncated = description.substring(0, maxLength);
+  const lastSpace = truncated.lastIndexOf(' ');
+  
+  if (lastSpace > maxLength * 0.8) { // If we can find a good break point
+    return truncated.substring(0, lastSpace).trim() + '...';
+  }
+  
+  return truncated.trim() + '...';
+}
+
+/**
+ * Generates optimal meta title for pages
+ * @param pageTitle The main page title
+ * @param brandName The brand name (default: "Kersten Talent Capital")
+ * @returns Optimized meta title
+ */
+export function generateOptimalMetaTitle(pageTitle: string, brandName: string = "Kersten Talent Capital"): string {
+  const baseTitle = `${pageTitle} | ${brandName}`;
+  return truncateMetaTitle(baseTitle, 60);
+}
+
+/**
+ * Generates optimal meta description
+ * @param description The description text
+ * @returns Optimized meta description
+ */
+export function generateOptimalMetaDescription(description: string): string {
+  return truncateMetaDescription(description, 160);
+} 

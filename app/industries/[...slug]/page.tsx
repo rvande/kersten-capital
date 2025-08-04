@@ -4,6 +4,7 @@ import { getIndustryBySlug, getStrapiURL, getIndustrySlugs } from '../../api/api
 import { Industry } from '../../types/pages';
 import WebPageSchema from '../../components/WebPageSchema';
 import IndustryPageClient from './IndustryPageClient';
+import { generateHreflangTags, generateOptimalMetaTitle, generateOptimalMetaDescription } from '../../utils/seo';
 
 interface IndustryPageProps {
   params: Promise<{
@@ -43,16 +44,35 @@ export async function generateMetadata({ params }: IndustryPageProps) {
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com';
     const canonicalUrl = `${siteUrl}/industries/${fullSlug}`;
 
+    // Generate hreflang tags for this page
+    const hreflangTags = generateHreflangTags(`/industries/${fullSlug}`, siteUrl);
+
+    // Generate optimal meta title and description
+    const metaTitle = generateOptimalMetaTitle(industry.title);
+    const metaDescription = generateOptimalMetaDescription(
+      industry.shortDescription || `Specialized recruitment expertise in ${industry.title.toLowerCase()}.`
+    );
+
     return {
-      title: `${industry.title} | Kersten Talent Capital`,
-      description: industry.shortDescription || `Specialized recruitment expertise in ${industry.title.toLowerCase()}.`,
+      title: metaTitle,
+      description: metaDescription,
       alternates: {
         canonical: canonicalUrl,
+        languages: {
+          'en-US': canonicalUrl,
+          'en-CA': canonicalUrl,
+          'en-GB': canonicalUrl,
+          'en-AU': canonicalUrl,
+          'x-default': canonicalUrl,
+        },
       },
       openGraph: {
-        title: `${industry.title} | Kersten Talent Capital`,
-        description: industry.shortDescription || `Specialized recruitment expertise in ${industry.title.toLowerCase()}.`,
+        title: metaTitle,
+        description: metaDescription,
         url: canonicalUrl,
+        siteName: 'Kersten Talent Capital',
+        type: 'website',
+        locale: 'en_US',
         images: industry.heroImage?.url ? [
           {
             url: industry.heroImage.url.startsWith('http') 

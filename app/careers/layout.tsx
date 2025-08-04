@@ -1,11 +1,27 @@
 import { Metadata } from 'next';
+import { generateHreflangTags } from '../utils/seo';
 
-// Generate metadata for this page
+// Base URL from environment or default
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com';
+
 export const metadata: Metadata = {
-  title: 'Executive Careers',
-  description: 'Explore executive career opportunities with Kersten Talent Capital. Submit your profile for consideration for current and future executive positions.',
+  title: 'Careers | Kersten Talent Capital',
+  description: 'Join our team of executive talent professionals. Explore career opportunities at Kersten Talent Capital and help us empower exceptional leaders.',
   alternates: {
-    canonical: 'https://kerstentalentcapital.com/careers',
+    canonical: `${baseUrl}/careers`,
+    languages: {
+      'en-US': `${baseUrl}/careers`,
+      'en-CA': `${baseUrl}/careers`,
+      'en-GB': `${baseUrl}/careers`,
+      'en-AU': `${baseUrl}/careers`,
+      'x-default': `${baseUrl}/careers`,
+    },
+  },
+  openGraph: {
+    title: 'Careers | Kersten Talent Capital',
+    description: 'Join our team of executive talent professionals. Explore career opportunities at Kersten Talent Capital and help us empower exceptional leaders.',
+    url: `${baseUrl}/careers`,
+    type: 'website',
   },
 };
 

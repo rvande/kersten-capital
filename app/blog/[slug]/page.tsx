@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { getBlogPostBySlug, getBlogPosts } from '@/app/api/blog/api';
 import { getS3URL } from '@/app/api/api';
 import ArticleSchema from '@/app/components/ArticleSchema';
+import { generateHreflangTags, generateOptimalMetaTitle, generateOptimalMetaDescription } from '@/app/utils/seo';
 import qs from 'qs';
 import BlogPostClient from './BlogPostClient';
 
@@ -39,6 +40,17 @@ export async function generateMetadata(
     // Canonical URL for this blog post
     const canonicalUrl = `${baseUrl}/blog/${slug}`;
     
+    // Generate hreflang tags for this page
+    const hreflangTags = generateHreflangTags(`/blog/${slug}`, baseUrl);
+    
+    // Generate optimal meta title and description
+    const metaTitle = generateOptimalMetaTitle(
+      seo?.metaTitle || title || 'Blog Post'
+    );
+    const metaDescription = generateOptimalMetaDescription(
+      seo?.metaDescription || excerpt || 'Insights on leadership and talent acquisition from Kersten Talent Capital'
+    );
+    
     // Handle SEO image URL in a more flexible way
     let imageUrl = undefined;
     if (seo?.metaImage) {
@@ -56,22 +68,29 @@ export async function generateMetadata(
     }
     
     return {
-      title: seo?.metaTitle || `${title} | Kersten Talent Capital` || 'Blog Post | Kersten Talent Capital',
-      description: seo?.metaDescription || excerpt || 'Insights on leadership and talent acquisition from Kersten Talent Capital',
+      title: metaTitle,
+      description: metaDescription,
+      alternates: {
+        canonical: canonicalUrl,
+        languages: {
+          'en-US': canonicalUrl,
+          'en-CA': canonicalUrl,
+          'en-GB': canonicalUrl,
+          'en-AU': canonicalUrl,
+          'x-default': canonicalUrl,
+        },
+      },
       openGraph: imageUrl ? {
         images: [{ url: imageUrl }],
         type: 'article',
         url: canonicalUrl,
-        title: seo?.metaTitle || title || 'Blog Post',
-        description: seo?.metaDescription || excerpt || 'Insights on leadership and talent acquisition',
+        title: metaTitle,
+        description: metaDescription,
       } : {
         type: 'article',
         url: canonicalUrl,
-        title: seo?.metaTitle || title || 'Blog Post',
-        description: seo?.metaDescription || excerpt || 'Insights on leadership and talent acquisition',
-      },
-      alternates: {
-        canonical: canonicalUrl,
+        title: metaTitle,
+        description: metaDescription,
       },
     };
   } catch (error) {
