@@ -2,7 +2,7 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import { getIndustryBySlug, getStrapiURL, getIndustrySlugs } from '../../api/api';
 import { Industry } from '../../types/pages';
-import { generateWebPageSchema } from '../../utils/seo';
+import WebPageSchema from '../../components/WebPageSchema';
 import IndustryPageClient from './IndustryPageClient';
 
 interface IndustryPageProps {
@@ -64,21 +64,6 @@ export async function generateMetadata({ params }: IndustryPageProps) {
           }
         ] : [],
       },
-      other: {
-        'application/ld+json': (() => {
-          try {
-            return generateWebPageSchema({
-              title: industry.title,
-              description: industry.shortDescription || `Specialized recruitment expertise in ${industry.title.toLowerCase()}.`,
-              url: `/industries/${fullSlug}`,
-              breadcrumb: ['Industries', industry.title]
-            });
-          } catch (schemaError) {
-            console.error('Error generating webpage schema:', schemaError);
-            return '';
-          }
-        })(),
-      },
     };
   } catch (error) {
     console.error('Error generating metadata for industry:', error);
@@ -100,7 +85,19 @@ export default async function IndustryPage({ params }: IndustryPageProps) {
       notFound();
     }
 
-    return <IndustryPageClient industry={industry} />;
+    return (
+      <>
+        <WebPageSchema 
+          page={{
+            title: industry.title,
+            description: industry.shortDescription || `Specialized recruitment expertise in ${industry.title.toLowerCase()}.`,
+            url: `/industries/${fullSlug}`,
+            breadcrumb: ['Industries', industry.title]
+          }}
+        />
+        <IndustryPageClient industry={industry} />
+      </>
+    );
   } catch (error) {
     console.error('Error fetching industry:', error);
     notFound();

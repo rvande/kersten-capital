@@ -14,6 +14,7 @@ import { generateOrganizationSchema } from "./utils/seo";
 import GoogleAnalytics from "./components/GoogleAnalytics";
 import { MotionConfig } from "framer-motion";
 import PerformanceConfig from './components/PerformanceConfig';
+import OrganizationSchema from './components/OrganizationSchema';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -88,9 +89,6 @@ export async function generateMetadata(): Promise<Metadata> {
         images: ogImages.length > 0 ? ogImages.map(img => img.url) : [],
       },
       icons: iconMetadata,
-      other: {
-        'application/ld+json': generateOrganizationSchema(),
-      },
     };
   } catch (error) {
     console.error('Error generating metadata:', error);
@@ -127,6 +125,9 @@ export default async function RootLayout({
         </head>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
           <GoogleAnalytics />
+          
+          {/* Organization Schema - placed early in body for SEO */}
+          <OrganizationSchema />
           
           <a 
             href="#main-content" 

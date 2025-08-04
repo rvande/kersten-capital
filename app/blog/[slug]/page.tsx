@@ -2,7 +2,7 @@ import { Metadata, ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getBlogPostBySlug, getBlogPosts } from '@/app/api/blog/api';
 import { getS3URL } from '@/app/api/api';
-import { generateArticleSchema } from '@/app/utils/seo';
+import ArticleSchema from '@/app/components/ArticleSchema';
 import qs from 'qs';
 import BlogPostClient from './BlogPostClient';
 
@@ -72,24 +72,6 @@ export async function generateMetadata(
       },
       alternates: {
         canonical: canonicalUrl,
-      },
-      other: {
-        'application/ld+json': (() => {
-          try {
-            return generateArticleSchema({
-              title,
-              excerpt,
-              content: post.data.content || '',
-              coverImage: post.data.coverImage?.url ? { url: post.data.coverImage.url } : undefined,
-              publishedAt: post.data.publishedAt,
-              updatedAt: post.data.updatedAt,
-              categories: post.data.categories
-            });
-          } catch (schemaError) {
-            console.error('Error generating article schema:', schemaError);
-            return '';
-          }
-        })(),
       },
     };
   } catch (error) {
@@ -309,7 +291,22 @@ export default async function BlogPostPage({ params }: { params: Params }) {
       slug: postSlug
     };
     
-    return <BlogPostClient post={postData} />;
+    return (
+      <>
+        <ArticleSchema 
+          post={{
+            title,
+            excerpt,
+            content: content || markdownContent || '',
+            coverImage: coverImage?.url ? { url: coverImage.url } : undefined,
+            publishedAt,
+            updatedAt: publishedAt,
+            categories
+          }}
+        />
+        <BlogPostClient post={postData} />
+      </>
+    );
   } catch (error) {
     console.error('Error fetching blog post:', error);
     notFound();
