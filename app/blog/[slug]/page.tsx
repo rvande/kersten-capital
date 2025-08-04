@@ -31,7 +31,7 @@ export async function generateMetadata(
       };
     }
     
-    const { title, excerpt, seo } = post.data;
+    const { title, excerpt, seo, publishedAt, content, markdownContent, coverImage, categories } = post.data;
     
     // Base URL from environment or default
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com';

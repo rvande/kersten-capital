@@ -85,13 +85,17 @@ export default async function IndustryPage({ params }: IndustryPageProps) {
       notFound();
     }
 
+    // Get site URL for schema
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com';
+    const canonicalUrl = `${siteUrl}/industries/${fullSlug}`;
+
     return (
       <>
         <WebPageSchema 
           page={{
             title: industry.title,
             description: industry.shortDescription || `Specialized recruitment expertise in ${industry.title.toLowerCase()}.`,
-            url: `/industries/${fullSlug}`,
+            url: canonicalUrl,
             breadcrumb: ['Industries', industry.title]
           }}
         />

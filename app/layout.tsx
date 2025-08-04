@@ -14,7 +14,7 @@ import { generateOrganizationSchema } from "./utils/seo";
 import GoogleAnalytics from "./components/GoogleAnalytics";
 import { MotionConfig } from "framer-motion";
 import PerformanceConfig from './components/PerformanceConfig';
-import OrganizationSchema from './components/OrganizationSchema';
+import HeadSchema from './components/HeadSchema';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -122,12 +122,12 @@ export default async function RootLayout({
           <link rel="preconnect" href="//fonts.gstatic.com" crossOrigin="anonymous" />
           
           <meta name="google-site-verification" content="H194w9QjUq3uSBGdJOSJBO6ZOy98z-Yoym96MSuOrVc" />
+          
+          {/* Schema markup - placed in head for better SEO and Google detection */}
+          <HeadSchema />
         </head>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
           <GoogleAnalytics />
-          
-          {/* Organization Schema - placed early in body for SEO */}
-          <OrganizationSchema />
           
           <a 
             href="#main-content" 

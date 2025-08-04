@@ -52,7 +52,46 @@ export function generateOrganizationSchema(): string {
     "sameAs": [
       "https://www.linkedin.com/company/kersten-talent-capital/",
       "https://twitter.com/kerstentalent"
-    ]
+    ],
+    // Additional properties Google looks for
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": `${SITE_URL}/search?q={search_term_string}`
+      },
+      "query-input": "required name=search_term_string"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Executive Search Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Executive Search",
+            "url": `${SITE_URL}/services/executive-search`
+          }
+        },
+        {
+          "@type": "Offer", 
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Fractional Hiring",
+            "url": `${SITE_URL}/services/fractional-hiring`
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service", 
+            "name": "Contingency Hiring",
+            "url": `${SITE_URL}/services/contingency-hiring`
+          }
+        }
+      ]
+    }
   };
 
   return JSON.stringify(organizationSchema);
@@ -144,7 +183,7 @@ export function generateArticleSchema(post: {
       "@type": "Article",
       "headline": post.title || "Blog Post",
       "description": post.excerpt || "Insights on leadership and talent acquisition",
-      "image": post.coverImage?.url ? `${SITE_URL}${post.coverImage.url}` : `${SITE_URL}/kersten-logo.jpg`,
+      "image": post.coverImage?.url ? post.coverImage.url : `${SITE_URL}/kersten-logo.jpg`,
       "datePublished": post.publishedAt || new Date().toISOString(),
       "dateModified": post.updatedAt || new Date().toISOString(),
       "author": {
