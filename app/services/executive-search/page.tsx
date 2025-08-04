@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaSearch, FaUsers, FaChartLine, FaShieldAlt, FaHandshake, FaCrown, FaEye, FaLock, FaTrophy } from 'react-icons/fa';
+import ServiceSchema from '../../components/ServiceSchema';
 
 // Animation variants
 const containerVariants = {
@@ -98,7 +99,16 @@ export default function ExecutiveSearchPage() {
   }, []);
 
   return (
-    <main className="flex flex-col w-full">
+    <>
+      <ServiceSchema 
+        service={{
+          name: "Executive Search",
+          description: "Premium, dedicated approach to identifying and securing top-tier leadership talent for your organization through our boutique partnership model.",
+          url: "/services/executive-search",
+          category: "Executive Search"
+        }}
+      />
+      <main className="flex flex-col w-full">
       {/* Hero Section */}
       <div className="relative w-full overflow-hidden">
         {/* Image Background */}
@@ -397,5 +407,6 @@ export default function ExecutiveSearchPage() {
         </div>
       </section>
     </main>
+    </>
   );
 } 

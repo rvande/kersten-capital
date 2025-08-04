@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaClock, FaUsers, FaRocket, FaChartLine, FaExchangeAlt, FaUserTie, FaCogs, FaBuilding, FaSearch, FaHandshake, FaBriefcase, FaLightbulb, FaArrowsAlt } from 'react-icons/fa';
+import ServiceSchema from '../../components/ServiceSchema';
 
 // Animation variants
 const containerVariants = {
@@ -98,7 +99,16 @@ export default function FractionalHiringPage() {
   }, []);
 
   return (
-    <main className="flex flex-col w-full">
+    <>
+      <ServiceSchema 
+        service={{
+          name: "Fractional Hiring",
+          description: "Innovative executive talent solutions for organizations seeking specialized expertise without the commitment of a full-time hire.",
+          url: "/services/fractional-hiring",
+          category: "Fractional Hiring"
+        }}
+      />
+      <main className="flex flex-col w-full">
       {/* Hero Section */}
       <div className="relative w-full overflow-hidden">
         {/* Image Background */}
@@ -457,5 +467,6 @@ export default function FractionalHiringPage() {
         </div>
       </section>
     </main>
+    </>
   );
 } 

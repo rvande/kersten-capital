@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaHandshake, FaUsers, FaRocket, FaChartLine, FaExchangeAlt, FaUserTie, FaCogs, FaBuilding, FaSearch } from 'react-icons/fa';
+import ServiceSchema from '../../components/ServiceSchema';
 
 // Animation variants
 const containerVariants = {
@@ -98,7 +99,16 @@ export default function ContingencyHiringPage() {
   }, []);
 
   return (
-    <main className="flex flex-col w-full">
+    <>
+      <ServiceSchema 
+        service={{
+          name: "Contingency Hiring",
+          description: "Results-driven approach with performance-based model for mid-level and specialized roles.",
+          url: "/services/contingency-hiring",
+          category: "Contingency Hiring"
+        }}
+      />
+      <main className="flex flex-col w-full">
       {/* Hero Section */}
       <div className="relative w-full overflow-hidden">
         {/* Image Background */}
@@ -459,5 +469,6 @@ export default function ContingencyHiringPage() {
         </div>
       </section>
     </main>
+    </>
   );
 } 
