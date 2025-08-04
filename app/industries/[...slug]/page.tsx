@@ -53,6 +53,23 @@ export async function generateMetadata({ params }: IndustryPageProps) {
       industry.shortDescription || `Specialized recruitment expertise in ${industry.title.toLowerCase()}.`
     );
 
+    // Generate Open Graph images with fallback
+    const ogImages = industry.heroImage?.url ? [
+      {
+        url: industry.heroImage.url.startsWith('http') 
+          ? industry.heroImage.url 
+          : getStrapiURL(industry.heroImage.url),
+        width: 1200,
+        height: 630,
+        alt: industry.heroTitle || industry.title,
+      }
+    ] : [{
+      url: 'https://kerstencapital.s3.us-east-1.amazonaws.com/OG_Image_ff4eaa3237.png',
+      width: 1200,
+      height: 630,
+      alt: industry.title || 'Kersten Talent Capital',
+    }];
+
     return {
       title: metaTitle,
       description: metaDescription,
@@ -73,16 +90,7 @@ export async function generateMetadata({ params }: IndustryPageProps) {
         siteName: 'Kersten Talent Capital',
         type: 'website',
         locale: 'en_US',
-        images: industry.heroImage?.url ? [
-          {
-            url: industry.heroImage.url.startsWith('http') 
-              ? industry.heroImage.url 
-              : getStrapiURL(industry.heroImage.url),
-            width: 1200,
-            height: 630,
-            alt: industry.heroTitle || industry.title,
-          }
-        ] : [],
+        images: ogImages,
       },
     };
   } catch (error) {

@@ -58,17 +58,27 @@ export function generateIconMetadata(favicon: StrapiImage | null): Icons | undef
  * @returns An array of OG image objects formatted for Next.js metadata
  */
 export function generateOgImages(image: StrapiImage | null, altText: string) {
-  if (!image) return [];
-  
-  const imageUrl = getStrapiMedia(image);
-  if (!imageUrl) return [];
-  
-  return [
-    {
-      url: imageUrl,
-      width: image.width || 1200,
-      height: image.height || 630,
-      alt: altText,
+  // Try to use the provided image first
+  if (image) {
+    const imageUrl = getStrapiMedia(image);
+    
+    if (imageUrl) {
+      return [{
+        url: imageUrl,
+        width: image.width || 1200,
+        height: image.height || 630,
+        alt: altText,
+      }];
     }
-  ];
+  }
+  
+  // Fallback to default OG image
+  const defaultOgImage = {
+    url: 'https://kerstencapital.s3.us-east-1.amazonaws.com/OG_Image_ff4eaa3237.png',
+    width: 1200,
+    height: 630,
+    alt: altText || 'Kersten Talent Capital - Strategic Talent Investment & Career Acceleration',
+  };
+  
+  return [defaultOgImage];
 } 

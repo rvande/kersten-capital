@@ -7,21 +7,78 @@ import { Metadata } from "next";
 
 // Generate metadata for the homepage
 export async function generateMetadata(): Promise<Metadata> {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com';
-  
-  return {
-    title: 'Kersten Talent Capital | Strategic Talent Investment & Career Acceleration',
-    description: 'Strategic talent investment and career acceleration for exceptional leaders. Specialized executive search, contingency hiring, and fractional solutions across key industries.',
-    alternates: {
-      canonical: siteUrl,
-    },
-    openGraph: {
+  try {
+    const globalData = await getGlobalData();
+    const global = globalData.data;
+    
+    const { metaTitle, metaDescription, shareImage, twitterCardType, twitterUsername } = global.metadata;
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com';
+    
+    // Generate OG images from shareImage or fallback to favicon
+    const { generateOgImages } = await import('./utils/favicon');
+    const ogImages = shareImage 
+      ? generateOgImages(shareImage, metaTitle)
+      : generateOgImages(global.favicon, metaTitle);
+    
+    // Ensure we always have at least one OG image
+    const finalOgImages = ogImages.length > 0 ? ogImages : [{
+      url: 'https://kerstencapital.s3.us-east-1.amazonaws.com/OG_Image_ff4eaa3237.png',
+      width: 1200,
+      height: 630,
+      alt: metaTitle || 'Kersten Talent Capital',
+    }];
+    
+    return {
       title: 'Kersten Talent Capital | Strategic Talent Investment & Career Acceleration',
       description: 'Strategic talent investment and career acceleration for exceptional leaders. Specialized executive search, contingency hiring, and fractional solutions across key industries.',
-      url: siteUrl,
-      type: 'website',
-    },
-  };
+      alternates: {
+        canonical: siteUrl,
+      },
+      openGraph: {
+        title: 'Kersten Talent Capital | Strategic Talent Investment & Career Acceleration',
+        description: 'Strategic talent investment and career acceleration for exceptional leaders. Specialized executive search, contingency hiring, and fractional solutions across key industries.',
+        url: siteUrl,
+        type: 'website',
+        images: finalOgImages.map(img => ({
+          url: img.url,
+          width: img.width,
+          height: img.height,
+          alt: img.alt,
+        })),
+      },
+      twitter: {
+        card: twitterCardType || "summary_large_image",
+        creator: twitterUsername || "",
+        title: 'Kersten Talent Capital | Strategic Talent Investment & Career Acceleration',
+        description: 'Strategic talent investment and career acceleration for exceptional leaders. Specialized executive search, contingency hiring, and fractional solutions across key industries.',
+        images: finalOgImages.map(img => img.url),
+      },
+    };
+  } catch (error) {
+    console.error('Error generating homepage metadata:', error);
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com';
+    
+    // Fallback metadata
+    return {
+      title: 'Kersten Talent Capital | Strategic Talent Investment & Career Acceleration',
+      description: 'Strategic talent investment and career acceleration for exceptional leaders. Specialized executive search, contingency hiring, and fractional solutions across key industries.',
+      alternates: {
+        canonical: siteUrl,
+      },
+      openGraph: {
+        title: 'Kersten Talent Capital | Strategic Talent Investment & Career Acceleration',
+        description: 'Strategic talent investment and career acceleration for exceptional leaders. Specialized executive search, contingency hiring, and fractional solutions across key industries.',
+        url: siteUrl,
+        type: 'website',
+        images: [{
+          url: 'https://kerstencapital.s3.us-east-1.amazonaws.com/OG_Image_ff4eaa3237.png',
+          width: 1200,
+          height: 630,
+          alt: 'Kersten Talent Capital',
+        }],
+      },
+    };
+  }
 }
 
 export default async function Home() {

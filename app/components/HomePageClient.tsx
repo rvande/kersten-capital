@@ -41,7 +41,7 @@ const Hero2 = dynamic(() => import("./Hero2"), {
             className="text-[1.6rem] md:text-[4rem] lg:text-[5.5rem] font-black text-transparent bg-gradient-to-b from-[#0C6BAF] to-[#71C8F3] bg-clip-text mb-6 md:mb-8"
             style={{ lineHeight: '1.1' }}
           >
-            Your Leadership Team
+            Your Leadership Strategy
           </h2>
           
           <p 

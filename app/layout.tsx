@@ -65,6 +65,14 @@ export async function generateMetadata(): Promise<Metadata> {
       ? generateOgImages(shareImage, metaTitle)
       : generateOgImages(global.favicon, metaTitle);
     
+    // Ensure we always have at least one OG image
+    const finalOgImages = ogImages.length > 0 ? ogImages : [{
+      url: 'https://kerstencapital.s3.us-east-1.amazonaws.com/OG_Image_ff4eaa3237.png',
+      width: 1200,
+      height: 630,
+      alt: metaTitle || 'Kersten Talent Capital',
+    }];
+    
     // Get site URL from environment variable or default
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com';
 
@@ -97,7 +105,12 @@ export async function generateMetadata(): Promise<Metadata> {
         description: optimalDescription,
         url: siteUrl,
         siteName: global.metaTitleSuffix,
-        images: ogImages,
+        images: finalOgImages.map(img => ({
+          url: img.url,
+          width: img.width,
+          height: img.height,
+          alt: img.alt,
+        })),
         type: 'website',
         locale: 'en_US',
         countryName: 'United States',
@@ -107,7 +120,7 @@ export async function generateMetadata(): Promise<Metadata> {
         creator: twitterUsername || "",
         title: optimalTitle,
         description: optimalDescription,
-        images: ogImages.length > 0 ? ogImages.map(img => img.url) : [],
+        images: finalOgImages.map(img => img.url),
       },
       icons: iconMetadata,
     };

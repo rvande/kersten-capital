@@ -45,16 +45,16 @@ export default function Hero2() {
     };
   }, []);
 
-  // Text rotation effect
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTextIndex((prevIndex) => 
-        (prevIndex + 1) % rotatingTexts.length
-      );
-    }, 3000); // Change text every 3 seconds
+  // Text rotation effect - REMOVED since we want static text
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setCurrentTextIndex((prevIndex) => 
+  //       (prevIndex + 1) % rotatingTexts.length
+  //     );
+  //   }, 3000); // Change text every 3 seconds
 
-    return () => clearInterval(interval);
-  }, [rotatingTexts.length]);
+  //   return () => clearInterval(interval);
+  // }, [rotatingTexts.length]);
 
   const services: ServiceItem[] = [
     {
@@ -183,16 +183,11 @@ export default function Hero2() {
             className="text-[3.4rem] md:text-[5rem] lg:text-[7rem] font-black text-white mb-2 md:mb-4 tracking-tight"
             style={{ letterSpacing: '-0.04em', lineHeight: '1.1' }}
           >
-            TRANSFORM
+            TRANSFORM{' '}
+            <span className="text-[1.6rem] md:text-[4rem] lg:text-[5.5rem] font-black text-transparent bg-gradient-to-b from-[#0C6BAF] to-[#71C8F3] bg-clip-text transition-all duration-500 ease-in-out md:whitespace-nowrap">
+              Your Leadership Strategy
+            </span>
           </h1>
-          
-          {/* Rotating Subtitle */}
-          <h2 
-            className="text-[1.6rem] md:text-[4rem] lg:text-[5.5rem] font-black text-transparent bg-gradient-to-b from-[#0C6BAF] to-[#71C8F3] bg-clip-text mb-6 md:mb-8 transition-all duration-500 ease-in-out md:whitespace-nowrap"
-            style={{ lineHeight: '1.1' }}
-          >
-            Your {rotatingTexts[currentTextIndex]}
-          </h2>
           
           {/* Description */}
           <p 

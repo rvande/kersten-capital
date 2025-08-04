@@ -67,6 +67,9 @@ export async function generateMetadata(
       }
     }
     
+    // Ensure we always have an image URL
+    const finalImageUrl = imageUrl || 'https://kerstencapital.s3.us-east-1.amazonaws.com/OG_Image_ff4eaa3237.png';
+    
     return {
       title: metaTitle,
       description: metaDescription,
@@ -80,13 +83,13 @@ export async function generateMetadata(
           'x-default': canonicalUrl,
         },
       },
-      openGraph: imageUrl ? {
-        images: [{ url: imageUrl }],
-        type: 'article',
-        url: canonicalUrl,
-        title: metaTitle,
-        description: metaDescription,
-      } : {
+      openGraph: {
+        images: [{ 
+          url: finalImageUrl,
+          width: 1200,
+          height: 630,
+          alt: metaTitle || 'Blog Post',
+        }],
         type: 'article',
         url: canonicalUrl,
         title: metaTitle,
