@@ -2,6 +2,7 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import { getIndustryBySlug, getStrapiURL, getIndustrySlugs } from '../../api/api';
 import { Industry } from '../../types/pages';
+import { generateWebPageSchema } from '../../utils/seo';
 import IndustryPageClient from './IndustryPageClient';
 
 interface IndustryPageProps {
@@ -38,12 +39,20 @@ export async function generateMetadata({ params }: IndustryPageProps) {
       };
     }
 
+    // Get site URL from environment variable or default
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com';
+    const canonicalUrl = `${siteUrl}/industries/${fullSlug}`;
+
     return {
       title: `${industry.title} | Kersten Talent Capital`,
       description: industry.shortDescription || `Specialized recruitment expertise in ${industry.title.toLowerCase()}.`,
+      alternates: {
+        canonical: canonicalUrl,
+      },
       openGraph: {
         title: `${industry.title} | Kersten Talent Capital`,
         description: industry.shortDescription || `Specialized recruitment expertise in ${industry.title.toLowerCase()}.`,
+        url: canonicalUrl,
         images: industry.heroImage?.url ? [
           {
             url: industry.heroImage.url.startsWith('http') 
@@ -54,6 +63,21 @@ export async function generateMetadata({ params }: IndustryPageProps) {
             alt: industry.heroTitle || industry.title,
           }
         ] : [],
+      },
+      other: {
+        'application/ld+json': (() => {
+          try {
+            return generateWebPageSchema({
+              title: industry.title,
+              description: industry.shortDescription || `Specialized recruitment expertise in ${industry.title.toLowerCase()}.`,
+              url: `/industries/${fullSlug}`,
+              breadcrumb: ['Industries', industry.title]
+            });
+          } catch (schemaError) {
+            console.error('Error generating webpage schema:', schemaError);
+            return '';
+          }
+        })(),
       },
     };
   } catch (error) {

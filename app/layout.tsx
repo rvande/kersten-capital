@@ -19,15 +19,15 @@ const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
-  preload: false,
+  preload: true,
 });
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-cormorant",
-  display: "optional",
-  preload: false,
+  display: "swap",
+  preload: true,
 });
 
 const montserrat = Montserrat({
@@ -88,8 +88,8 @@ export async function generateMetadata(): Promise<Metadata> {
         images: ogImages.length > 0 ? ogImages.map(img => img.url) : [],
       },
       icons: iconMetadata,
-      alternates: {
-        canonical: siteUrl,
+      other: {
+        'application/ld+json': generateOrganizationSchema(),
       },
     };
   } catch (error) {
@@ -149,12 +149,6 @@ export default async function RootLayout({
             id="hubspot-tracking-script"  
             src="//js-na2.hs-scripts.com/242773408.js"
             strategy="lazyOnload"
-          />
-          
-          <Script
-            id="organization-schema"
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: orgSchemaMarkup }}
           />
           
           <main 

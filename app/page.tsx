@@ -3,6 +3,26 @@ import { getBlogPosts } from "./api/blog/api";
 import Link from "next/link";
 import HomePageClient from "./components/HomePageClient";
 import { fetchWhitepapers } from "./utils/blog-helpers";
+import { Metadata } from "next";
+
+// Generate metadata for the homepage
+export async function generateMetadata(): Promise<Metadata> {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com';
+  
+  return {
+    title: 'Kersten Talent Capital | Strategic Talent Investment & Career Acceleration',
+    description: 'Strategic talent investment and career acceleration for exceptional leaders. Specialized executive search, contingency hiring, and fractional solutions across key industries.',
+    alternates: {
+      canonical: siteUrl,
+    },
+    openGraph: {
+      title: 'Kersten Talent Capital | Strategic Talent Investment & Career Acceleration',
+      description: 'Strategic talent investment and career acceleration for exceptional leaders. Specialized executive search, contingency hiring, and fractional solutions across key industries.',
+      url: siteUrl,
+      type: 'website',
+    },
+  };
+}
 
 export default async function Home() {
   try {

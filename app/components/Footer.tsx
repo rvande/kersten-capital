@@ -348,7 +348,7 @@ export default function Footer({ footer }: FooterProps) {
             </div>
             <div className="text-center">
               <a 
-                href="https://www.linkedin.com/in/ryan-vandehey" 
+                href="https://www.vande-digital.com" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-white/60 hover:text-[#71C8F3] transition-colors duration-300 font-open-sans text-sm hover:underline focus:outline-none focus:underline focus:decoration-[#71C8F3] focus:decoration-2 focus:underline-offset-4"

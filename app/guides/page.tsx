@@ -4,7 +4,7 @@ import GuidesPageContent from '../components/GuidesPageContent';
 import { Metadata } from 'next';
 
 // Base URL from environment or default
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kersten-capital.com';
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com';
 
 export const metadata: Metadata = {
   title: 'Guides & Whitepapers | Kersten Talent Capital',

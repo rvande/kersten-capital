@@ -46,6 +46,40 @@ export function getStaticPages(): SitemapEntry[] {
 }
 
 /**
+ * Get service pages for the sitemap
+ */
+export function getServicePages(): SitemapEntry[] {
+  const date = new Date().toISOString();
+  
+  return [
+    {
+      url: `${SITE_URL}/services`,
+      lastModified: date,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/services/executive-search`,
+      lastModified: date,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/services/contingency-hiring`,
+      lastModified: date,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/services/fractional-hiring`,
+      lastModified: date,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+  ];
+}
+
+/**
  * Fetch blog posts for the sitemap using the proper blog API
  */
 export async function getBlogPosts(): Promise<SitemapEntry[]> {

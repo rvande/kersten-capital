@@ -30,8 +30,11 @@ export function generateOrganizationSchema(): string {
     "@type": "Organization",
     "name": "Kersten Talent Capital",
     "url": SITE_URL,
-    "logo": `${SITE_URL}/logo.png`,
+    "logo": `${SITE_URL}/kersten-logo.jpg`,
     "description": "Strategic talent investment firm specializing in executive search and leadership solutions.",
+    "foundingDate": "2017",
+    "numberOfEmployees": "10-50",
+    "areaServed": ["United States", "Europe"],
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "8310 South Valley Highway, Suite 300",
@@ -86,7 +89,7 @@ export function generateLocalBusinessSchema(): string {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Kersten Talent Capital",
-    "image": `${SITE_URL}/logo.png`,
+    "image": `${SITE_URL}/kersten-logo.jpg`,
     "url": SITE_URL,
     "telephone": "+1-303-414-2057",
     "address": {
@@ -118,4 +121,148 @@ export function generateLocalBusinessSchema(): string {
   };
 
   return JSON.stringify(localBusinessSchema);
+} 
+
+/**
+ * Generate Article schema markup for blog posts
+ * @param post - Blog post data
+ * @returns Article schema markup as a JSON string
+ */
+export function generateArticleSchema(post: {
+  title: string;
+  excerpt: string;
+  content: string;
+  coverImage?: { url: string };
+  publishedAt: string;
+  updatedAt: string;
+  author?: string;
+  categories?: Array<{ name: string }>;
+}): string {
+  try {
+    const articleSchema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": post.title || "Blog Post",
+      "description": post.excerpt || "Insights on leadership and talent acquisition",
+      "image": post.coverImage?.url ? `${SITE_URL}${post.coverImage.url}` : `${SITE_URL}/kersten-logo.jpg`,
+      "datePublished": post.publishedAt || new Date().toISOString(),
+      "dateModified": post.updatedAt || new Date().toISOString(),
+      "author": {
+        "@type": "Organization",
+        "name": "Kersten Talent Capital"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Kersten Talent Capital",
+        "logo": {
+          "@type": "ImageObject",
+          "url": `${SITE_URL}/kersten-logo.jpg`
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": SITE_URL
+      },
+      "articleSection": post.categories?.[0]?.name || "Executive Search",
+      "keywords": post.categories?.map(cat => cat.name).join(", ") || "executive search, talent acquisition, leadership"
+    };
+
+    return JSON.stringify(articleSchema);
+  } catch (error) {
+    console.error('Error generating article schema:', error);
+    // Return a minimal valid schema if generation fails
+    return JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Blog Post",
+      "description": "Insights on leadership and talent acquisition",
+      "author": {
+        "@type": "Organization",
+        "name": "Kersten Talent Capital"
+      }
+    });
+  }
+}
+
+/**
+ * Generate Service schema markup
+ * @param service - Service data
+ * @returns Service schema markup as a JSON string
+ */
+export function generateServiceSchema(service: {
+  name: string;
+  description: string;
+  url: string;
+  category?: string;
+}): string {
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": service.name,
+    "description": service.description,
+    "url": `${SITE_URL}${service.url}`,
+    "provider": {
+      "@type": "Organization",
+      "name": "Kersten Talent Capital",
+      "url": SITE_URL
+    },
+    "serviceType": service.category || "Executive Search",
+    "areaServed": ["United States", "Europe"],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Executive Talent Services"
+    }
+  };
+
+  return JSON.stringify(serviceSchema);
+}
+
+/**
+ * Generate WebPage schema for industry pages
+ * @param page - Page data
+ * @returns WebPage schema markup as a JSON string
+ */
+export function generateWebPageSchema(page: {
+  title: string;
+  description: string;
+  url: string;
+  breadcrumb?: string[];
+}): string {
+  try {
+    const webPageSchema = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": page.title || "Industry Page",
+      "description": page.description || "Specialized recruitment expertise",
+      "url": `${SITE_URL}${page.url}`,
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": page.breadcrumb?.map((item, index) => ({
+          "@type": "ListItem",
+          "position": index + 1,
+          "name": item,
+          "item": `${SITE_URL}${page.url}`
+        })) || []
+      },
+      "mainEntity": {
+        "@type": "Organization",
+        "name": "Kersten Talent Capital"
+      }
+    };
+
+    return JSON.stringify(webPageSchema);
+  } catch (error) {
+    console.error('Error generating webpage schema:', error);
+    // Return a minimal valid schema if generation fails
+    return JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Industry Page",
+      "description": "Specialized recruitment expertise",
+      "mainEntity": {
+        "@type": "Organization",
+        "name": "Kersten Talent Capital"
+      }
+    });
+  }
 } 

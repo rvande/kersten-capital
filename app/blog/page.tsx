@@ -8,7 +8,7 @@ import Pagination from '../components/Pagination';
 import { sortBlogPosts } from '../utils/blog-helpers';
 
 // Base URL from environment or default
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kersten-capital.com';
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com';
 
 export const metadata: Metadata = {
   title: 'Blog | Kersten Talent Capital',

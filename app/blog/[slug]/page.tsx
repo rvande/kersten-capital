@@ -2,6 +2,7 @@ import { Metadata, ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getBlogPostBySlug, getBlogPosts } from '@/app/api/blog/api';
 import { getS3URL } from '@/app/api/api';
+import { generateArticleSchema } from '@/app/utils/seo';
 import qs from 'qs';
 import BlogPostClient from './BlogPostClient';
 
@@ -33,7 +34,7 @@ export async function generateMetadata(
     const { title, excerpt, seo } = post.data;
     
     // Base URL from environment or default
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kersten-capital.com';
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com';
     
     // Canonical URL for this blog post
     const canonicalUrl = `${baseUrl}/blog/${slug}`;
@@ -71,6 +72,24 @@ export async function generateMetadata(
       },
       alternates: {
         canonical: canonicalUrl,
+      },
+      other: {
+        'application/ld+json': (() => {
+          try {
+            return generateArticleSchema({
+              title,
+              excerpt,
+              content: post.data.content || '',
+              coverImage: post.data.coverImage?.url ? { url: post.data.coverImage.url } : undefined,
+              publishedAt: post.data.publishedAt,
+              updatedAt: post.data.updatedAt,
+              categories: post.data.categories
+            });
+          } catch (schemaError) {
+            console.error('Error generating article schema:', schemaError);
+            return '';
+          }
+        })(),
       },
     };
   } catch (error) {

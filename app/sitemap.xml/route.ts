@@ -1,4 +1,4 @@
-import { getStaticPages, getBlogPosts, getBlogCategories, getIndustryPages, SitemapEntry } from '../utils/sitemap-utils';
+import { getStaticPages, getBlogPosts, getBlogCategories, getIndustryPages, getServicePages, SitemapEntry } from '../utils/sitemap-utils';
 
 // Base URL of the site
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com';
@@ -20,6 +20,7 @@ export async function GET(): Promise<Response> {
     const blogPosts = await getBlogPosts();
     const categories = await getBlogCategories();
     const industries = await getIndustryPages();
+    const servicePages = getServicePages();
     
     // Combine all URLs
     const urls: SitemapEntry[] = [
@@ -27,6 +28,7 @@ export async function GET(): Promise<Response> {
       ...blogPosts,
       ...categories,
       ...industries,
+      ...servicePages,
     ];
     
     // Generate XML

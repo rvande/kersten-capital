@@ -38,7 +38,7 @@ export async function generateMetadata(
     const { name } = category.data;
     
     // Base URL from environment or default
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kersten-capital.com';
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com';
     
     // Canonical URL for this category
     const canonicalUrl = `${baseUrl}/blog/category/${slug}`;
