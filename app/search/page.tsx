@@ -1,30 +1,54 @@
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 import SearchResults from '../components/SearchResults';
+import { generateConsistentOgImages, generateConsistentTwitterImages } from '../utils/metadata';
 
 // Base URL from environment or default
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com';
 
-export const metadata: Metadata = {
-  title: 'Search Results | Kersten Talent Capital',
-  description: 'Search results for Kersten Talent Capital content including blog posts, pages, and FAQs.',
-  alternates: {
-    canonical: `${baseUrl}/search`,
-    languages: {
-      'en-US': `${baseUrl}/search`,
-      'en-CA': `${baseUrl}/search`,
-      'en-GB': `${baseUrl}/search`,
-      'en-AU': `${baseUrl}/search`,
-      'x-default': `${baseUrl}/search`,
-    },
-  },
-  openGraph: {
-    title: 'Search Results | Kersten Talent Capital',
-    description: 'Search results for Kersten Talent Capital content including blog posts, pages, and FAQs.',
-    url: `${baseUrl}/search`,
-    type: 'website',
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const ogImages = await generateConsistentOgImages('Search Results | Kersten Talent Capital');
+    const twitterImages = await generateConsistentTwitterImages('Search Results | Kersten Talent Capital');
+    
+    return {
+      title: 'Search Results | Kersten Talent Capital',
+      description: 'Search results for Kersten Talent Capital content including blog posts, pages, and FAQs.',
+      alternates: {
+        canonical: `${baseUrl}/search`,
+        languages: {
+          'en-US': `${baseUrl}/search`,
+          'en-CA': `${baseUrl}/search`,
+          'en-GB': `${baseUrl}/search`,
+          'en-AU': `${baseUrl}/search`,
+          'x-default': `${baseUrl}/search`,
+        },
+      },
+      openGraph: {
+        title: 'Search Results | Kersten Talent Capital',
+        description: 'Search results for Kersten Talent Capital content including blog posts, pages, and FAQs.',
+        url: `${baseUrl}/search`,
+        type: 'website',
+        images: ogImages,
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: 'Search Results | Kersten Talent Capital',
+        description: 'Search results for Kersten Talent Capital content including blog posts, pages, and FAQs.',
+        images: twitterImages,
+      },
+    };
+  } catch (error) {
+    console.error('Error generating search metadata:', error);
+    return {
+      title: 'Search Results | Kersten Talent Capital',
+      description: 'Search results for Kersten Talent Capital content including blog posts, pages, and FAQs.',
+      alternates: {
+        canonical: `${baseUrl}/search`,
+      },
+    };
+  }
+}
 
 interface SearchPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;

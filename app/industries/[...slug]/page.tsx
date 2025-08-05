@@ -5,6 +5,7 @@ import { Industry } from '../../types/pages';
 import WebPageSchema from '../../components/WebPageSchema';
 import IndustryPageClient from './IndustryPageClient';
 import { generateHreflangTags, generateOptimalMetaTitle, generateOptimalMetaDescription } from '../../utils/seo';
+import { generateConsistentOgImages, generateConsistentTwitterImages } from '../../utils/metadata';
 
 interface IndustryPageProps {
   params: Promise<{
@@ -53,22 +54,9 @@ export async function generateMetadata({ params }: IndustryPageProps) {
       industry.shortDescription || `Specialized recruitment expertise in ${industry.title.toLowerCase()}.`
     );
 
-    // Generate Open Graph images with fallback
-    const ogImages = industry.heroImage?.url ? [
-      {
-        url: industry.heroImage.url.startsWith('http') 
-          ? industry.heroImage.url 
-          : getStrapiURL(industry.heroImage.url),
-        width: 1200,
-        height: 630,
-        alt: industry.heroTitle || industry.title,
-      }
-    ] : [{
-      url: 'https://kerstencapital.s3.us-east-1.amazonaws.com/OG_Image_ff4eaa3237.png',
-      width: 1200,
-      height: 630,
-      alt: industry.title || 'Kersten Talent Capital',
-    }];
+    // Generate consistent Open Graph images from Strapi
+    const ogImages = await generateConsistentOgImages(industry.heroTitle || industry.title);
+    const twitterImages = await generateConsistentTwitterImages(industry.heroTitle || industry.title);
 
     return {
       title: metaTitle,
@@ -91,6 +79,12 @@ export async function generateMetadata({ params }: IndustryPageProps) {
         type: 'website',
         locale: 'en_US',
         images: ogImages,
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: metaTitle,
+        description: metaDescription,
+        images: twitterImages,
       },
     };
   } catch (error) {

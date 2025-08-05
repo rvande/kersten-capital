@@ -29,14 +29,14 @@ export async function generateMetadata(): Promise<Metadata> {
     }];
     
     return {
-      title: 'Kersten Talent Capital | Strategic Talent Investment & Career Acceleration',
-      description: 'Strategic talent investment and career acceleration for exceptional leaders. Specialized executive search, contingency hiring, and fractional solutions across key industries.',
+      title: 'Kersten Talent Capital | Strategic Talent Recruitment & Career Acceleration',
+      description: 'Strategic talent investment and career acceleration for exceptional leaders. Specialized executive search, contingency hiring, and fractional solutions.',
       alternates: {
         canonical: siteUrl,
       },
       openGraph: {
-        title: 'Kersten Talent Capital | Strategic Talent Investment & Career Acceleration',
-        description: 'Strategic talent investment and career acceleration for exceptional leaders. Specialized executive search, contingency hiring, and fractional solutions across key industries.',
+        title: 'Kersten Talent Capital | Strategic Talent Recruitment & Career Acceleration',
+        description: 'Strategic talent investment and career acceleration for exceptional leaders. Specialized executive search, contingency hiring, and fractional solutions.',
         url: siteUrl,
         type: 'website',
         images: finalOgImages.map(img => ({

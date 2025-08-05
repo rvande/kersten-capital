@@ -140,7 +140,7 @@ export default function ServicesPage() {
                   animation: isLoaded ? 'slideRight 1.5s cubic-bezier(0.4,0,0.2,1)' : 'none',
                 }}
               >
-                Our
+                Our Recruitment
                 <span className="text-white block">Services</span>
               </h1>
             </div>

@@ -3,30 +3,54 @@ import { fetchWhitepapers } from '@/app/utils/blog-helpers';
 import { generateHreflangTags } from '@/app/utils/seo';
 import GuidesPageContent from '../components/GuidesPageContent';
 import { Metadata } from 'next';
+import { generateConsistentOgImages, generateConsistentTwitterImages } from '../utils/metadata';
 
 // Base URL from environment or default
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com';
 
-export const metadata: Metadata = {
-  title: 'Guides & Whitepapers | Kersten Talent Capital',
-  description: 'Access our latest guides, whitepapers, and research on executive talent acquisition, leadership trends, and strategic hiring practices.',
-  alternates: {
-    canonical: `${baseUrl}/guides`,
-    languages: {
-      'en-US': `${baseUrl}/guides`,
-      'en-CA': `${baseUrl}/guides`,
-      'en-GB': `${baseUrl}/guides`,
-      'en-AU': `${baseUrl}/guides`,
-      'x-default': `${baseUrl}/guides`,
-    },
-  },
-  openGraph: {
-    title: 'Guides & Whitepapers | Kersten Talent Capital',
-    description: 'Access our latest guides, whitepapers, and research on executive talent acquisition, leadership trends, and strategic hiring practices.',
-    url: `${baseUrl}/guides`,
-    type: 'website',
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const ogImages = await generateConsistentOgImages('Guides & Whitepapers | Kersten Talent Capital');
+    const twitterImages = await generateConsistentTwitterImages('Guides & Whitepapers | Kersten Talent Capital');
+    
+    return {
+      title: 'Guides & Whitepapers | Kersten Talent Capital',
+      description: 'Access our latest guides, whitepapers, and research on executive talent acquisition, leadership trends, and strategic hiring practices.',
+      alternates: {
+        canonical: `${baseUrl}/blog`,
+        languages: {
+          'en-US': `${baseUrl}/blog`,
+          'en-CA': `${baseUrl}/blog`,
+          'en-GB': `${baseUrl}/blog`,
+          'en-AU': `${baseUrl}/blog`,
+          'x-default': `${baseUrl}/blog`,
+        },
+      },
+      openGraph: {
+        title: 'Guides & Whitepapers | Kersten Talent Capital',
+        description: 'Access our latest guides, whitepapers, and research on executive talent acquisition, leadership trends, and strategic hiring practices.',
+        url: `${baseUrl}/blog`,
+        type: 'website',
+        images: ogImages,
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: 'Guides & Whitepapers | Kersten Talent Capital',
+        description: 'Access our latest guides, whitepapers, and research on executive talent acquisition, leadership trends, and strategic hiring practices.',
+        images: twitterImages,
+      },
+    };
+  } catch (error) {
+    console.error('Error generating guides metadata:', error);
+    return {
+      title: 'Guides & Whitepapers | Kersten Talent Capital',
+      description: 'Access our latest guides, whitepapers, and research on executive talent acquisition, leadership trends, and strategic hiring practices.',
+      alternates: {
+        canonical: `${baseUrl}/blog`,
+      },
+    };
+  }
+}
 
 export default async function GuidesPage() {
   try {

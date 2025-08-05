@@ -129,7 +129,7 @@ export default function OurApproachPage() {
                   <circle cx="12" cy="12" r="6" stroke="currentColor" strokeWidth="2" fill="none"/>
                   <circle cx="12" cy="12" r="2" fill="currentColor"/>
                 </svg>
-                Our Approach
+                Our Placement Approach
               </h1>
             </div>
             {/* Subheadline */}
@@ -222,9 +222,9 @@ export default function OurApproachPage() {
                 variants={itemVariants}
                 className="bg-gradient-to-br from-[#0C6BAF] to-[#187CC1] text-white p-5 rounded-xl shadow-lg border border-[#005A9C]/20"
               >
-                <h4 className="font-montserrat font-bold text-white text-sm mb-3 uppercase tracking-wide">
+                <h3 className="font-montserrat font-bold text-white text-sm mb-3 uppercase tracking-wide">
                   Aligning With Your Company Values
-                </h4>
+                </h3>
                 <ul className="text-sm space-y-2 text-white/90">
                   <li>• Vision</li>
                   <li>• Mission, Goals & Roadmap</li>
@@ -239,9 +239,9 @@ export default function OurApproachPage() {
                 variants={itemVariants}
                 className="bg-gradient-to-bl from-[#187CC1] to-[#005A9C] text-white p-5 rounded-xl shadow-lg border border-[#0C6BAF]/20"
               >
-                <h4 className="font-montserrat font-bold text-white text-sm mb-3 uppercase tracking-wide">
+                <h3 className="font-montserrat font-bold text-white text-sm mb-3 uppercase tracking-wide">
                   Aligning With Your Tech Stack
-                </h4>
+                </h3>
                 <ul className="text-sm space-y-2 text-white/90">
                   <li>• Technical knowledge</li>
                   <li>• Expertise in technical areas</li>
@@ -273,9 +273,9 @@ export default function OurApproachPage() {
                   variants={itemVariants}
                   className="absolute -top-8 -left-25 bg-gradient-to-br from-[#0C6BAF] to-[#187CC1] text-white p-5 rounded-xl shadow-lg max-w-sm pointer-events-auto border border-[#005A9C]/20"
                 >
-                  <h4 className="font-montserrat font-bold text-white text-sm mb-3 uppercase tracking-wide">
+                  <h3 className="font-montserrat font-bold text-white text-sm mb-3 uppercase tracking-wide">
                     Aligning With Your Company Values
-                  </h4>
+                  </h3>
                   <ul className="text-sm space-y-2 text-white/90">
                     <li>• Vision</li>
                     <li>• Mission, Goals & Roadmap</li>
@@ -290,9 +290,9 @@ export default function OurApproachPage() {
                   variants={itemVariants}
                   className="absolute -top-8 -right-18 bg-gradient-to-bl from-[#187CC1] to-[#005A9C] text-white p-5 rounded-xl shadow-lg max-w-sm pointer-events-auto border border-[#0C6BAF]/20"
                 >
-                  <h4 className="font-montserrat font-bold text-white text-sm mb-3 uppercase tracking-wide">
+                  <h3 className="font-montserrat font-bold text-white text-sm mb-3 uppercase tracking-wide">
                     Aligning With Your Tech Stack
-                  </h4>
+                  </h3>
                   <ul className="text-sm space-y-2 text-white/90">
                     <li>• Technical knowledge</li>
                     <li>• Expertise in technical areas</li>
@@ -307,9 +307,9 @@ export default function OurApproachPage() {
                   variants={itemVariants}
                   className="absolute -bottom-8 -left-35 bg-gradient-to-tr from-[#005A9C] to-[#0C6BAF] text-white p-5 rounded-xl shadow-lg max-w-sm pointer-events-auto border border-[#187CC1]/20"
                 >
-                  <h4 className="font-montserrat font-bold text-white text-sm mb-3 uppercase tracking-wide">
+                  <h3 className="font-montserrat font-bold text-white text-sm mb-3 uppercase tracking-wide">
                     Aligning With Your Company Culture
-                  </h4>
+                  </h3>
                   <ul className="text-sm space-y-2 text-white/90">
                     <li>• What is the organizational culture of the executive team?</li>
                     <li>• What is the level of continuity?</li>
@@ -324,9 +324,9 @@ export default function OurApproachPage() {
                   variants={itemVariants}
                   className="absolute -bottom-8 -right-30 bg-gradient-to-tl from-[#71C8F3] to-[#0C6BAF] text-white p-5 rounded-xl shadow-lg max-w-sm pointer-events-auto border border-[#187CC1]/20"
                 >
-                  <h4 className="font-montserrat font-bold text-white text-sm mb-3 uppercase tracking-wide">
+                  <h3 className="font-montserrat font-bold text-white text-sm mb-3 uppercase tracking-wide">
                     Aligning With Your Leadership Goals
-                  </h4>
+                  </h3>
                   <ul className="text-sm space-y-2 text-white/90">
                     <li>• Ability to drive business competencies to lead to performance</li>
                     <li>• Organizational agility</li>
@@ -344,9 +344,9 @@ export default function OurApproachPage() {
                 variants={itemVariants}
                 className="bg-gradient-to-tr from-[#005A9C] to-[#0C6BAF] text-white p-5 rounded-xl shadow-lg border border-[#187CC1]/20"
               >
-                <h4 className="font-montserrat font-bold text-white text-sm mb-3 uppercase tracking-wide">
+                <h3 className="font-montserrat font-bold text-white text-sm mb-3 uppercase tracking-wide">
                   Aligning With Your Company Culture
-                </h4>
+                </h3>
                 <ul className="text-sm space-y-2 text-white/90">
                   <li>• What is the organizational culture of the executive team?</li>
                   <li>• What is the level of continuity?</li>
@@ -361,9 +361,9 @@ export default function OurApproachPage() {
                 variants={itemVariants}
                 className="bg-gradient-to-tl from-[#71C8F3] to-[#0C6BAF] text-white p-5 rounded-xl shadow-lg border border-[#187CC1]/20"
               >
-                <h4 className="font-montserrat font-bold text-white text-sm mb-3 uppercase tracking-wide">
+                <h3 className="font-montserrat font-bold text-white text-sm mb-3 uppercase tracking-wide">
                   Aligning With Your Leadership Goals
-                </h4>
+                </h3>
                 <ul className="text-sm space-y-2 text-white/90">
                   <li>• Ability to drive business competencies to lead to performance</li>
                   <li>• Organizational agility</li>

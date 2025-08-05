@@ -2,6 +2,7 @@ import { Metadata, ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getCategoryBySlug, getBlogPostsByCategory, getCategories } from '@/app/api/blog/api';
 import { generateHreflangTags } from '@/app/utils/seo';
+import { generateConsistentOgImages, generateConsistentTwitterImages } from '@/app/utils/metadata';
 import BlogPostCard from '@/app/components/BlogPostCard';
 import CategoryFilter from '@/app/components/CategoryFilter';
 import SortSelector from '@/app/components/SortSelector';
@@ -47,6 +48,9 @@ export async function generateMetadata(
     // Generate hreflang tags for this page
     const hreflangTags = generateHreflangTags(`/blog/category/${slug}`, baseUrl);
     
+    const ogImages = await generateConsistentOgImages(`${name} | Blog Categories | Kersten Talent Capital`);
+    const twitterImages = await generateConsistentTwitterImages(`${name} | Blog Categories | Kersten Talent Capital`);
+    
     return {
       title: `${name} | Blog Categories | Kersten Talent Capital`,
       description: `Browse all blog posts in the ${name} category at Kersten Talent Capital.`,
@@ -65,6 +69,13 @@ export async function generateMetadata(
         description: `Browse all blog posts in the ${name} category at Kersten Talent Capital.`,
         url: canonicalUrl,
         type: 'website',
+        images: ogImages,
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${name} | Blog Categories | Kersten Talent Capital`,
+        description: `Browse all blog posts in the ${name} category at Kersten Talent Capital.`,
+        images: twitterImages,
       },
     };
   } catch (error) {

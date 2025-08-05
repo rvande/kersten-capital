@@ -5,32 +5,54 @@ import { FAQ } from '../types/faq';
 import FAQHeader from '../components/FAQHeader';
 import FAQPageContent from '../components/FAQPageContent';
 import { Metadata } from 'next';
+import { generateConsistentOgImages, generateConsistentTwitterImages } from '../utils/metadata';
 
 // Base URL from environment or default
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com';
 
 // Generate metadata for this page
 export async function generateMetadata(): Promise<Metadata> {
-  return {
-    title: 'Frequently Asked Questions | Kersten Talent Capital',
-    description: 'Find answers to common questions about our executive talent acquisition services, process, and how we can help transform your leadership team.',
-    alternates: {
-      canonical: `${baseUrl}/faq`,
-      languages: {
-        'en-US': `${baseUrl}/faq`,
-        'en-CA': `${baseUrl}/faq`,
-        'en-GB': `${baseUrl}/faq`,
-        'en-AU': `${baseUrl}/faq`,
-        'x-default': `${baseUrl}/faq`,
-      },
-    },
-    openGraph: {
+  try {
+    const ogImages = await generateConsistentOgImages('Frequently Asked Questions | Kersten Talent Capital');
+    const twitterImages = await generateConsistentTwitterImages('Frequently Asked Questions | Kersten Talent Capital');
+    
+    return {
       title: 'Frequently Asked Questions | Kersten Talent Capital',
       description: 'Find answers to common questions about our executive talent acquisition services, process, and how we can help transform your leadership team.',
-      url: `${baseUrl}/faq`,
-      type: 'website',
-    },
-  };
+      alternates: {
+        canonical: `${baseUrl}/faq`,
+        languages: {
+          'en-US': `${baseUrl}/faq`,
+          'en-CA': `${baseUrl}/faq`,
+          'en-GB': `${baseUrl}/faq`,
+          'en-AU': `${baseUrl}/faq`,
+          'x-default': `${baseUrl}/faq`,
+        },
+      },
+      openGraph: {
+        title: 'Frequently Asked Questions | Kersten Talent Capital',
+        description: 'Find answers to common questions about our executive talent acquisition services, process, and how we can help transform your leadership team.',
+        url: `${baseUrl}/faq`,
+        type: 'website',
+        images: ogImages,
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: 'Frequently Asked Questions | Kersten Talent Capital',
+        description: 'Find answers to common questions about our executive talent acquisition services, process, and how we can help transform your leadership team.',
+        images: twitterImages,
+      },
+    };
+  } catch (error) {
+    console.error('Error generating FAQ metadata:', error);
+    return {
+      title: 'Frequently Asked Questions | Kersten Talent Capital',
+      description: 'Find answers to common questions about our executive talent acquisition services, process, and how we can help transform your leadership team.',
+      alternates: {
+        canonical: `${baseUrl}/faq`,
+      },
+    };
+  }
 }
 
 // This is a server component that fetches FAQ data

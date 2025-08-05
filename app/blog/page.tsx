@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { getBlogPosts } from '../api/blog/api';
 import { getCategories } from '../api/blog/api';
 import { generateHreflangTags } from '../utils/seo';
+import { generateConsistentOgImages, generateConsistentTwitterImages } from '../utils/metadata';
 import BlogPostCard from '../components/BlogPostCard';
 import CategoryFilter from '../components/CategoryFilter';
 import SortSelector from '../components/SortSelector';
@@ -11,26 +12,49 @@ import { sortBlogPosts } from '../utils/blog-helpers';
 // Base URL from environment or default
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kerstentalentcapital.com';
 
-export const metadata: Metadata = {
-  title: 'Blog | Kersten Talent Capital',
-  description: 'Read the latest insights, trends, and news from Kersten Talent Capital.',
-  alternates: {
-    canonical: `${baseUrl}/blog`,
-    languages: {
-      'en-US': `${baseUrl}/blog`,
-      'en-CA': `${baseUrl}/blog`,
-      'en-GB': `${baseUrl}/blog`,
-      'en-AU': `${baseUrl}/blog`,
-      'x-default': `${baseUrl}/blog`,
-    },
-  },
-  openGraph: {
-    title: 'Blog | Kersten Talent Capital',
-    description: 'Read the latest insights, trends, and news from Kersten Talent Capital.',
-    url: `${baseUrl}/blog`,
-    type: 'website',
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const ogImages = await generateConsistentOgImages('Kersten Talent Capital Blog');
+    const twitterImages = await generateConsistentTwitterImages('Kersten Talent Capital Blog');
+    
+    return {
+      title: 'Kersten Talent Capital Blog',
+      description: 'Read the latest insights, trends, and news from Kersten Talent Capital.',
+      alternates: {
+        canonical: `${baseUrl}/blog`,
+        languages: {
+          'en-US': `${baseUrl}/blog`,
+          'en-CA': `${baseUrl}/blog`,
+          'en-GB': `${baseUrl}/blog`,
+          'en-AU': `${baseUrl}/blog`,
+          'x-default': `${baseUrl}/blog`,
+        },
+      },
+      openGraph: {
+        title: 'Kersten Talent Capital Blog',
+        description: 'Read the latest insights, trends, and news from Kersten Talent Capital.',
+        url: `${baseUrl}/blog`,
+        type: 'website',
+        images: ogImages,
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: 'Kersten Talent Capital Blog',
+        description: 'Read the latest insights, trends, and news from Kersten Talent Capital.',
+        images: twitterImages,
+      },
+    };
+  } catch (error) {
+    console.error('Error generating blog metadata:', error);
+    return {
+      title: 'Kersten Talent Capital Blog',
+      description: 'Read the latest insights, trends, and news from Kersten Talent Capital.',
+      alternates: {
+        canonical: `${baseUrl}/blog`,
+      },
+    };
+  }
+}
 
 // Next.js 15 compatible types
 type SearchParams = Promise<{
@@ -97,7 +121,7 @@ export default async function BlogPage(props: { searchParams?: SearchParams }) {
           <div className="max-w-7xl mx-auto text-center">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 font-montserrat"
                 style={{ textShadow: '0 4px 20px rgba(0, 0, 0, 0.9)' }}>
-              Latest Insights
+              Kersten Talent Capital Blog
             </h1>
             <p className="text-lg sm:text-xl md:text-2xl text-white/95 max-w-4xl mx-auto font-open-sans leading-relaxed">
               Stay informed with our latest thinking on executive talent acquisition, 
