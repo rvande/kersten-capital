@@ -165,8 +165,8 @@ export default function IndustriesPageClient({ industries, error }: IndustriesPa
                   animation: isLoaded ? 'slideRight 1.5s cubic-bezier(0.4,0,0.2,1)' : 'none',
                 }}
               >
-                Our
-                <span className="text-white block">Industries</span>
+                Our Industries
+                <span className="text-white block">Served</span>
               </h1>
             </div>
             {/* Subheadline */}

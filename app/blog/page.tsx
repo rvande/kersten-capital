@@ -156,7 +156,7 @@ export default async function BlogPage(props: { searchParams?: SearchParams }) {
           <div className="max-w-7xl mx-auto">
             
             {/* Search and Filter Controls */}
-            <div className="bg-white rounded-2xl p-6 sm:p-8 md:p-10 shadow-2xl max-w-4xl mx-auto mb-16 border border-gray-200">
+            <div className="bg-white rounded-2xl p-6 sm:p-8 md:p-10 shadow-2xl max-w-6xl mx-auto mb-16 border border-gray-200">
               <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-6">
                 <CategoryFilter categories={categories} />
                 <SortSelector />
@@ -167,7 +167,7 @@ export default async function BlogPage(props: { searchParams?: SearchParams }) {
             {posts.length > 0 ? (
               <>
                 <div 
-                  className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-10 xl:gap-12 mb-16"
+                  className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-8 lg:gap-10 xl:gap-12 mb-16"
                   role="feed"
                   aria-label="Blog posts"
                 >

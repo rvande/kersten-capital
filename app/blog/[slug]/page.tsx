@@ -47,6 +47,9 @@ export async function generateMetadata(
     const metaTitle = generateOptimalMetaTitle(
       seo?.metaTitle || title || 'Blog Post'
     );
+    
+    // Format blog post title as "Title | Blog"
+    const blogPostTitle = title ? `${title} | Blog` : 'Blog Post | Blog';
     const metaDescription = generateOptimalMetaDescription(
       seo?.metaDescription || excerpt || 'Insights on leadership and talent acquisition from Kersten Talent Capital'
     );
@@ -71,7 +74,7 @@ export async function generateMetadata(
     const finalImageUrl = imageUrl || 'https://kerstencapital.s3.us-east-1.amazonaws.com/OG_Image_ff4eaa3237.png';
     
     return {
-      title: metaTitle,
+      title: blogPostTitle,
       description: metaDescription,
       alternates: {
         canonical: canonicalUrl,
@@ -88,11 +91,11 @@ export async function generateMetadata(
           url: finalImageUrl,
           width: 1200,
           height: 630,
-          alt: metaTitle || 'Blog Post',
+          alt: blogPostTitle || 'Blog Post',
         }],
         type: 'article',
         url: canonicalUrl,
-        title: metaTitle,
+        title: blogPostTitle,
         description: metaDescription,
       },
     };

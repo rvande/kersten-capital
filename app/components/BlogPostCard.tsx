@@ -218,7 +218,7 @@ export default function BlogPostCard({ post, featured = false }: BlogPostCardPro
             {/* Title */}
             <h3 
               id={`blog-title-${post.id}`}
-              className={`${featured ? 'text-2xl lg:text-3xl' : 'text-xl lg:text-2xl'} font-black mb-4 text-[#002C5F] group-hover:text-[#0C6BAF] transition-colors duration-300 line-clamp-2 font-montserrat leading-tight`}
+              className={`${featured ? 'text-2xl lg:text-3xl' : 'text-xl lg:text-2xl'} font-black mb-4 text-[#002C5F] group-hover:text-[#0C6BAF] transition-colors duration-300 font-montserrat leading-tight`}
             >
               {post.title}
             </h3>

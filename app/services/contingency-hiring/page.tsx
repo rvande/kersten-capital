@@ -150,8 +150,8 @@ export default function ContingencyHiringPage() {
                   animation: isLoaded ? 'slideRight 1.5s cubic-bezier(0.4,0,0.2,1)' : 'none',
                 }}
               >
-                Contingency
-                <span className="text-[#469fd1] block">Search</span>
+                Contingency Search
+                <span className="text-[#469fd1] block">Service</span>
               </h1>
             </div>
             {/* Subheadline */}

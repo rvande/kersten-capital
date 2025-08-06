@@ -63,7 +63,7 @@ export default function ContactPage() {
               className="font-montserrat text-3xl md:text-5xl lg:text-6xl leading-tight font-black text-[#002C5F] mb-4"
               style={{ letterSpacing: '-0.02em' }}
             >
-              Contact Us
+              Contact Kersten Talent Capital
             </motion.h1>
             {/* Subheadline */}
             <motion.p
