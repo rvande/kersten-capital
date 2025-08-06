@@ -92,7 +92,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ content, className = 
       setIsScrolling(true);
       setActiveSection(id); // Immediately set the active section
       
-      const offset = -630; // Minimal offset to position header near top of viewport
+      const offset = -600; // Minimal offset to position header near top of viewport
       const elementPosition = element.offsetTop - offset;
       
       window.scrollTo({
@@ -114,25 +114,25 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ content, className = 
   return (
     <>
       {/* Mobile TOC - Shows at top of article */}
-      <div className="xl:hidden mb-8 bg-gray-50 rounded-2xl p-6 border border-gray-200">
-        <h3 className="text-sm font-black text-[#002C5F] mb-4 font-montserrat uppercase tracking-wide">
+      <div className="xl:hidden mb-8 bg-gray-50 rounded-2xl p-8 border border-gray-200">
+        <h3 className="text-base font-black text-[#002C5F] mb-6 font-montserrat uppercase tracking-wide">
           In This Article
         </h3>
-        <nav className="space-y-2">
+        <nav className="space-y-1">
           {tocItems.map((item) => (
             <button
               key={item.id}
               onClick={() => scrollToSection(item.id)}
-              className={`block w-full text-left text-sm transition-all duration-200 hover:text-[#0C6BAF] font-open-sans ${
+              className={`block w-full text-left text-base transition-all duration-200 hover:text-[#0C6BAF] font-open-sans py-2 ${
                 activeSection === item.id
-                  ? 'text-[#0C6BAF] font-semibold border-l-2 border-[#0C6BAF] pl-3'
+                  ? 'text-[#0C6BAF] font-semibold border-l-4 border-[#0C6BAF] pl-4'
                   : 'text-gray-600 hover:pl-2'
               } ${
                 item.level === 1 ? 'font-semibold' : 
-                item.level === 2 ? 'ml-3' : 'ml-6 text-xs'
+                item.level === 2 ? 'ml-3' : 'ml-6 text-sm'
               }`}
               style={{
-                paddingLeft: item.level === 1 ? '0' : `${(item.level - 1) * 12}px`
+                paddingLeft: item.level === 1 ? '0' : `${(item.level - 1) * 16}px`
               }}
             >
               {item.text}
@@ -151,32 +151,32 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ content, className = 
             transition={{ duration: 0.3 }}
             className={`fixed right-6 top-1/2 transform -translate-y-1/2 z-40 hidden xl:block ${className}`}
           >
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 p-6 max-w-xs">
-              <h3 className="text-sm font-black text-[#002C5F] mb-4 font-montserrat uppercase tracking-wide">
-                In This Article
-              </h3>
-              <nav className="space-y-2">
-                {tocItems.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => scrollToSection(item.id)}
-                    className={`block w-full text-left text-sm transition-all duration-200 hover:text-[#0C6BAF] font-open-sans ${
-                      activeSection === item.id
-                        ? 'text-[#0C6BAF] font-semibold border-l-2 border-[#0C6BAF] pl-3'
-                        : 'text-gray-600 hover:pl-2'
-                    } ${
-                      item.level === 1 ? 'font-semibold' : 
-                      item.level === 2 ? 'ml-3' : 'ml-6 text-xs'
-                    }`}
-                    style={{
-                      paddingLeft: item.level === 1 ? '0' : `${(item.level - 1) * 12}px`
-                    }}
-                  >
-                    {item.text}
-                  </button>
-                ))}
-              </nav>
-            </div>
+                         <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 p-8 max-w-xs">
+               <h3 className="text-base font-black text-[#002C5F] mb-6 font-montserrat uppercase tracking-wide">
+                 In This Article
+               </h3>
+               <nav className="space-y-2">
+                 {tocItems.map((item) => (
+                   <button
+                     key={item.id}
+                     onClick={() => scrollToSection(item.id)}
+                     className={`block w-full text-left text-base transition-all duration-200 hover:text-[#0C6BAF] font-open-sans py-2 ${
+                       activeSection === item.id
+                         ? 'text-[#0C6BAF] font-semibold border-l-4 border-[#0C6BAF] pl-4'
+                         : 'text-gray-600 hover:pl-2'
+                     } ${
+                       item.level === 1 ? 'font-semibold' : 
+                       item.level === 2 ? 'ml-3' : 'ml-6 text-sm'
+                     }`}
+                     style={{
+                       paddingLeft: item.level === 1 ? '0' : `${(item.level - 1) * 16}px`
+                     }}
+                   >
+                     {item.text}
+                   </button>
+                 ))}
+               </nav>
+             </div>
           </motion.div>
         )}
       </AnimatePresence>
