@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-import { generateHeadingId } from '@/app/utils/markdown-utils';
+import { generateHeadingId, sanitizeHeadingText } from '@/app/utils/markdown-utils';
 
 interface MarkdownRendererProps {
   content: string;
@@ -18,32 +18,32 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, className 
 
     // Step 1: Convert markdown headings to HTML
     html = html.replace(/^\s*#{6}\s+(.+?)(?:\s*#*\s*)?$/gim, (match, title) => {
-      const id = generateHeadingId(title);
+      const id = generateHeadingId(sanitizeHeadingText(title));
       return `<h6 id="${id}" class="text-lg md:text-xl font-black mt-6 mb-3 text-[#002C5F] font-montserrat leading-tight">${title}</h6>`;
     });
     
     html = html.replace(/^\s*#{5}\s+(.+?)(?:\s*#*\s*)?$/gim, (match, title) => {
-      const id = generateHeadingId(title);
+      const id = generateHeadingId(sanitizeHeadingText(title));
       return `<h5 id="${id}" class="text-xl md:text-2xl font-black mt-7 mb-4 text-[#002C5F] font-montserrat leading-tight">${title}</h5>`;
     });
     
     html = html.replace(/^\s*#{4}\s+(.+?)(?:\s*#*\s*)?$/gim, (match, title) => {
-      const id = generateHeadingId(title);
+      const id = generateHeadingId(sanitizeHeadingText(title));
       return `<h4 id="${id}" class="text-xl md:text-2xl font-black mt-7 mb-4 text-[#002C5F] font-montserrat leading-tight">${title}</h4>`;
     });
     
     html = html.replace(/^\s*#{3}\s+(.+?)(?:\s*#*\s*)?$/gim, (match, title) => {
-      const id = generateHeadingId(title);
+      const id = generateHeadingId(sanitizeHeadingText(title));
       return `<h3 id="${id}" class="text-2xl md:text-3xl font-black mt-8 mb-5 text-[#002C5F] font-montserrat leading-tight">${title}</h3>`;
     });
     
     html = html.replace(/^\s*#{2}\s+(.+?)(?:\s*#*\s*)?$/gim, (match, title) => {
-      const id = generateHeadingId(title);
+      const id = generateHeadingId(sanitizeHeadingText(title));
       return `<h2 id="${id}" class="text-3xl md:text-4xl font-black mt-10 mb-6 text-[#002C5F] font-montserrat leading-tight">${title}</h2>`;
     });
     
     html = html.replace(/^\s*#{1}\s+(.+?)(?:\s*#*\s*)?$/gim, (match, title) => {
-      const id = generateHeadingId(title);
+      const id = generateHeadingId(sanitizeHeadingText(title));
       return `<h1 id="${id}" class="text-4xl md:text-5xl font-black mt-12 mb-8 text-[#002C5F] font-montserrat leading-tight">${title}</h1>`;
     });
 
