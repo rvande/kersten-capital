@@ -98,9 +98,9 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-      source: '/guides',
-      destination: '/blog',
-      permanent: true,
+        source: '/guides',
+        destination: '/blog',
+        permanent: true,
       },
     ];
   },

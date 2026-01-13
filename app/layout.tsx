@@ -147,6 +147,18 @@ export default async function RootLayout({
     return (
       <html lang="en" className={`${inter.variable} ${cormorant.variable} ${montserrat.variable} ${openSans.variable} h-full`}>
         <head>
+          {/* Google Tag Manager */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-M2MDFV5J');`,
+            }}
+          />
+          {/* End Google Tag Manager */}
+          
           {/* Preload critical LCP resources */}
           <link rel="preload" href="/hero-poster.avif" as="image" type="image/avif" fetchPriority="high" />
           
@@ -161,6 +173,17 @@ export default async function RootLayout({
           <HeadSchema />
         </head>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
+          {/* Google Tag Manager (noscript) */}
+          <noscript>
+            <iframe
+              src="https://www.googletagmanager.com/ns.html?id=GTM-M2MDFV5J"
+              height="0"
+              width="0"
+              style={{ display: 'none', visibility: 'hidden' }}
+            />
+          </noscript>
+          {/* End Google Tag Manager (noscript) */}
+          
           <GoogleAnalytics />
           
           <a 
@@ -205,7 +228,31 @@ export default async function RootLayout({
     // Fallback rendering without header that requires global data
    return (
       <html lang="en" className={`${inter.variable} ${cormorant.variable} ${montserrat.variable} ${openSans.variable} h-full`}>
+        <head>
+          {/* Google Tag Manager */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-M2MDFV5J');`,
+            }}
+          />
+          {/* End Google Tag Manager */}
+        </head>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
+          {/* Google Tag Manager (noscript) */}
+          <noscript>
+            <iframe
+              src="https://www.googletagmanager.com/ns.html?id=GTM-M2MDFV5J"
+              height="0"
+              width="0"
+              style={{ display: 'none', visibility: 'hidden' }}
+            />
+          </noscript>
+          {/* End Google Tag Manager (noscript) */}
+          
           <MotionConfig
             // Configure framer-motion for better performance
             transition={{ layout: { duration: 0.3 } }}
