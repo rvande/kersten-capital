@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
         'Authorization': `Bearer ${process.env.STRAPI_API_TOKEN || ''}`,
       },
       next: {
-        revalidate: 300, // Cache for 5 minutes instead of 60 seconds
+        revalidate: 3600, // 1 hr; on-demand revalidation available via webhook
       },
     });
     

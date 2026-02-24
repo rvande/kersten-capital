@@ -94,7 +94,7 @@ export default function PrivacyPolicyPage() {
             {/* Last Updated */}
             <motion.div variants={itemVariants} className="mb-12">
               <p className="text-gray-600 font-open-sans text-sm">
-                <strong>Last Updated:</strong> {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                <strong>Last Updated:</strong> June 2025
               </p>
             </motion.div>
 

@@ -181,9 +181,9 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="flex flex-wrap gap-2 mb-6 md:mb-6 lg:mb-8 lg:mt-10"
               >
-                {post.categories.map(category => (
+                {post.categories.map((category, index) => (
                   <Link 
-                    key={category?.id || `cat-${Math.random()}`}
+                    key={category?.id ?? `cat-${category?.slug ?? index}`}
                     href={`/blog/category/${category?.slug || 'uncategorized'}`}
                     className="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full hover:bg-white/30 transition-all duration-300 font-open-sans font-semibold text-sm"
                   >

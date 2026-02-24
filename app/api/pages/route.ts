@@ -80,7 +80,7 @@ export async function GET(request: NextRequest) {
             'Authorization': `Bearer ${process.env.STRAPI_API_TOKEN || ''}`,
           },
           next: {
-            revalidate: 600, // 10 minutes cache for pages
+            revalidate: 3600, // 1 hr; pages change rarely
           },
         });
         

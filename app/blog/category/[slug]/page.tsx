@@ -137,7 +137,7 @@ async function fetchCategoryDirectly(slug) {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${process.env.STRAPI_API_TOKEN || ''}`,
           },
-          next: { revalidate: 300 },
+          next: { revalidate: 3600, tags: ['blog'] },
         });
         
         if (!response.ok) {

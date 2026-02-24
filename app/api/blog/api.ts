@@ -27,16 +27,16 @@ export async function getBlogPosts(params = {}) {
   };
 
   const mergedParams = { ...defaultParams, ...params };
+  const blogFetchOptions = { next: { revalidate: 600, tags: ['blog'] } }; // 10 min; on-demand via webhook
   console.log('Getting blog posts with params:', JSON.stringify(mergedParams, null, 2));
   
   try {
-    // Try both formats if needed
     try {
-      const response = await fetchAPI(BLOG_POSTS_ENDPOINT, mergedParams);
+      const response = await fetchAPI(BLOG_POSTS_ENDPOINT, mergedParams, blogFetchOptions);
       return response as BlogPostsResponse;
     } catch (error) {
       console.log('Trying alternative endpoint format...');
-      const response = await fetchAPI('api::blog-post.blog-post', mergedParams);
+      const response = await fetchAPI('api::blog-post.blog-post', mergedParams, blogFetchOptions);
       return response as BlogPostsResponse;
     }
   } catch (error) {
@@ -53,7 +53,7 @@ export async function getBlogPosts(params = {}) {
 export async function getBlogPostBySlug(slug: string) {
   console.log(`Fetching blog post with slug: ${slug}`);
   
-  // First try with detailed populate to ensure we get content
+  // Populate only relations Strapi accepts; avoid 'content' etc. (Strapi v5 often rejects them in populate)
   const params = {
     filters: {
       slug: {
@@ -61,22 +61,10 @@ export async function getBlogPostBySlug(slug: string) {
       },
     },
     populate: {
-      coverImage: {
-        populate: '*',
-      },
-      categories: {
-        populate: '*',
-      },
-      seo: {
-        populate: '*',
-      },
-      content: true,
-      markdownContent: true,
-      // Also try common content field variations
-      body: true,
-      text: true,
-      description: true,
-    }
+      coverImage: { populate: '*' },
+      categories: { populate: '*' },
+      seo: { populate: '*' },
+    },
   };
 
   try {
@@ -95,10 +83,11 @@ export async function getBlogPostBySlug(slug: string) {
     let error = null;
     
     // Try each endpoint until one works
+    const blogPostFetchOptions = { next: { revalidate: 600, tags: ['blog'] } };
     for (const endpoint of endpointVariations) {
       try {
         console.log(`Trying to fetch blog post with endpoint: ${endpoint}`);
-        response = await fetchAPI(endpoint, params);
+        response = await fetchAPI(endpoint, params, blogPostFetchOptions);
         if (response) {
           console.log(`Success with endpoint: ${endpoint}`);
           break;
@@ -124,7 +113,7 @@ export async function getBlogPostBySlug(slug: string) {
       for (const endpoint of endpointVariations) {
         try {
           console.log(`Trying wildcard populate with endpoint: ${endpoint}`);
-          response = await fetchAPI(endpoint, wildcardParams);
+          response = await fetchAPI(endpoint, wildcardParams, blogPostFetchOptions);
           if (response) {
             console.log(`Success with wildcard populate and endpoint: ${endpoint}`);
             break;
@@ -191,15 +180,14 @@ export async function getCategories(params = {}) {
   };
 
   const mergedParams = { ...defaultParams, ...params };
-  
+  const categoriesFetchOptions = { next: { revalidate: 3600, tags: ['blog'] } }; // 1 hr; invalidated with blog
   try {
-    // Try both formats if needed
     try {
-      const response = await fetchAPI(CATEGORIES_ENDPOINT, mergedParams);
+      const response = await fetchAPI(CATEGORIES_ENDPOINT, mergedParams, categoriesFetchOptions);
       return response as CategoriesResponse;
     } catch (error) {
       console.log('Trying alternative endpoint format for categories...');
-      const response = await fetchAPI('api::category.category', mergedParams);
+      const response = await fetchAPI('api::category.category', mergedParams, categoriesFetchOptions);
       return response as CategoriesResponse;
     }
   } catch (error) {
@@ -225,14 +213,14 @@ export async function getCategoryBySlug(slug: string) {
     populate: '*' // Use wildcard populate for Strapi v5 compatibility
   };
 
+  const categoryFetchOptions = { next: { revalidate: 3600, tags: ['blog'] } };
   try {
-    // Try both formats if needed
     let response;
     try {
-      response = await fetchAPI(CATEGORIES_ENDPOINT, params);
+      response = await fetchAPI(CATEGORIES_ENDPOINT, params, categoryFetchOptions);
     } catch (firstError) {
       console.log('Trying alternative endpoint format for category...');
-      response = await fetchAPI('api::category.category', params);
+      response = await fetchAPI('api::category.category', params, categoryFetchOptions);
     }
     
     console.log(`Category response data structure:`, {
@@ -289,16 +277,16 @@ export async function getBlogPostsByCategory(categorySlug: string, params = {}) 
   };
 
   const mergedParams = { ...defaultParams, ...params };
+  const blogFetchOptions = { next: { revalidate: 600, tags: ['blog'] } };
   console.log(`Getting blog posts for category ${categorySlug} with params:`, JSON.stringify(mergedParams, null, 2));
   
   try {
-    // Try both formats if needed
     try {
-      const response = await fetchAPI(BLOG_POSTS_ENDPOINT, mergedParams);
+      const response = await fetchAPI(BLOG_POSTS_ENDPOINT, mergedParams, blogFetchOptions);
       return response as BlogPostsResponse;
     } catch (error) {
       console.log('Trying alternative endpoint format for filtered posts...');
-      const response = await fetchAPI('api::blog-post.blog-post', mergedParams);
+      const response = await fetchAPI('api::blog-post.blog-post', mergedParams, blogFetchOptions);
       return response as BlogPostsResponse;
     }
   } catch (error) {

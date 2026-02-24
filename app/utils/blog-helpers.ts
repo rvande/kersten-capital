@@ -84,7 +84,7 @@ export async function fetchWhitepapers(limit = 10) {
     console.log(`Attempting to fetch from ${apiUrl}/api/whitepapers`);
     let res = await fetch(
       `${apiUrl}/api/whitepapers?${queryString}`,
-      { next: { revalidate: 300 } }
+      { next: { revalidate: 3600 } }
     );
     
     // If that fails, try the singular endpoint
@@ -92,7 +92,7 @@ export async function fetchWhitepapers(limit = 10) {
       console.log('Plural endpoint not found, trying singular endpoint...');
       res = await fetch(
         `${apiUrl}/api/whitepaper?${queryString}`,
-        { next: { revalidate: 300 } }
+        { next: { revalidate: 3600 } }
       );
     }
 
@@ -150,7 +150,7 @@ export async function getBlogCategories() {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/blog-categories?sort=name:asc`,
-      { next: { revalidate: 300 } } // Cache for 5 minutes - categories change rarely
+      { next: { revalidate: 3600 } } // 1 hr; categories change rarely
     );
 
     if (!response.ok) {

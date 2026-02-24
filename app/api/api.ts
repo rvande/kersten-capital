@@ -43,12 +43,11 @@ export async function fetchAPI(path: string, urlParamsObject = {}, options = {})
       ...options,
     });
     
-    // Log full response details for debugging
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('API response error:', response.status, response.statusText);
-      console.error('Error details:', errorText);
-      
+      const preview = errorText.length > 300 ? `${errorText.slice(0, 300)}...` : errorText;
+      console.error(`API error ${response.status} ${response.statusText}:`, preview);
+
       // Check for specific validation errors
       let errorJson = null;
       try {
@@ -242,8 +241,7 @@ export async function getGlobalData() {
   };
   
   try {
-    const data = await fetchAPI('/global', queryParams);
-    
+    const data = await fetchAPI('/global', queryParams, { next: { revalidate: 3600 } }); // 1 hr; nav/footer change rarely
     // Log a summary for debugging
     console.log('Global data fetched successfully');
     if (data?.data?.navbar?.menu) {

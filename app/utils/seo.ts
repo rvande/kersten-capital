@@ -184,8 +184,8 @@ export function generateArticleSchema(post: {
       "headline": post.title || "Blog Post",
       "description": post.excerpt || "Insights on leadership and talent acquisition",
       "image": post.coverImage?.url ? post.coverImage.url : `${SITE_URL}/kersten-logo.jpg`,
-      "datePublished": post.publishedAt || new Date().toISOString(),
-      "dateModified": post.updatedAt || new Date().toISOString(),
+      "datePublished": post.publishedAt || "2026-01-01T00:00:00.000Z",
+      "dateModified": post.updatedAt || post.publishedAt || "2026-01-01T00:00:00.000Z",
       "author": {
         "@type": "Organization",
         "name": "Kersten Talent Capital"

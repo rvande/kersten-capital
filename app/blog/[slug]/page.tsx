@@ -189,7 +189,7 @@ async function fetchPostDirectly(slug: string) {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${process.env.STRAPI_API_TOKEN || ''}`,
           },
-          next: { revalidate: 300 }, // Cache for 5 minutes instead of no-store
+          next: { revalidate: 600, tags: ['blog'] },
         });
         
         if (!response.ok) {
@@ -230,7 +230,7 @@ async function fetchPostDirectly(slug: string) {
         console.log(`Trying proxy API: ${proxyUrl}`);
         
         const response = await fetch(proxyUrl, {
-          next: { revalidate: 300 }, // Cache for 5 minutes instead of no-store
+          next: { revalidate: 600, tags: ['blog'] },
         });
         
         if (response.ok) {
@@ -292,10 +292,11 @@ export default async function BlogPostPage({ params }: { params: Params }) {
       notFound();
     }
     
-    // Extract post data with safe fallbacks
+    // Stable fallbacks so ISR output is deterministic (no new Date() in SSR)
+    const FALLBACK_DATE = '2026-01-01T00:00:00.000Z';
     const { 
       title = 'Untitled Post', 
-      publishedAt = new Date().toISOString(), 
+      publishedAt = (post.data as any)?.createdAt ?? FALLBACK_DATE, 
       excerpt = '', 
       content = null, 
       markdownContent = null,

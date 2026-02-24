@@ -15,6 +15,7 @@ import GoogleAnalytics from "./components/GoogleAnalytics";
 import { MotionConfig } from "framer-motion";
 import PerformanceConfig from './components/PerformanceConfig';
 import HeadSchema from './components/HeadSchema';
+import GtmClient from './components/GtmClient';
 import { generateHreflangTags, generateOptimalMetaTitle, generateOptimalMetaDescription } from './utils/seo';
 
 const inter = Inter({
@@ -147,18 +148,7 @@ export default async function RootLayout({
     return (
       <html lang="en" className={`${inter.variable} ${cormorant.variable} ${montserrat.variable} ${openSans.variable} h-full`}>
         <head>
-          {/* Google Tag Manager */}
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-M2MDFV5J');`,
-            }}
-          />
-          {/* End Google Tag Manager */}
-          
+          {/* GTM loaded client-side via GtmClient to keep ISR output deterministic */}
           {/* Preload critical LCP resources */}
           <link rel="preload" href="/hero-poster.avif" as="image" type="image/avif" fetchPriority="high" />
           
@@ -173,7 +163,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <HeadSchema />
         </head>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
-          {/* Google Tag Manager (noscript) */}
+          {/* Google Tag Manager (noscript) - no timestamp, safe in SSR */}
           <noscript>
             <iframe
               src="https://www.googletagmanager.com/ns.html?id=GTM-M2MDFV5J"
@@ -182,8 +172,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               style={{ display: 'none', visibility: 'hidden' }}
             />
           </noscript>
-          {/* End Google Tag Manager (noscript) */}
-          
+          <GtmClient />
           <GoogleAnalytics />
           
           <a 
@@ -229,19 +218,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
    return (
       <html lang="en" className={`${inter.variable} ${cormorant.variable} ${montserrat.variable} ${openSans.variable} h-full`}>
         <head>
-          {/* Google Tag Manager */}
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-M2MDFV5J');`,
-            }}
-          />
-          {/* End Google Tag Manager */}
+          {/* GTM loaded client-side via GtmClient (see body) */}
         </head>
         <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
+          <GtmClient />
           {/* Google Tag Manager (noscript) */}
           <noscript>
             <iframe
