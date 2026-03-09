@@ -22,6 +22,7 @@ export async function getBlogPosts(params = {}) {
       seo: {
         populate: '*',
       },
+      author: { populate: ['avatar'] },
     },
     sort: ['publishedAt:desc'],
   };
@@ -64,6 +65,7 @@ export async function getBlogPostBySlug(slug: string) {
       coverImage: { populate: '*' },
       categories: { populate: '*' },
       seo: { populate: '*' },
+      author: { populate: ['avatar'] },
     },
   };
 

@@ -45,6 +45,7 @@ interface BlogPostClientProps {
     categories?: any[];
     slug: string;
     markdownContent?: string;
+    author?: { name: string };
   };
 }
 
@@ -214,6 +215,12 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="flex items-center text-white/90 mb-6 md:mb-6 lg:mb-8 font-open-sans"
             >
+              {post.author?.name && (
+                <>
+                  <span className="mr-4 text-base md:text-lg">{post.author.name}</span>
+                  <span className="mr-4">•</span>
+                </>
+              )}
               <span className="mr-4 text-base md:text-lg">{formattedDate}</span>
               <span className="mr-4">•</span>
               <FaClock className="w-4 h-4 mr-2" />

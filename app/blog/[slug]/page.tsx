@@ -294,15 +294,17 @@ export default async function BlogPostPage({ params }: { params: Params }) {
     
     // Stable fallbacks so ISR output is deterministic (no new Date() in SSR)
     const FALLBACK_DATE = '2026-01-01T00:00:00.000Z';
-    const { 
-      title = 'Untitled Post', 
-      publishedAt = (post.data as any)?.createdAt ?? FALLBACK_DATE, 
-      excerpt = '', 
-      content = null, 
+    const {
+      title = 'Untitled Post',
+      publishedAt = (post.data as any)?.createdAt ?? FALLBACK_DATE,
+      updatedAt = publishedAt,
+      excerpt = '',
+      content = null,
       markdownContent = null,
-      coverImage = null, 
+      coverImage = null,
       categories = [],
-      slug: postSlug = slug
+      slug: postSlug = slug,
+      author = undefined,
     } = post.data || {};
     
     // Prepare the post data for the client component
@@ -314,20 +316,23 @@ export default async function BlogPostPage({ params }: { params: Params }) {
       markdownContent,
       coverImage,
       categories,
-      slug: postSlug
+      slug: postSlug,
+      author,
     };
     
     return (
       <>
-        <ArticleSchema 
+        <ArticleSchema
           post={{
             title,
             excerpt,
             content: content || markdownContent || '',
             coverImage: coverImage?.url ? { url: coverImage.url } : undefined,
             publishedAt,
-            updatedAt: publishedAt,
-            categories
+            updatedAt,
+            slug: postSlug,
+            author: author ? { name: author.name } : undefined,
+            categories,
           }}
         />
         <BlogPostClient post={postData} />

@@ -9,7 +9,8 @@ interface ArticleSchemaProps {
     coverImage?: { url: string };
     publishedAt: string;
     updatedAt: string;
-    author?: string;
+    author?: { name: string };
+    slug?: string;
     categories?: Array<{ name: string }>;
   };
 }

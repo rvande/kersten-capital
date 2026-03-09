@@ -174,7 +174,8 @@ export function generateArticleSchema(post: {
   coverImage?: { url: string };
   publishedAt: string;
   updatedAt: string;
-  author?: string;
+  author?: { name: string };
+  slug?: string;
   categories?: Array<{ name: string }>;
 }): string {
   try {
@@ -186,10 +187,9 @@ export function generateArticleSchema(post: {
       "image": post.coverImage?.url ? post.coverImage.url : `${SITE_URL}/kersten-logo.jpg`,
       "datePublished": post.publishedAt || "2026-01-01T00:00:00.000Z",
       "dateModified": post.updatedAt || post.publishedAt || "2026-01-01T00:00:00.000Z",
-      "author": {
-        "@type": "Organization",
-        "name": "Kersten Talent Capital"
-      },
+      "author": post.author
+        ? { "@type": "Person", "name": post.author.name }
+        : { "@type": "Organization", "name": "Kersten Talent Capital" },
       "publisher": {
         "@type": "Organization",
         "name": "Kersten Talent Capital",
@@ -200,7 +200,7 @@ export function generateArticleSchema(post: {
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": SITE_URL
+        "@id": post.slug ? `${SITE_URL}/blog/${post.slug}` : SITE_URL
       },
       "articleSection": post.categories?.[0]?.name || "Executive Search",
       "keywords": post.categories?.map(cat => cat.name).join(", ") || "executive search, talent acquisition, leadership"

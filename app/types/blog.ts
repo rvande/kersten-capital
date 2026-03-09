@@ -8,6 +8,14 @@ export interface SeoMetadata {
   keywords?: string;
 }
 
+// Author
+export interface Author {
+  id: number;
+  name: string;
+  bio?: string;
+  avatar?: StrapiImage | null;
+}
+
 // Individual blog post
 export interface BlogPost {
   id: number;
@@ -22,6 +30,7 @@ export interface BlogPost {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
+  author?: Author;
 }
 
 // Category
